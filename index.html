@@ -91,8 +91,8 @@
   .vd-wm-b { color:var(--brand-red-700); font-size:.8em; letter-spacing:.08em; margin-left:4px; }
 
   /* Enlaces + buscador + pedido */
-  .vd-nav { display:flex; align-items:center; gap:18px; margin-left:auto; flex-wrap:wrap; }
-  .vd-nav-links { display:flex; align-items:center; gap:18px; }
+  .vd-nav { display:flex; align-items:center; gap:var(--space-4); margin-left:auto; flex-wrap:wrap; }
+  .vd-nav-links { display:flex; align-items:center; gap:var(--space-4); }
 
   .vd-nav-search { display:flex; align-items:center; gap:var(--space-2); border:1px solid var(--color-divider); border-radius:var(--radius-md); padding:5px var(--space-2); min-width:210px; background:#fff; transition:border-color .2s ease, box-shadow .2s ease; }
   .vd-nav-search:focus-within { border-color:var(--brand-red); box-shadow:0 0 0 3px rgba(232,68,60,.10); }
@@ -112,8 +112,8 @@
   @media (max-width:1000px) {
     .vd-hdr { padding:10px 16px; }
     .vd-order { margin-left:auto; }
-    .vd-nav { order:20; flex-basis:100%; margin-left:0; gap:14px; }
-    .vd-nav-links { gap:14px; }
+    .vd-nav { order:20; flex-basis:100%; margin-left:0; gap:var(--space-3); }
+    .vd-nav-links { gap:var(--space-3); }
     .vd-nav-search { flex:1 1 210px; min-width:180px; }
   }
   @media (max-width:720px) {
@@ -133,8 +133,8 @@
     .vd-brand-logo { width:46px; height:46px; }
     .vd-wordmark { font-size:17px; }
     .vd-order { margin-left:auto; }
-    .vd-nav { order:20; flex-basis:100%; margin-left:0; gap:6px; }
-    .vd-nav-links { order:2; flex-basis:100%; gap:16px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:2px 0; }
+    .vd-nav { order:20; flex-basis:100%; margin-left:0; gap:var(--space-2); }
+    .vd-nav-links { order:2; flex-basis:100%; gap:var(--space-3); overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:2px 0; }
     .vd-nav-links::-webkit-scrollbar { display:none; }
     .vd-nav-links a { font-size:12.5px; }
     .vd-nav-search { order:1; width:100%; min-width:0; min-height:44px; padding:0 12px; }
