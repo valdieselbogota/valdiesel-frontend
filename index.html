@@ -116,7 +116,10 @@
     .vd-nav-links { gap:var(--space-3); }
     .vd-nav-search { flex:1 1 210px; min-width:180px; }
   }
-  @media (max-width:720px) {
+  /* 360px / hasta 768px: la barra queda en logo + wordmark + Pedido (n).
+     El buscador desciende a una fila propia de 44 px y los accesos
+     se mantienen en una franja compacta debajo (scroll suave). */
+  @media (max-width:768px) {
     #vd-hero .vd-hero-copy { padding:0 22px !important; gap:12px !important; }
     #vd-hero .vd-hero-copy > div { width:100% !important; }
     #vd-hero .vd-brands { margin-top:30px !important; gap:12px !important; }
