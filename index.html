@@ -57,6 +57,10 @@
     font-variant-numeric:tabular-nums; font-feature-settings:"tnum"; }
   @media (max-width:900px) { .vd .vd-grid-4 { grid-template-columns:1fr 1fr; gap:14px; } }
   @media (max-width:520px) { .vd .vd-grid-4 { gap:10px; } }
+  /* Recta de tarjetas: altura igual entre filas, nombre de 2 lineas y CTA pegado abajo */
+  .vd .vd-grid-4 > .vd-card { height:100%; }
+  .vd .vd-grid-4 .vd-card-name { min-height:2.7em; }
+  .vd .vd-grid-4 .vd-card-cta { margin-top:auto; }
   .vd .vd-red-icon { filter: invert(31%) sepia(64%) saturate(2200%) hue-rotate(338deg) brightness(93%) contrast(92%); }
   .vd input, .vd select { font-family: var(--vd-body); }
   .vd input:focus, .vd select:focus { outline: none; }
@@ -495,12 +499,12 @@ function vdProductCard(pr) {
         ? `<img class="plate" src="${pr.image}" alt="${pr.name}" style="width:100%;height:92px;object-fit:cover;">`
         : `<div class="plate" style="width:100%;height:92px;display:flex;align-items:center;justify-content:center;"><img src="${VD_ICON}cog.svg" alt="" style="width:26px;height:26px;opacity:.35;"></div>`}
       <span class="card-kicker">${pr.brand}</span>
-      <p style="font-family:'Playfair Display',Georgia,serif;font-weight:600;font-size:14px;margin:0;line-height:1.35;">${pr.name}</p>
+      <p class="vd-card-name">${pr.name}</p>
       <p class="num muted" style="font-size:12px;margin:0;">Ref. ${pr.code}</p>
       ${logged
         ? `<p class="vd-price">${fmt(price)}</p>${desc > 0 ? `<p class="vd-price-old">${fmt(pr.price)}</p>` : ''}`
         : `<div class="text-muted" style="font-size:12px;">Precio para clientes</div>`}
-      <button class="vd-btn vd-btn-red vd-btn-block" style="padding:8px;font-size:13px;" onclick="vdAdd(event, ${pr.id})">Agregar</button>
+      <button class="vd-btn vd-btn-red vd-btn-block vd-card-cta" style="padding:8px;font-size:13px;" onclick="vdAdd(event, ${pr.id})">Agregar</button>
     </div>`;
 }
 function fitFull(el) {
