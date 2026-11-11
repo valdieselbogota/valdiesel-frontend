@@ -229,6 +229,17 @@
   ::placeholder { color: #97A0AA; }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
   .hidden { display: none !important; }
+  .vd-footer { background:#1A1817; color:rgba(255,255,255,.72); padding:var(--space-8) 24px var(--space-4); }
+  .vd-footer-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:var(--space-6); }
+  .vd-footer-title { font-family:'Cormorant Garamond',Georgia,serif; font-size:22px; color:#fff; margin:0 0 8px; }
+  .vd-footer-label { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--brand-red-700); margin:0 0 4px; font-weight:700; }
+  .vd-footer-text { font-size:13px; line-height:1.6; margin:0 0 12px; }
+  .vd-footer-links { list-style:none; padding:0; margin:0; }
+  .vd-footer-links li { margin-bottom:6px; }
+  .vd-footer-links a { color:rgba(255,255,255,.72); cursor:pointer; font-size:13px; text-decoration:none; }
+  .vd-footer-links a:hover { color:#fff; }
+  .vd-footer-bottom { max-width:1200px; margin:var(--space-6) auto 0; padding-top:var(--space-4); border-top:1px solid rgba(255,255,255,.12); font-size:12px; color:rgba(255,255,255,.5); text-align:center; }
+  @media (max-width:768px) { .vd-footer-grid { grid-template-columns:1fr; gap:var(--space-4); } }
   a { color: #E8443C; text-decoration: none; }
   .navlink { font-size: 13px; color: #5B6672; cursor: pointer; padding-bottom: 2px; }
   .navlink.active { color: #1A2229; border-bottom: 2px solid #E8443C; }
@@ -1111,6 +1122,29 @@ loadProducts().then(() => {
   renderView('home');
 });
 </script>
+<footer class="vd-footer">
+  <div class="vd-footer-grid">
+    <div>
+      <p class="vd-footer-title">VALDIESEL SAS</p>
+      <p class="vd-footer-text">Repuestos diesel para transporte ligero. Bogotá, desde 2003.</p>
+    </div>
+    <div>
+      <p class="vd-footer-label">Ubicación</p>
+      <p class="vd-footer-text">Cra 55 No. 14-17, Bogotá, Colombia</p>
+      <p class="vd-footer-label">Contacto</p>
+      <p class="vd-footer-text">Tel: +57 315 030 0954<br>valdieselbogota@hotmail.com</p>
+    </div>
+    <div>
+      <p class="vd-footer-label">Enlaces rápidos</p>
+      <ul class="vd-footer-links">
+        <li><a onclick="showView('catalogo')">Catálogo</a></li>
+        <li><a onclick="showView('portal')">Portal de clientes</a></li>
+        <li><a onclick="showView('nosotros')">Quiénes somos</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="vd-footer-bottom">© 2026 VALDIESEL SAS. Todos los derechos reservados.</div>
+</footer>
 <a class="vd-wa" aria-label="Escríbenos por WhatsApp" onclick="contactarAsesor()">
   <img src="https://unpkg.com/simple-icons@13.21.0/icons/whatsapp.svg" alt="" style="width:30px;height:30px;filter:invert(1);">
 </a>
