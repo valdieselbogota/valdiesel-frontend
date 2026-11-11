@@ -1,0 +1,4 @@
+﻿User-agent: *
+Allow: /
+
+Sitemap: https://valdieselbogota.github.io/valdiesel-frontend/sitemap.xml
