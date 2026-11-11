@@ -68,10 +68,23 @@
   .vd-hero-ctas { display:flex; gap:12px; flex-wrap:wrap; margin-top:4px; }
   .vd .vd-hero .btn-primary { background:transparent; color:var(--brand-red-700); border:1px solid var(--brand-red); padding:11px 20px; }
   .vd .vd-hero-ctas .btn-primary { background:transparent; color:var(--brand-red-700); border:1px solid var(--brand-red); padding:11px 20px; }
+  .vd-hero-plate .plate { width:100%; height:290px; object-fit:cover; object-position:center 65%; display:block; border:0; padding:0; background:transparent; animation:vdPlate 1s var(--vd-ease) 0.15s both; }
   .btn-secondary { background:transparent; border:1px solid var(--brand-red); color:var(--brand-red); border-radius:6px; padding:11px 20px; font-size:14px; transition:filter .15s; }
   .btn-secondary:hover { filter:brightness(.94); }
   .btn-wa { background:#25D366; color:#fff; border-radius:6px; padding:12px 20px; font-size:14px; font-weight:600; text-decoration:none; display:inline-block; transition:filter .15s; white-space:nowrap; }
   .btn-wa:hover { filter:brightness(.92); color:#fff; }
+  .vd-cats { display:grid; grid-template-columns:repeat(5,1fr); gap:var(--space-3); max-width:1200px; margin:0 auto; padding:var(--space-4) 24px var(--space-6); }
+  .vd-cat { background:var(--vd-surface); border:1px solid var(--vd-divider); border-radius:var(--radius-md); padding:var(--space-4) var(--space-3); text-align:center; cursor:pointer; transition:transform .15s, border-color .15s; }
+  .vd-cat:hover { transform:translateY(-2px); border-color:var(--brand-red); }
+  .vd-cat .ti { font-size:24px; color:var(--brand-red-700); display:block; margin:0 auto 6px; }
+  .vd-cat-name { font-size:13px; font-weight:600; color:var(--vd-text); margin:0; }
+  .vd-cat-count { font-size:12px; color:var(--vd-muted); margin:2px 0 0; font-variant-numeric:tabular-nums; font-feature-settings:"tnum"; }
+  .vd-trust { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-4); max-width:1200px; margin:0 auto; padding:var(--space-6) 24px; }
+  .vd-trust-item { text-align:center; padding:var(--space-4); }
+  .vd-trust-item .ti { font-size:32px; color:var(--brand-red-700); display:block; margin:0 auto var(--space-3); }
+  .vd-trust-item h4 { font-family:'Cormorant Garamond',Georgia,serif; font-size:20px; font-weight:400; margin:0 0 4px; color:var(--vd-text); }
+  .vd-trust-item p { font-size:13px; color:var(--vd-muted); margin:0; font-variant-numeric:tabular-nums; }
+  @media (max-width:768px) { .vd-trust { grid-template-columns:1fr; } }
   .vd-asesoria { background:#1A1817; color:#fff; border-radius:12px; padding:var(--space-6); display:grid; grid-template-columns:1fr auto; gap:var(--space-4); align-items:center; }
   .vd-asesoria h3 { font-family:'Cormorant Garamond',Georgia,serif; font-size:24px; font-weight:400; margin:0 0 8px; color:#fff; line-height:1.15; }
   .vd-asesoria p { font-size:14px; line-height:1.6; color:rgba(255,255,255,.86); margin:0; max-width:60ch; }
@@ -176,7 +189,10 @@
     #vd-hero .vd-btn { flex:1 1 auto; justify-content:center; }
     .vd-hero-grid { grid-template-columns:1fr; gap:var(--space-4); padding:var(--space-4); }
     .vd-hero-copy { gap:14px !important; padding:0 !important; }
+    .vd-hero-plate { order:1; }
+    .vd-hero-copy { order:2; }
     .vd .vd-hero-title { font-size:32px !important; }
+    .vd-hero-plate .plate { height:140px; }
     .vd-hero-sub { font-size:14px !important; max-width:100%; }
     .vd-hero-ctas { flex-direction:column; align-items:stretch; }
     .vd-hero-ctas .btn { width:100%; min-height:48px; }
@@ -599,6 +615,9 @@ function viewHome() {
             <button class="btn btn-secondary" onclick="contactarAsesor()">Hablar con un asesor</button>
           </div>
         </div>
+        <div class="vd-hero-plate">
+          <img class="plate" src="${VD_SLIDES[0].src}" alt="Transporte ligero" style="height:290px;object-fit:cover;object-position:center 65%;">
+        </div>
       </div>
     </div>
 
@@ -609,15 +628,33 @@ function viewHome() {
       </div>`).join('')}
     </div>
 
-    <section id="vd-asesoria" style="max-width:1200px;margin:0 auto;padding:var(--space-6) 24px;">
-      <div class="vd-asesoria">
-        <div>
-          <h3>¿No encuentra la referencia exacta de su repuesto?</h3>
-          <p>Indíquenos el modelo de su camión y la falla o síntoma que presenta. Un experto VALDIESEL le orienta de inmediato para encontrar la pieza correcta.</p>
-        </div>
-        <a class="btn btn-wa" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola! No encuentro la referencia exacta. Mi camión es modelo ___ y la falla/síntoma es ___. ¿Me pueden asesorar?')}" target="_blank" rel="noopener">Hablar con un asesor</a>
+    <section id="vd-trust" class="vd-trust">
+      <div class="vd-trust-item">
+        <i class="ti ti-package"></i>
+        <h4>682 referencias</h4>
+        <p>Portafolio permanente de repuestos diesel</p>
+      </div>
+      <div class="vd-trust-item">
+        <i class="ti ti-truck"></i>
+        <h4>Envíos nacionales</h4>
+        <p>Despachos a todo el país</p>
+      </div>
+      <div class="vd-trust-item">
+        <i class="ti ti-shield-check"></i>
+        <h4>Repuestos garantizados</h4>
+        <p>Calidad respaldada, más de 20 años</p>
       </div>
     </section>
+
+    <section id="vd-categorias" class="vd-cats">
+      ${VD_CATEGORIES.map(c => `<div class="vd-cat" onclick="vdCategory('${c.name}')">
+        <i class="ti ${c.icon}"></i>
+        <p class="vd-cat-name">${c.name}</p>
+        <p class="vd-cat-count">${vdCategoryCounts()[c.name]} refs</p>
+      </div>`).join('')}
+    </section>
+
+
 
     <section id="vd-destacados" style="max-width:1200px;margin:0 auto;padding:44px 24px 56px;">
       <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;">
@@ -626,6 +663,16 @@ function viewHome() {
       </div>
       <div class="vd-grid-4">
         ${vdFeatured().map(pr => vdProductCard(pr)).join('')}
+      </div>
+    </section>
+
+    <section id="vd-asesoria" style="max-width:1200px;margin:0 auto;padding:var(--space-6) 24px;">
+      <div class="vd-asesoria">
+        <div>
+          <h3>¿No encuentra la referencia exacta de su repuesto?</h3>
+          <p>Indíquenos el modelo de su camión y la falla o síntoma que presenta. Un experto VALDIESEL le orienta de inmediato para encontrar la pieza correcta.</p>
+        </div>
+        <a class="btn btn-wa" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola! No encuentro la referencia exacta. Mi camión es modelo ___ y la falla/síntoma es ___. ¿Me pueden asesorar?')}" target="_blank" rel="noopener">Hablar con un asesor</a>
       </div>
     </section>
 
