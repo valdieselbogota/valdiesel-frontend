@@ -90,6 +90,15 @@
   @keyframes vdPlate { from { opacity: 0; transform: scale(1.03); } to { opacity: 1; transform: none; } }
   @keyframes vdRule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
   @keyframes vdMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .vd-brands-section { max-width:1200px; margin:0 auto; padding:var(--space-8) 24px; text-align:center; }
+  .vd-brands-title { font-family:'Cormorant Garamond',Georgia,serif; font-size:28px; font-weight:400; color:var(--vd-text); margin:0 0 var(--space-6); border-bottom:0; }
+  .brands-carousel { position:relative; overflow:hidden; mask-image:linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); -webkit-mask-image:linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); }
+  .marquee-track { display:flex; gap:48px; align-items:center; width:max-content; animation:vdMarquee 26s linear infinite; will-change:transform; }
+  .marquee-track img { height:44px; width:auto; object-fit:contain; opacity:.85; transition:opacity .2s; }
+  .marquee-track img:hover { opacity:1; }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track, .brands-carousel { animation: none !important; transform: none !important; overflow-x: auto; }
+  }
   @keyframes vdPulse { 0% { box-shadow:0 0 0 0 rgba(37,211,102,.45); } 70% { box-shadow:0 0 0 14px rgba(37,211,102,0); } 100% { box-shadow:0 0 0 0 rgba(37,211,102,0); } }
   .vd-topbar { background:#F4867F; color:#fff; padding:8px 24px; font-family:var(--vd-body); font-size:12px; letter-spacing:.04em; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
   .vd-topbar .vd-tb-contact { display:flex; align-items:center; gap:22px; flex-wrap:wrap; }
@@ -606,6 +615,15 @@ function viewHome() {
       </div>
       <div class="vd-grid-4">
         ${vdFeatured().map(pr => vdProductCard(pr)).join('')}
+      </div>
+    </section>
+
+    <section class="vd-brands-section">
+      <h3 class="vd-brands-title">Marcas que surtimos</h3>
+      <div class="brands-carousel">
+        <div class="marquee-track">
+          ${VD_BRANDS.concat(VD_BRANDS).map(b => `<img src="${b.src}" alt="${b.alt}" loading="lazy">`).join('')}
+        </div>
       </div>
     </section>
 
