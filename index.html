@@ -201,8 +201,9 @@
   }
   input:focus, select:focus { outline: none; border-color: #E8443C; }
   button { cursor: pointer; border: none; font-family: 'Playfair Display', Georgia, serif; font-weight: 500; }
-  .btn-primary { background: linear-gradient(135deg, #EF5A50 0%, #D6392F 100%); color: #FFF6F5; border-radius: 6px; padding: 10px 18px; font-size: 14px; transition: filter 0.15s; }
+  .btn-primary { background: #E8443C; color: #FFF6F5; border-radius: 6px; padding: 10px 18px; font-size: 14px; transition: filter 0.15s; }
   .btn-primary:hover { filter: brightness(0.94); }
+  .btn-block { display: block; width: 100%; }
   .btn-ghost { background: transparent; border: 1px solid #D7DBE1; color: #4A5560; border-radius: 6px; padding: 8px 14px; font-size: 13px; }
   .btn-ghost:hover { border-color: #E8443C; color: #E8443C; }
   .card { background: rgba(255,255,255,0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 10px; border: 1px solid rgba(255,255,255,0.6); box-shadow: 0 8px 24px rgba(20,30,40,0.10); }
@@ -530,8 +531,8 @@ function vdProductCard(pr) {
       <p class="num muted" style="font-size:12px;margin:0;">Ref. ${pr.code}</p>
       ${logged
         ? `<p class="vd-price">${fmt(price)}</p>${desc > 0 ? `<p class="vd-price-old">${fmt(pr.price)}</p>` : ''}`
-        : `<div class="text-muted" style="font-size:12px;">Precio para clientes</div>`}
-      <button class="vd-btn vd-btn-red vd-btn-block vd-card-cta" style="padding:8px;font-size:13px;" onclick="vdAdd(event, ${pr.id})">Agregar</button>
+        : `<div class="text-muted" style="font-size: 12px;">Precio para clientes</div>`}
+      <button class="btn btn-primary btn-block vd-card-cta" style="padding:8px;font-size:13px;" onclick="vdAdd(event, ${pr.id})">Agregar</button>
     </div>`;
 }
 function fitFull(el) {
