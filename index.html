@@ -528,7 +528,6 @@ function vdProductCard(pr) {
         : `<div class="plate" style="width:100%;height:92px;display:flex;align-items:center;justify-content:center;"><img src="${VD_ICON}cog.svg" alt="" style="width:26px;height:26px;opacity:.35;"></div>`}
       <span class="card-kicker">${pr.brand}</span>
       <p class="vd-card-name">${pr.name}</p>
-      <p class="num muted" style="font-size:12px;margin:0;">Ref. ${pr.code}</p>
       ${logged
         ? `<p class="vd-price">${fmt(price)}</p>${desc > 0 ? `<p class="vd-price-old">${fmt(pr.price)}</p>` : ''}`
         : `<div class="text-muted" style="font-size: 12px;">Precio para clientes</div>`}
