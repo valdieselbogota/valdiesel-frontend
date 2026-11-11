@@ -21,7 +21,7 @@
     --color-divider: var(--vd-divider);
     --color-text: var(--vd-text);
     --color-muted: var(--vd-muted);
-    --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-8: 32px;
+    --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px; --space-8: 32px;
     --radius-sm: 4px; --radius-md: 8px;
   }
   .vd { font-family: var(--vd-body); color: var(--vd-text); }
@@ -70,6 +70,12 @@
   .vd .vd-hero-ctas .btn-primary { background:transparent; color:var(--brand-red-700); border:1px solid var(--brand-red); padding:11px 20px; }
   .btn-secondary { background:transparent; border:1px solid var(--brand-red); color:var(--brand-red); border-radius:6px; padding:11px 20px; font-size:14px; transition:filter .15s; }
   .btn-secondary:hover { filter:brightness(.94); }
+  .btn-wa { background:#25D366; color:#fff; border-radius:6px; padding:12px 20px; font-size:14px; font-weight:600; text-decoration:none; display:inline-block; transition:filter .15s; white-space:nowrap; }
+  .btn-wa:hover { filter:brightness(.92); color:#fff; }
+  .vd-asesoria { background:#1A1817; color:#fff; border-radius:12px; padding:var(--space-6); display:grid; grid-template-columns:1fr auto; gap:var(--space-4); align-items:center; }
+  .vd-asesoria h3 { font-family:'Cormorant Garamond',Georgia,serif; font-size:24px; font-weight:400; margin:0 0 8px; color:#fff; line-height:1.15; }
+  .vd-asesoria p { font-size:14px; line-height:1.6; color:rgba(255,255,255,.86); margin:0; max-width:60ch; }
+  @media (max-width:768px) { .vd-asesoria { grid-template-columns:1fr; } .vd-asesoria .btn-wa { width:100%; text-align:center; } }
 
   @media (max-width:900px) { .vd .vd-grid-4 { grid-template-columns:1fr 1fr; gap:14px; } }
   @media (max-width:520px) { .vd .vd-grid-4 { gap:10px; } }
@@ -582,6 +588,16 @@ function viewHome() {
         <span>${t.label}</span>
       </div>`).join('')}
     </div>
+
+    <section id="vd-asesoria" style="max-width:1200px;margin:0 auto;padding:var(--space-6) 24px;">
+      <div class="vd-asesoria">
+        <div>
+          <h3>¿No encuentra la referencia exacta de su repuesto?</h3>
+          <p>Indíquenos el modelo de su camión y la falla o síntoma que presenta. Un experto VALDIESEL le orienta de inmediato para encontrar la pieza correcta.</p>
+        </div>
+        <a class="btn btn-wa" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola! No encuentro la referencia exacta. Mi camión es modelo ___ y la falla/síntoma es ___. ¿Me pueden asesorar?')}" target="_blank" rel="noopener">Hablar con un asesor</a>
+      </div>
+    </section>
 
     <section id="vd-destacados" style="max-width:1200px;margin:0 auto;padding:44px 24px 56px;">
       <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;">
