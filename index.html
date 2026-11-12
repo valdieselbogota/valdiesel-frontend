@@ -16,6 +16,10 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="VALDIESEL SAS | Repuestos diesel para transporte ligero">
 <meta name="twitter:description" content="Repuestos diesel para transporte ligero. Asesoría por WhatsApp y envíos a todo el país.">
+<meta name="theme-color" content="#E8443C">
+<link rel="icon" href="assets/favicon.ico">
+<meta property="og:image" content="https://valdieselbogota.github.io/valdiesel-frontend/assets/og-image.jpg">
+<meta name="twitter:image" content="https://valdieselbogota.github.io/valdiesel-frontend/assets/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.43.0/dist/tabler-icons.min.css">
@@ -100,13 +104,18 @@
   .vd .vd-hero-title { font-family:'Cormorant Garamond',Georgia,serif; font-weight:400; font-size:50px; line-height:1.05; color:#fff; margin:0; letter-spacing:-.01em; }
   .vd-hero-sub { font-family:'Lora',Georgia,serif; font-size:16px; line-height:1.55; color:rgba(255,255,255,.86); text-align:justify; max-width:44ch; margin:0; }
   .vd-hero-ctas { display:flex; gap:12px; flex-wrap:wrap; margin-top:4px; }
+  .vd-hero-copy > * { animation: vdUp .6s var(--vd-ease) both; }
+  .vd-hero-copy > *:nth-child(1) { animation-delay: .15s; }
+  .vd-hero-copy > *:nth-child(2) { animation-delay: .25s; }
+  .vd-hero-copy > *:nth-child(3) { animation-delay: .35s; }
+  .vd-hero-copy > *:nth-child(4) { animation-delay: .45s; }
   .vd .vd-hero .btn-primary { background:transparent; color:var(--brand-red-700); border:1px solid var(--brand-red); padding:11px 20px; }
   .vd .vd-hero-ctas .btn-primary { background:transparent; color:var(--brand-red-700); border:1px solid var(--brand-red); padding:11px 20px; }
   .btn-secondary { background:transparent; border:1px solid var(--brand-red); color:var(--brand-red); border-radius:6px; padding:11px 20px; font-size:14px; transition:filter .15s, transform .16s var(--vd-ease); }
-  .btn-secondary:hover { filter:brightness(.94); }
+  .btn-secondary:hover { transform: translateY(-1px); }
   .btn-secondary:active { transform: scale(0.97); }
   .btn-wa { background:#b68235; color:#fff; border-radius:6px; padding:12px 20px; font-size:14px; font-weight:600; text-decoration:none; display:inline-block; transition:filter .15s, transform .16s var(--vd-ease); white-space:nowrap; }
-  .btn-wa:hover { filter:brightness(.92); color:#fff; }
+  .btn-wa:hover { transform: translateY(-1px); color:#fff; }
   .btn-wa:active { transform: scale(0.97); }
   .vd-cats { display:grid; grid-template-columns:repeat(5,1fr); gap:var(--space-3); max-width:1200px; margin:0 auto; padding:var(--space-4) 24px var(--space-6); }
   .vd-cat { background:var(--vd-surface); border:1px solid var(--vd-divider); border-radius:var(--radius-md); padding:var(--space-4) var(--space-3); text-align:center; cursor:pointer; transition:transform .16s var(--vd-ease), border-color .16s ease; }
@@ -292,7 +301,7 @@
   input:focus, select:focus { outline: none; border-color: #E8443C; }
   button { cursor: pointer; border: none; font-family: 'Playfair Display', Georgia, serif; font-weight: 500; }
   .btn-primary { background: #E8443C; color: #FFF6F5; border-radius: 6px; padding: 10px 18px; font-size: 14px; transition: filter 0.15s, transform .16s var(--vd-ease, cubic-bezier(0.23,1,0.32,1)); }
-  .btn-primary:hover { filter: brightness(0.94); }
+  .btn-primary:hover { transform: translateY(-1px); }
   .btn-primary:active { transform: scale(0.97); }
   .btn-block { display: block; width: 100%; }
   .btn-ghost { background: transparent; border: 1px solid #D7DBE1; color: #4A5560; border-radius: 6px; padding: 8px 14px; font-size: 13px; transition: transform .16s var(--vd-ease, cubic-bezier(0.23,1,0.32,1)), border-color .16s ease, color .16s ease; }
@@ -303,7 +312,7 @@
   .product-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(20,30,40,0.12); }
   .product-card:active { transform: translateY(-3px) scale(0.98); }
   @keyframes cartBump { 0% { transform: scale(1); } 35% { transform: scale(1.35); } 100% { transform: scale(1); } }
-  .cart-bump { animation: cartBump 0.35s ease; }
+  .cart-bump { animation: cartBump 0.35s var(--vd-ease); }
   ::placeholder { color: #97A0AA; }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
   .hidden { display: none !important; }
@@ -324,6 +333,9 @@
   .navlink:hover { color: #1A2229; }
 </style>
 
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"VALDIESEL SAS","url":"https://valdiesel.com/","contactPoint":{"@type":"ContactPoint","telephone":"+57-315-030-0954","contactType":"customer service","areaServed":"CO","availableLanguage":"es"},"address":{"@type":"PostalAddress","streetAddress":"Cra 55 No. 14-17","addressLocality":"Bogotá","addressCountry":"CO"}}
+</script>
 </head>
 <body>
 
