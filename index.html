@@ -104,6 +104,18 @@
   .vd .vd-hero-title { font-family:'Cormorant Garamond',Georgia,serif; font-weight:400; font-size:50px; line-height:1.05; color:#fff; margin:0; letter-spacing:-.01em; }
   .vd-hero-sub { font-family:'Lora',Georgia,serif; font-size:16px; line-height:1.55; color:rgba(255,255,255,.86); text-align:justify; max-width:44ch; margin:0; }
   .vd-hero-ctas { display:flex; gap:12px; flex-wrap:wrap; margin-top:4px; }
+  .val-banner-carousel { position:relative; max-width:1200px; margin:var(--space-6) auto; border-radius:var(--radius-md); overflow:hidden; background:#1A1817; aspect-ratio:16/9; }
+  .val-banner-track { position:absolute; inset:0; }
+  .val-banner-slide { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .7s ease-in-out; }
+  .val-banner-slide.on { opacity:1; }
+  .val-banner-arrow { position:absolute; top:50%; transform:translateY(-50%); z-index:3; background:rgba(255,255,255,0.15); color:#fff; border:1px solid rgba(255,255,255,0.3); width:40px; height:40px; border-radius:999px; font-size:24px; line-height:1; cursor:pointer; backdrop-filter:blur(4px); transition:background .15s; }
+  .val-banner-arrow:hover { background:rgba(255,255,255,0.3); }
+  .val-banner-prev { left:16px; }
+  .val-banner-next { right:16px; }
+  .val-banner-dots { position:absolute; bottom:16px; left:50%; transform:translateX(-50%); z-index:3; display:flex; gap:8px; }
+  .val-banner-dot { width:8px; height:8px; border-radius:999px; background:rgba(255,255,255,0.4); border:none; cursor:pointer; padding:0; transition:background .2s, transform .2s; }
+  .val-banner-dot.on { background:#F59E0B; transform:scale(1.3); }
+  @media (max-width:768px) { .val-banner-carousel { aspect-ratio:4/3; } }
   .vd-hero-copy > * { animation: vdUp .6s var(--vd-ease) both; }
   .vd-hero-copy > *:nth-child(1) { animation-delay: .15s; }
   .vd-hero-copy > *:nth-child(2) { animation-delay: .25s; }
@@ -461,7 +473,7 @@ function renderView(view) {
   currentView = view;
   renderNav();
   const app = document.getElementById('app');
-  if (view === 'home') { app.innerHTML = viewHome(); fitHero(); startHeroSlides(); } else { clearInterval(vdSlideTimer); }
+  if (view === 'home') { app.innerHTML = viewHome(); fitHero(); startHeroSlides(); startValBanner(); } else { clearInterval(vdSlideTimer); clearInterval(valBannerTimer); }
   if (view === 'catalogo') { app.innerHTML = viewCatalog(); populateBrandFilter('brand-filter-pub'); renderPublicGrid(); }
   if (view === 'nosotros') app.innerHTML = viewAbout();
   if (view === 'carrito') app.innerHTML = viewCart();
@@ -733,45 +745,16 @@ function viewHome() {
       </div>
     </section>
 
-    <!-- CINTA DE ESPECIALIDADES / GALERIA DE ALTO IMPACTO -->
-    <section class="val-specialty-strip">
-      <div class="val-strip-container">
-        <div class="val-strip-header">
-          <span class="val-strip-badge">EXPERTOS EN SERVICIO PESADO</span>
-          <h2>Soluciones Integrales para Flotas y Camiones</h2>
-        </div>
-        <div class="val-strip-grid">
-          <div class="val-strip-card">
-            <div class="val-strip-img-wrapper">
-              <img src="assets/slide-motor.jpg" alt="Componentes de Motor - Valdiesel" loading="lazy">
-              <div class="val-strip-overlay"></div>
-            </div>
-            <div class="val-strip-content">
-              <h3>MOTOR Y COMPONENTES</h3>
-              <p>Potencia pura y alta durabilidad interna.</p>
-            </div>
-          </div>
-          <div class="val-strip-card">
-            <div class="val-strip-img-wrapper">
-              <img src="assets/slide-frenos.jpg" alt="Sistemas de Frenos - Valdiesel" loading="lazy">
-              <div class="val-strip-overlay"></div>
-            </div>
-            <div class="val-strip-content">
-              <h3>FRENOS Y SEGURIDAD</h3>
-              <p>Máxima respuesta y control en carretera.</p>
-            </div>
-          </div>
-          <div class="val-strip-card">
-            <div class="val-strip-img-wrapper">
-              <img src="assets/slide-transmision.jpg" alt="Transmisión y Embragues - Valdiesel" loading="lazy">
-              <div class="val-strip-overlay"></div>
-            </div>
-            <div class="val-strip-content">
-              <h3>TRANSMISIÓN Y EMBRAGUES</h3>
-              <p>Resistencia extrema bajo alta presión.</p>
-            </div>
-          </div>
-        </div>
+    <!-- CARRUSEL DE BANNER (especialidades) -->
+    <section class="val-banner-carousel" aria-label="Galeria de especialidades">
+      <div class="val-banner-track">
+        ${[1,2,3,4].map((n,i) => `<img class="val-banner-slide${i===0?' on':''}" src="assets/banner-slide-${n}.jpg" alt="Banner Valdiesel slide ${n}" loading="${i===0?'eager':'lazy'}" decoding="async">`).join('')}
+      </div>
+      <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg, rgba(26,24,23,0.05) 0%, rgba(26,24,23,0.55) 100%);"></div>
+      <button class="val-banner-arrow val-banner-prev" onclick="valBannerPrev()" aria-label="Anterior">&#8249;</button>
+      <button class="val-banner-arrow val-banner-next" onclick="valBannerNext()" aria-label="Siguiente">&#8250;</button>
+      <div class="val-banner-dots">
+        ${[0,1,2,3].map(i => `<button class="val-banner-dot${i===0?' on':''}" onclick="valBannerGo(${i})" aria-label="Slide ${i+1}"></button>`).join('')}
       </div>
     </section>
 
@@ -1293,6 +1276,23 @@ async function checkoutClientFrom(msgId) {
 }
 function checkoutClient() { return checkoutClientFrom('checkout-msg-cli'); }
 
+let valBannerIdx = 0, valBannerTimer = null;
+function valBannerShow(i) {
+  const slides = document.querySelectorAll('.val-banner-slide');
+  if (!slides.length) return;
+  valBannerIdx = (i + slides.length) % slides.length;
+  slides.forEach((s,k) => s.classList.toggle('on', k === valBannerIdx));
+  document.querySelectorAll('.val-banner-dot').forEach((d,k) => d.classList.toggle('on', k === valBannerIdx));
+}
+function valBannerNext() { valBannerShow(valBannerIdx + 1); }
+function valBannerPrev() { valBannerShow(valBannerIdx - 1); }
+function valBannerGo(i) { valBannerShow(i); }
+function startValBanner() {
+  clearInterval(valBannerTimer);
+  const slides = document.querySelectorAll('.val-banner-slide');
+  if (slides.length < 2) return;
+  valBannerTimer = setInterval(() => { valBannerShow(valBannerIdx + 1); }, 4000);
+}
 loadProducts().then(() => {
   history.replaceState({ view: 'home' }, '', '#home');
   renderView('home');
