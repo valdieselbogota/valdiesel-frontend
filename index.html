@@ -150,6 +150,20 @@
   .vd .vd-grid-4 > .vd-card:nth-child(7){animation-delay:300ms;}
   .vd .vd-grid-4 > .vd-card:nth-child(8){animation-delay:350ms;}
   @media (max-width:768px) { .vd-trust { grid-template-columns:1fr; } }
+  .val-specialty-strip { max-width:1200px; margin:0 auto; padding:var(--space-6) 24px; }
+  .val-strip-header { text-align:center; margin-bottom:var(--space-6); }
+  .val-strip-badge { display:inline-block; background:var(--brand-red); color:#fff; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:5px 12px; border-radius:4px; margin-bottom:8px; }
+  .val-strip-header h2 { font-family:'Cormorant Garamond',Georgia,serif; font-size:28px; font-weight:400; color:var(--vd-text); margin:0; }
+  .val-strip-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-4); }
+  .val-strip-card { position:relative; border-radius:var(--radius-md); overflow:hidden; background:#1A1817; min-height:220px; }
+  .val-strip-img-wrapper { position:absolute; inset:0; }
+  .val-strip-img-wrapper img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .4s var(--vd-ease); }
+  .val-strip-card:hover .val-strip-img-wrapper img { transform:scale(1.05); }
+  .val-strip-overlay { position:absolute; inset:0; background:linear-gradient(180deg, rgba(26,24,23,0.1) 0%, rgba(26,24,23,0.85) 100%); }
+  .val-strip-content { position:relative; z-index:2; padding:var(--space-4); display:flex; flex-direction:column; justify-content:flex-end; height:100%; min-height:220px; }
+  .val-strip-content h3 { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; color:#fff; margin:0 0 4px; letter-spacing:.02em; }
+  .val-strip-content p { font-size:13px; color:rgba(255,255,255,.8); margin:0; }
+  @media (max-width:768px) { .val-strip-grid { grid-template-columns:1fr; } .val-strip-card { min-height:180px; } }
   .vd-asesoria { background:#1A1817; color:#fff; border-radius:12px; padding:var(--space-6); display:grid; grid-template-columns:1fr auto; gap:var(--space-4); align-items:center; }
   .vd-asesoria h2 { font-family:'Cormorant Garamond',Georgia,serif; font-size:24px; font-weight:400; margin:0 0 8px; color:#fff; line-height:1.15; }
   .vd-asesoria p { font-size:14px; line-height:1.6; color:rgba(255,255,255,.86); margin:0; max-width:60ch; }
@@ -716,6 +730,48 @@ function viewHome() {
         <i class="ti ti-shield-check"></i>
         <h4>Repuestos garantizados</h4>
         <p>Calidad respaldada, más de 20 años</p>
+      </div>
+    </section>
+
+    <!-- CINTA DE ESPECIALIDADES / GALERIA DE ALTO IMPACTO -->
+    <section class="val-specialty-strip">
+      <div class="val-strip-container">
+        <div class="val-strip-header">
+          <span class="val-strip-badge">EXPERTOS EN SERVICIO PESADO</span>
+          <h2>Soluciones Integrales para Flotas y Camiones</h2>
+        </div>
+        <div class="val-strip-grid">
+          <div class="val-strip-card">
+            <div class="val-strip-img-wrapper">
+              <img src="assets/slide-motor.jpg" alt="Componentes de Motor - Valdiesel" loading="lazy">
+              <div class="val-strip-overlay"></div>
+            </div>
+            <div class="val-strip-content">
+              <h3>MOTOR Y COMPONENTES</h3>
+              <p>Potencia pura y alta durabilidad interna.</p>
+            </div>
+          </div>
+          <div class="val-strip-card">
+            <div class="val-strip-img-wrapper">
+              <img src="assets/slide-frenos.jpg" alt="Sistemas de Frenos - Valdiesel" loading="lazy">
+              <div class="val-strip-overlay"></div>
+            </div>
+            <div class="val-strip-content">
+              <h3>FRENOS Y SEGURIDAD</h3>
+              <p>Máxima respuesta y control en carretera.</p>
+            </div>
+          </div>
+          <div class="val-strip-card">
+            <div class="val-strip-img-wrapper">
+              <img src="assets/slide-transmision.jpg" alt="Transmisión y Embragues - Valdiesel" loading="lazy">
+              <div class="val-strip-overlay"></div>
+            </div>
+            <div class="val-strip-content">
+              <h3>TRANSMISIÓN Y EMBRAGUES</h3>
+              <p>Resistencia extrema bajo alta presión.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
