@@ -745,19 +745,6 @@ function viewHome() {
       </div>
     </section>
 
-    <!-- CARRUSEL DE BANNER (especialidades) -->
-    <section class="val-banner-carousel" aria-label="Galeria de especialidades">
-      <div class="val-banner-track">
-        ${[1,2,3,4].map((n,i) => `<img class="val-banner-slide${i===0?' on':''}" src="assets/banner-slide-${n}.jpg" alt="Banner Valdiesel slide ${n}" loading="${i===0?'eager':'lazy'}" decoding="async">`).join('')}
-      </div>
-      <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg, rgba(26,24,23,0.05) 0%, rgba(26,24,23,0.55) 100%);"></div>
-      <button class="val-banner-arrow val-banner-prev" onclick="valBannerPrev()" aria-label="Anterior">&#8249;</button>
-      <button class="val-banner-arrow val-banner-next" onclick="valBannerNext()" aria-label="Siguiente">&#8250;</button>
-      <div class="val-banner-dots">
-        ${[0,1,2,3].map(i => `<button class="val-banner-dot${i===0?' on':''}" onclick="valBannerGo(${i})" aria-label="Slide ${i+1}"></button>`).join('')}
-      </div>
-    </section>
-
     <section id="vd-categorias" class="vd-cats">
       ${VD_CATEGORIES.map(c => `<div class="vd-cat" onclick="vdCategory('${c.name}')">
         <i class="ti ${c.icon}"></i>
@@ -796,6 +783,21 @@ function viewHome() {
         </div>
       </div>
     </section>
+
+<!-- CARRUSEL DE BANNER (especialidades) -->
+    <section class="val-banner-carousel" aria-label="Galeria de especialidades">
+      <div class="val-banner-track">
+        ${[1,2,3,4].map((n,i) => `<img class="val-banner-slide${i===0?' on':''}" src="assets/banner-slide-${n}.jpg" alt="Banner Valdiesel slide ${n}" loading="${i===0?'eager':'lazy'}" decoding="async">`).join('')}
+      </div>
+      <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg, rgba(26,24,23,0.05) 0%, rgba(26,24,23,0.55) 100%);"></div>
+      <button class="val-banner-arrow val-banner-prev" onclick="valBannerPrev()" aria-label="Anterior">&#8249;</button>
+      <button class="val-banner-arrow val-banner-next" onclick="valBannerNext()" aria-label="Siguiente">&#8250;</button>
+      <div class="val-banner-dots">
+        ${[0,1,2,3].map(i => `<button class="val-banner-dot${i===0?' on':''}" onclick="valBannerGo(${i})" aria-label="Slide ${i+1}"></button>`).join('')}
+      </div>
+    </section>
+
+
 
   </div>`;
 }
