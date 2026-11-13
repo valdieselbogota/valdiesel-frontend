@@ -137,13 +137,13 @@ Marcas actuales: `assets/home-4.png` (ISUZU), `assets/home-6.jpg` (RIKKON), `ass
 `1px solid var(--color-divider)` arriba, padding `var(--space-6) var(--space-8)`, rejilla `1.3fr 1fr 1fr`.
 
 - Columna 1: logo a 44×44 px, marca de palabra a 16 px en rojo, y «Repuestos diesel para transporte ligero. / Bogotá, Colombia.» a 13 px en `.text-muted`.
-- Columna 2, «Contacto» en `h6` rojo: «Cra 55 No. 14-17, Bogotá» y el enlace `https://wa.me/573108088686` como «+57 310 808 8686».
+- Columna 2, «Contacto» en `h6` rojo: «Cra 55 No. 14-17, Bogotá» y el enlace `https://wa.me/573150300954` como «+57 315 030 0954».
 - Columna 3, «Enlaces» en `h6` rojo: «Catálogo» y «Portal clientes».
 
 ## Interacciones y comportamiento
 
 - «Ver catálogo» y «Ver todo el catálogo» llevan al catálogo. Las tarjetas de categoría llevan al catálogo filtrado por esa categoría.
-- «Hablar con un asesor» y «Escribir por WhatsApp» abren WhatsApp con el número `573108088686`, igual que la función `contactarAsesor()` que ya existe en `index.html`.
+- «Hablar con un asesor» y «Escribir por WhatsApp» abren WhatsApp con el número `573150300954`, igual que la función `contactarAsesor()` que ya existe en `index.html`.
 - «Agregar» suma la pieza al pedido sin exigir cuenta y actualiza el contador de la barra. El precio no se muestra en ningún caso a un visitante sin sesión: donde iría el precio se lee «Precio para clientes».
 - El buscador de la barra consulta por referencia o por nombre, como el buscador actual.
 - El carrusel de marcas no se detiene al pasar el cursor.
