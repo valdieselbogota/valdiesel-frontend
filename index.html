@@ -1377,15 +1377,27 @@ loadProducts().then(() => {
 </div>
 <script>
 (function(){
-  var POPUP_KEY='val_popup_closed';
   var wa=document.getElementById('val-popup-wa');
   if(wa && typeof WHATSAPP_NUMBER!=='undefined'){ wa.href='https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent('Hola, soy cliente nuevo y quiero reclamar mi descuento especial de bienvenida.'); }
-  function openPopup(){ var p=document.getElementById('val-welcome-popup'); if(p && !localStorage.getItem(POPUP_KEY)) p.classList.add('open'); }
-  function closePopup(){ var p=document.getElementById('val-welcome-popup'); if(p) p.classList.remove('open'); localStorage.setItem(POPUP_KEY,'1'); }
-  setTimeout(openPopup, 2000);
-  document.addEventListener('click', function(e){ var p=document.getElementById('val-welcome-popup'); if(!p) return; if(e.target===p) closePopup(); if(e.target && e.target.id==='val-popup-close') closePopup(); if(e.target && e.target.id==='val-popup-catalog'){ closePopup(); showView('catalogo'); setTimeout(function(){ var el=document.getElementById('vd-destacados'); if(el) el.scrollIntoView({behavior:'smooth'}); },100); } });
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePopup(); });
 })();
+document.addEventListener("DOMContentLoaded", () => {
+  const popupClosed = localStorage.getItem('val_popup_closed');
+  if (!popupClosed) {
+    setTimeout(() => {
+      const popup = document.getElementById('val-welcome-popup');
+      if (popup) popup.style.display = 'flex';
+    }, 2000);
+  }
+});
+function closeValPopup() {
+  const popup = document.getElementById('val-welcome-popup');
+  if (popup) {
+    popup.style.display = 'none';
+    localStorage.setItem('val_popup_closed', 'true');
+  }
+}
+document.addEventListener('click', function(e){ var p=document.getElementById('val-welcome-popup'); if(!p) return; if(e.target===p) closeValPopup(); if(e.target && e.target.id==='val-popup-close') closeValPopup(); });
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeValPopup(); });
 </script>
 <a class="vd-wa" aria-label="Escríbenos por WhatsApp" onclick="contactarAsesor()">
   <img src="https://unpkg.com/simple-icons@13.21.0/icons/whatsapp.svg" alt="" style="width:30px;height:30px;filter:invert(1);">
