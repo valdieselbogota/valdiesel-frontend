@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VALDIESEL SAS | Repuestos diesel para transporte ligero en Bogotá</title>
-<meta name="description" content="VALDIESEL SAS: repuestos diesel para transporte ligero. Más de 20 años surtiendo. 682 referencias en 16 marcas, asesoría por WhatsApp, envíos a todo el país. Consulte por referencia.">
+<meta name="description" content="VALDIESEL SAS: repuestos diesel para transporte ligero desde 1983. 682 referencias en 16 marcas, asesoría por WhatsApp, envíos a todo el país. Consulte por referencia.">
 <meta name="keywords" content="repuestos diesel, repuestos diesel Bogotá, transporte ligero, repuestos camión, VALDIESEL, repuestos ISUZU, repuestos NPR, NKR, NQR">
 <link rel="canonical" href="https://valdieselbogota.github.io/valdiesel-frontend/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="VALDIESEL SAS">
 <meta property="og:title" content="VALDIESEL SAS | Repuestos diesel para transporte ligero">
-<meta property="og:description" content="Repuestos diesel para transporte ligero. Más de 20 años surtiendo. Asesoría por WhatsApp y envíos a todo el país.">
+<meta property="og:description" content="Repuestos diesel para transporte ligero desde 1983. Asesoría por WhatsApp y envíos a todo el país.">
 <meta property="og:url" content="https://valdieselbogota.github.io/valdiesel-frontend/">
 <meta property="og:locale" content="es_CO">
 <meta name="twitter:card" content="summary_large_image">
@@ -40,7 +40,7 @@
     "addressLocality": "Bogotá",
     "addressCountry": "CO"
   },
-  "foundingDate": "2003",
+  "foundingDate": "1983",
   "sameAs": []
 }
 </script>
@@ -240,6 +240,17 @@
   .vd-wa { position:fixed; right:22px; bottom:22px; z-index:900; width:58px; height:58px; border-radius:999px; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(20,30,40,.28); animation:vdPulse 2.6s ease-out infinite; transition:transform .16s var(--vd-ease); will-change:transform; }
   .vd-wa:hover { transform:scale(1.07); }
   .vd-wa:active { transform:scale(0.95); }
+  /* En movil el FAB se retira mientras el hero de #nosotros esta en pantalla:
+     ahi ya hay un CTA de WhatsApp propio y el flotante tapaba el boton
+     "Ver catalogo" o el texto. Vuelve en cuanto se sale del hero. */
+  @media (max-width: 768px) {
+    .vd-wa { transition: transform .16s var(--vd-ease), opacity .25s ease; }
+    .vd-wa.is-over-hero {
+      opacity: 0;
+      transform: translateY(14px) scale(0.9);
+      pointer-events: none;
+    }
+  }
   .vd-seals { background:var(--vd-surface); border-top:1px solid var(--vd-divider); border-bottom:1px solid var(--vd-divider); display:flex; align-items:center; justify-content:space-evenly; flex-wrap:wrap; gap:20px; padding:14px 24px; }
   .vd-seals span { font-family:'Playfair Display',Georgia,serif; font-weight:600; font-size:12.5px; color:var(--vd-text); white-space:nowrap; }
   /* Entre 721 y 1000 px la fila 1 queda en marca + Pedido (n) y la fila 2
@@ -400,6 +411,7 @@ html { overflow-x: clip; }
   #val-presentation-hero {
     position: relative;
     width: 100%;
+    flex: 0 0 auto;
     min-height: clamp(520px, 76vh, 760px);
     display: flex;
     align-items: center;
@@ -699,6 +711,28 @@ function renderNav() {
   const order = document.getElementById('vd-order');
   if (order) order.textContent = 'Pedido (' + count + ')';
 }
+/* El FAB de WhatsApp se aparta mientras el hero de #nosotros esta en pantalla:
+   ahi ya hay un CTA propio y el flotante tapaba botones y texto en movil. */
+let waFabObserver = null;
+function syncWaFab() {
+  const fab = document.querySelector('.vd-wa');
+  if (!fab) return;
+  if (waFabObserver) { waFabObserver.disconnect(); waFabObserver = null; }
+  /* Se observa el hero completo, no solo la fila de botones: a 360 px el CTA
+     queda bajo el pliegue y el FAB flotaba encima del parrafo. Mientras quede
+     un pixel del hero en pantalla, su propio CTA dorado es el acceso a WhatsApp. */
+  const hero = document.getElementById('val-presentation-hero');
+  if (!hero || typeof IntersectionObserver === 'undefined') {
+    fab.classList.remove('is-over-hero');
+    return;
+  }
+  waFabObserver = new IntersectionObserver((entries) => {
+    const visible = entries.some(e => e.isIntersecting);
+    fab.classList.toggle('is-over-hero', visible);
+  }, { threshold: 0 });
+  waFabObserver.observe(hero);
+}
+
 function renderView(view) {
   currentView = view;
   renderNav();
@@ -713,6 +747,7 @@ function renderView(view) {
     else { app.innerHTML = viewClientPortal(); populateBrandFilter('brand-filter-cli'); renderClientGrid(); }
   }
   window.scrollTo(0,0);
+  syncWaFab();
 }
 
 function showView(view) {
@@ -725,6 +760,14 @@ function showView(view) {
 window.addEventListener('popstate', (e) => {
   const view = (e.state && e.state.view) || 'home';
   renderView(view);
+});
+
+/* Editar el hash en la barra de direcciones (o seguir un link #nosotros) debe
+   cambiar de vista sin recargar. showView() y popstate ya cubren el resto. */
+window.addEventListener('hashchange', () => {
+  const asked = (location.hash || '').replace('#', '');
+  const routable = ['home', 'catalogo', 'nosotros', 'carrito', 'portal'];
+  if (routable.indexOf(asked) >= 0 && asked !== currentView) renderView(asked);
 });
 
 function viewCart() {
@@ -836,7 +879,7 @@ const VD_BRANDS = [
 
 const VD_TRUST = [
   { label: 'Despachos a todo el país',  icon: 'truck.svg' },
-  { label: 'Más de 20 años surtiendo',  icon: 'calendar-check.svg' },
+  { label: 'Desde 1983 en Bogotá',  icon: 'calendar-check.svg' },
   { label: 'Repuestos garantizados',    icon: 'shield-check.svg' },
   { label: 'Asesoría por WhatsApp',     icon: 'message-circle.svg' }
 ];
@@ -942,22 +985,21 @@ function viewHome() {
   <style>#app { padding: 0 !important; max-width: none !important; }</style>
   <div class="vd">
 
-    <section id="val-presentation-hero" aria-labelledby="val-ph-title">
-      <div class="val-ph-inner">
-        <div class="val-ph-copy">
-          <p class="val-ph-kicker">DISTRIBUCIÓN AUTORIZADA BOGOTÁ · DESDE 1983</p>
-          <h1 class="val-ph-title" id="val-ph-title">POTENCIA Y RESPALDO DIÉSEL PESADO</h1>
-          <p class="val-ph-text">Encuentra componentes de alta precisión para las principales marcas (ISUZU, RIKKON, TONYCO), respaldados por décadas de experiencia y servicio técnico especializado en Bogotá para flotas y transporte ligero.</p>
-          <div class="val-ph-actions">
-            <a class="val-ph-btn-gold" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quiero cotizar repuestos diésel de alto rendimiento.')}" target="_blank" rel="noopener noreferrer">
-              <img src="https://unpkg.com/simple-icons@13.21.0/icons/whatsapp.svg" alt="" aria-hidden="true" width="20" height="20" style="filter:brightness(0);opacity:.85;">
-              Cotizar por WhatsApp
-            </a>
-            <a class="val-ph-btn-ghost" href="#catalogo" onclick="return valPhGoCatalogo(event)">Ver catálogo</a>
+    <div id="vd-hero" style="position:relative;height:440px;overflow:hidden;width:100vw;margin-left:calc(50% - 50vw);">
+      ${VD_SLIDES.map((s, i) => `<img class="vd-slide${i === 0 ? ' on' : ''}" src="${s.src}" alt="${s.alt}" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async" style="object-position:${s.pos};">`).join('')}
+      <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg, rgba(26,24,23,.92) 0%, rgba(26,24,23,.78) 34%, rgba(26,24,23,.15) 62%, rgba(26,24,23,0) 80%);"></div>
+      <div class="vd-hero-grid">
+        <div class="vd-hero-copy">
+          <p class="vd-hero-kicker">Bogotá · desde 1983</p>
+          <h1 class="vd-hero-title">Su aliado en repuestos diesel</h1>
+          <p class="vd-hero-sub">Amplio portafolio para transporte ligero, con asesoría de quien conoce la pieza. Consulte por referencia o cuéntenos qué necesita: confirmamos existencia y precio el mismo día.</p>
+          <div class="vd-hero-ctas">
+            <button class="btn btn-primary" onclick="showView('catalogo')">Ver catálogo</button>
+            <button class="btn btn-secondary" onclick="contactarAsesor()">Hablar con un asesor</button>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
     <div class="vd-seals" style="width:100vw;margin-left:calc(50% - 50vw);">
       ${VD_TRUST.map(t => `<div style="display:flex;align-items:center;gap:8px;">
@@ -980,7 +1022,7 @@ function viewHome() {
       <div class="vd-trust-item">
         <i class="ti ti-shield-check"></i>
         <h4>Repuestos garantizados</h4>
-        <p>Calidad respaldada, más de 20 años</p>
+        <p>Calidad respaldada desde 1983</p>
       </div>
     </section>
 
@@ -1070,26 +1112,50 @@ function quickBrand(b) {
 
 function viewAbout() {
   return `
-    <div style="max-width:640px;">
-      <p class="brand" style="font-size:22px;color:#1A2229;margin-bottom:16px;">Quiénes somos</p>
-      <p style="font-size:14px;line-height:1.7;color:#4A5560;margin-bottom:16px;">
-        Desde 2003, VALDIESEL SAS acompaña al transporte ligero de Bogotá y del resto del país, surtiendo a talleres y transportadores con los repuestos diesel que mantienen sus flotas en movimiento.
-        Lo que empezó como un pequeño mostrador de barrio se convirtió, con los años, en un punto de referencia para quienes no pueden darse el lujo de parar un camión por falta de una pieza.
-      </p>
-      <p style="font-size:14px;line-height:1.7;color:#4A5560;margin-bottom:16px;">
-        Hoy nos especializamos en líneas ISUZU, KOREA, RIKKON, TONYCO y SONYCO, entre otras, con un inventario permanente de cientos de referencias y la atención directa de personas que conocen cada pieza por su nombre.
-        Detrás de cada pedido hay dos décadas de experiencia entendiendo lo que un taller realmente necesita: rapidez, calidad y alguien que responda el teléfono.
-      </p>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;">
-        <div class="card" style="padding:14px;text-align:center;"><p style="font-size:20px;color:#1A2229;font-weight:500;">20+</p><p style="font-size:11px;color:#8993A0;">años</p></div>
-        <div class="card" style="padding:14px;text-align:center;"><p style="font-size:20px;color:#1A2229;font-weight:500;">663</p><p style="font-size:11px;color:#8993A0;">referencias</p></div>
-        <div class="card" style="padding:14px;text-align:center;"><p style="font-size:20px;color:#1A2229;font-weight:500;">16</p><p style="font-size:11px;color:#8993A0;">marcas</p></div>
-        <div class="card" style="padding:14px;text-align:center;"><p style="font-size:20px;color:#1A2229;font-weight:500;">500+</p><p style="font-size:11px;color:#8993A0;">clientes</p></div>
+    <style>#app { padding: 0 !important; max-width: none !important; }</style>
+    <div class="vd">
+
+      <section id="val-presentation-hero" aria-labelledby="val-ph-title">
+        <div class="val-ph-inner">
+          <div class="val-ph-copy">
+            <p class="val-ph-kicker">DISTRIBUCIÓN AUTORIZADA BOGOTÁ · DESDE 1983</p>
+            <h1 class="val-ph-title" id="val-ph-title">POTENCIA Y RESPALDO DIÉSEL PESADO</h1>
+            <p class="val-ph-text">Encuentra componentes de alta precisión para las principales marcas (ISUZU, RIKKON, TONYCO), respaldados por décadas de experiencia y servicio técnico especializado en Bogotá para flotas y transporte ligero.</p>
+            <div class="val-ph-actions">
+              <a class="val-ph-btn-gold" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quiero cotizar repuestos diésel de alto rendimiento.')}" target="_blank" rel="noopener noreferrer">
+                <img src="https://unpkg.com/simple-icons@13.21.0/icons/whatsapp.svg" alt="" aria-hidden="true" width="20" height="20" style="filter:brightness(0);opacity:.85;">
+                Cotizar por WhatsApp
+              </a>
+              <a class="val-ph-btn-ghost" href="#catalogo" onclick="return valPhGoCatalogo(event)">Ver catálogo</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div style="max-width:1080px;margin:0 auto;padding:24px 20px 4px;">
+        <div style="max-width:640px;">
+          <p class="brand" style="font-size:22px;color:#1A2229;margin-bottom:16px;">Quiénes somos</p>
+          <p style="font-size:14px;line-height:1.7;color:#4A5560;margin-bottom:16px;">
+            Desde 1983, VALDIESEL SAS acompaña al transporte ligero de Bogotá y del resto del país, surtiendo a talleres y transportadores con los repuestos diesel que mantienen sus flotas en movimiento.
+            Lo que empezó como un pequeño mostrador de barrio se convirtió, con los años, en un punto de referencia para quienes no pueden darse el lujo de parar un camión por falta de una pieza.
+          </p>
+          <p style="font-size:14px;line-height:1.7;color:#4A5560;margin-bottom:16px;">
+            Hoy nos especializamos en líneas ISUZU, KOREA, RIKKON, TONYCO y SONYCO, entre otras, con un inventario permanente de cientos de referencias y la atención directa de personas que conocen cada pieza por su nombre.
+            Detrás de cada pedido hay cuatro décadas de experiencia entendiendo lo que un taller realmente necesita: rapidez, calidad y alguien que responda el teléfono.
+          </p>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;">
+            <div class="card" style="padding:14px;text-align:center;"><p style="font-size:20px;color:#1A2229;font-weight:500;">43</p><p style="font-size:11px;color:#8993A0;">años</p></div>
+            <div class="card" style="padding:14px;text-align:center;"><p style="font-size:20px;color:#1A2229;font-weight:500;">663</p><p style="font-size:11px;color:#8993A0;">referencias</p></div>
+            <div class="card" style="padding:14px;text-align:center;"><p style="font-size:20px;color:#1A2229;font-weight:500;">16</p><p style="font-size:11px;color:#8993A0;">marcas</p></div>
+            <div class="card" style="padding:14px;text-align:center;"><p style="font-size:20px;color:#1A2229;font-weight:500;">500+</p><p style="font-size:11px;color:#8993A0;">clientes</p></div>
+          </div>
+          <p style="font-size:14px;color:#1A2229;margin-bottom:8px;">Misión</p>
+          <p style="font-size:13px;line-height:1.7;color:#5B6672;margin-bottom:16px;">Mantener el transporte ligero en movimiento, ofreciendo repuestos diesel confiables y disponibilidad inmediata.</p>
+          <p style="font-size:14px;color:#1A2229;margin-bottom:8px;">Ubicación</p>
+          <p style="font-size:13px;line-height:1.7;color:#5B6672;">Cra 55 No. 14-17, Bogotá, Colombia</p>
+        </div>
       </div>
-      <p style="font-size:14px;color:#1A2229;margin-bottom:8px;">Misión</p>
-      <p style="font-size:13px;line-height:1.7;color:#5B6672;margin-bottom:16px;">Mantener el transporte ligero en movimiento, ofreciendo repuestos diesel confiables y disponibilidad inmediata.</p>
-      <p style="font-size:14px;color:#1A2229;margin-bottom:8px;">Ubicación</p>
-      <p style="font-size:13px;line-height:1.7;color:#5B6672;">Cra 55 No. 14-17, Bogotá, Colombia</p>
+
     </div>
   `;
 }
@@ -1535,15 +1601,19 @@ function startValBanner() {
   valBannerTimer = setInterval(() => { valBannerShow(valBannerIdx + 1); }, 4000);
 }
 loadProducts().then(() => {
-  history.replaceState({ view: 'home' }, '', '#home');
-  renderView('home');
+  /* Respetar el deep link (#nosotros, #catalogo, ...) en vez de forzar home. */
+  const routable = ['home', 'catalogo', 'nosotros', 'carrito', 'portal'];
+  const asked = (location.hash || '').replace('#', '');
+  const start = routable.indexOf(asked) >= 0 ? asked : 'home';
+  history.replaceState({ view: start }, '', '#' + start);
+  renderView(start);
 });
 </script>
 <footer class="vd-footer">
   <div class="vd-footer-grid">
     <div>
       <p class="vd-footer-title">VALDIESEL SAS</p>
-      <p class="vd-footer-text">Repuestos diesel para transporte ligero. Bogotá, desde 2003.</p>
+      <p class="vd-footer-text">Repuestos diesel para transporte ligero. Bogotá, desde 1983.</p>
     </div>
     <div>
       <p class="vd-footer-label">Ubicación</p>

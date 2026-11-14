@@ -1,6 +1,6 @@
 ﻿# VALDIESEL SAS
 
-VALDIESEL SAS es una empresa colombiana con más de 20 años de experiencia surtiendo repuestos diesel para transporte ligero. Portafolio de 682 referencias en 16 marcas, asesoría técnica por WhatsApp y envíos a todo el país.
+VALDIESEL SAS es una empresa colombiana con experiencia desde 1983 surtiendo repuestos diesel para transporte ligero. Portafolio de 682 referencias en 16 marcas, asesoría técnica por WhatsApp y envíos a todo el país.
 
 ## Sitio
 - Inicio (landing): https://valdieselbogota.github.io/valdiesel-frontend/
