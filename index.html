@@ -1141,8 +1141,9 @@ function viewAbout() {
       .vd-nosotros-mision-label { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; letter-spacing:0.16em; text-transform:uppercase; color:#D6392F; margin:0 0 6px; }
       .vd-nosotros-mision-text { font-family:'Inter',system-ui,sans-serif; font-size:1.05rem; line-height:1.6; color:#111827; margin:0; font-weight:500; }
       .vd-nosotros-pillars { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-      .vd-nosotros-pillar { background:#FFFFFF; border:1px solid #E5E7EB; border-radius:12px; padding:24px 20px; box-shadow:0 4px 14px rgba(11,15,23,0.05); transition:transform .2s ease, box-shadow .2s ease; }
-      .vd-nosotros-pillar:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(11,15,23,0.10); }
+      .vd-nosotros-pillar { background:#FFFFFF; border:1px solid #E5E7EB; border-radius:12px; padding:24px 20px; box-shadow:0 4px 14px rgba(11,15,23,0.05); transition:transform 200ms var(--vd-ease), box-shadow 200ms var(--vd-ease); }
+      .vd-nosotros-pillar:hover { box-shadow:0 10px 24px rgba(11,15,23,0.10); }
+      @media (hover: hover) and (pointer: fine) { .vd-nosotros-pillar:hover { transform:translateY(-3px); } }
       .vd-nosotros-pillar-icon { width:44px; height:44px; border-radius:10px; background:rgba(245,158,11,0.14); color:#F59E0B; display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
       .vd-nosotros-pillar h3 { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1.15rem; text-transform:uppercase; letter-spacing:0.02em; color:#111827; margin:0 0 8px; }
       .vd-nosotros-pillar p { font-family:'Inter',system-ui,sans-serif; font-size:0.95rem; line-height:1.6; color:#4B5563; margin:0; }
@@ -1151,10 +1152,14 @@ function viewAbout() {
       .vd-nosotros-cta-title { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:clamp(1.6rem,3.4vw,2.4rem); line-height:1.05; text-transform:uppercase; color:#FFFFFF; margin:0 0 8px; }
       .vd-nosotros-cta-sub { font-family:'Inter',system-ui,sans-serif; font-size:1rem; line-height:1.5; color:#D1D5DB; margin:0; }
       .vd-nosotros-cta-actions { display:flex; gap:12px; flex-wrap:wrap; }
-      .vd-nosotros-cta-btn-gold { display:inline-flex; align-items:center; justify-content:center; min-height:50px; padding:14px 24px; border-radius:6px; background:#F59E0B; color:#111827; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.95rem; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; border:1.5px solid #F59E0B; box-shadow:0 10px 26px rgba(245,158,11,0.28); transition:transform .16s ease, background .2s; }
-      .vd-nosotros-cta-btn-gold:hover { background:#FBB024; transform:translateY(-2px); }
-      .vd-nosotros-cta-btn-ghost { display:inline-flex; align-items:center; justify-content:center; min-height:50px; padding:14px 24px; border-radius:6px; background:transparent; color:#FFFFFF; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.95rem; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; border:1.5px solid rgba(255,255,255,0.85); backdrop-filter:blur(4px); transition:transform .16s ease, background .2s; }
-      .vd-nosotros-cta-btn-ghost:hover { background:rgba(255,255,255,0.10); transform:translateY(-2px); }
+      .vd-nosotros-cta-btn-gold { display:inline-flex; align-items:center; justify-content:center; min-height:50px; padding:14px 24px; border-radius:6px; background:#F59E0B; color:#111827; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.95rem; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; border:1.5px solid #F59E0B; box-shadow:0 10px 26px rgba(245,158,11,0.28); transition: transform 160ms var(--vd-ease), background 160ms ease; }
+      .vd-nosotros-cta-btn-gold:hover { background:#FBB024; }
+      @media (hover: hover) and (pointer: fine) { .vd-nosotros-cta-btn-gold:hover { transform:translateY(-2px); } }
+      .vd-nosotros-cta-btn-gold:active { transform: scale(0.97); }
+      .vd-nosotros-cta-btn-ghost { display:inline-flex; align-items:center; justify-content:center; min-height:50px; padding:14px 24px; border-radius:6px; background:transparent; color:#FFFFFF; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.95rem; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; border:1.5px solid rgba(255,255,255,0.85); backdrop-filter:blur(4px); transition:transform 160ms var(--vd-ease), background 160ms ease; }
+      .vd-nosotros-cta-btn-ghost:hover { background:rgba(255,255,255,0.10); }
+      @media (hover: hover) and (pointer: fine) { .vd-nosotros-cta-btn-ghost:hover { transform:translateY(-2px); } }
+      .vd-nosotros-cta-btn-ghost:active { transform: scale(0.97); }
       @media (max-width: 768px) {
         .vd-nosotros-grid { grid-template-columns:1fr; }
         .vd-nosotros-stats-grid { grid-template-columns:repeat(2,1fr); }
