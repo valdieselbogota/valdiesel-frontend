@@ -1727,6 +1727,27 @@ function viewCatalog() {
 
 function viewClientPortal() {
   return `
+    <style>
+      .val-client-welcome-banner { position: relative; width: 100vw; margin-left: calc(50% - 50vw); overflow: hidden; isolation: isolate; background-color: #0B0F17; background-image: url('assets/banner-aliado-valdiesel.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 80px 20px; }
+      .val-client-welcome-banner::before { content:''; position:absolute; inset:0; z-index:1; pointer-events:none; background: linear-gradient(180deg, rgba(11,15,23,0.88) 0%, rgba(11,15,23,0.72) 45%, rgba(11,15,23,0.25) 100%); }
+      .val-client-welcome-inner { position: relative; z-index: 2; max-width: 1100px; margin: 0 auto; text-align: right; }
+      .val-client-welcome-title { font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:800; font-size: clamp(1.9rem, 4.4vw, 3.4rem); line-height: 1.05; text-transform: uppercase; color:#FFFFFF; margin: 0 0 14px; text-shadow: 0 4px 24px rgba(0,0,0,0.75); }
+      .val-client-welcome-sub { font-family:'Inter',system-ui,sans-serif; font-size: clamp(0.95rem,1.6vw,1.15rem); line-height: 1.5; color:#E5E7EB; margin: 0 0 28px; }
+      .val-client-welcome-actions { display:flex; justify-content:flex-end; }
+      .val-client-welcome-btn { display:inline-flex; align-items:center; justify-content:center; min-height:50px; padding:14px 28px; border-radius:8px; background:#D6392F; color:#FFFFFF; font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:700; font-size:1rem; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; border:1.5px solid #D6392F; box-shadow:0 10px 26px rgba(214,57,47,0.35); transition: transform .16s var(--vd-ease, cubic-bezier(0.23,1,0.32,1)), background .2s, box-shadow .2s; }
+      .val-client-welcome-btn:hover { background:#B82E25; transform:translateY(-2px); box-shadow:0 14px 32px rgba(214,57,47,0.45); }
+      .val-client-welcome-btn:active { transform:scale(0.97); }
+      @media (max-width:768px){ .val-client-welcome-banner { padding: 56px 20px; } .val-client-welcome-inner { text-align:center; } .val-client-welcome-actions { justify-content:center; } }
+    </style>
+    <section class="val-client-welcome-banner" aria-labelledby="val-client-welcome-title">
+      <div class="val-client-welcome-inner">
+        <h2 class="val-client-welcome-title" id="val-client-welcome-title">¡BIENVENIDO A TU PORTAL DE ALIADO VALDIESEL!</h2>
+        <p class="val-client-welcome-sub">Accede a tu descuento exclusivo de taller, inventario real especializado diésel y soporte técnico prioritario por WhatsApp.</p>
+        <div class="val-client-welcome-actions">
+          <a class="val-client-welcome-btn" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quiero cotizar repuestos diésel de alto rendimiento.')}" target="_blank" rel="noopener">CONTACTAR SOPORTE TÉCNICO</a>
+        </div>
+      </div>
+    </section>
     <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:8px;padding:12px 14px;background:#FFFFFF;border-radius:8px;">
       <div style="font-size:13px;">${session.company} · Carrito: <b id="cli-cart-count">0 items</b></div>
       <div style="display:flex;align-items:center;gap:12px;">
