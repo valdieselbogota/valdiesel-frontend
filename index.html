@@ -24,7 +24,7 @@
 <link rel="preload" as="image" href="assets/slide-1.jpg">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.43.0/dist/tabler-icons.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Archivo+Narrow:wght@600;700&family=Cormorant+Garamond:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Archivo+Narrow:wght@600;700&family=Cormorant+Garamond:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -32,7 +32,7 @@
   "name": "VALDIESEL SAS",
   "description": "Repuestos diesel para transporte ligero, asesoría y envíos a todo el país.",
   "url": "https://valdieselbogota.github.io/valdiesel-frontend/",
-  "telephone": "+57 315 030 0954",
+  "telephone": "+57 310 808 8686",
   "email": "valdieselbogota@hotmail.com",
   "address": {
     "@type": "PostalAddress",
@@ -391,10 +391,206 @@ html { overflow-x: clip; }
   .navlink { font-size: 13px; color: #5B6672; cursor: pointer; padding-bottom: 2px; }
   .navlink.active { color: #1A2229; border-bottom: 2px solid #E8443C; }
   .navlink:hover { color: #1A2229; }
+
+  /* ============================================================
+     HERO DE PRESENTACION  #val-presentation-hero
+     Foto de marca + scrim horizontal. El repuesto queda a la
+     izquierda (sin velo) y el texto vive en el negativo derecho.
+     ============================================================ */
+  #val-presentation-hero {
+    position: relative;
+    width: 100%;
+    min-height: clamp(520px, 76vh, 760px);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: hidden;
+    isolation: isolate;
+    background-color: #0B0F17;
+    background-image: url('assets/imagen-presentacion.jpg');
+    background-size: cover;
+    background-position: center left;
+    background-repeat: no-repeat;
+  }
+  /* Capa de contraste: 15% -> 85% -> 95%. Deja respirar el turbo y
+     garantiza contraste AAA bajo el bloque de texto. */
+  #val-presentation-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      rgba(11, 15, 23, 0.15) 0%,
+      rgba(11, 15, 23, 0.85) 55%,
+      rgba(11, 15, 23, 0.95) 100%
+    );
+  }
+  .val-ph-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: clamp(32px, 5vw, 64px) clamp(20px, 5vw, 72px);
+    display: flex;
+    justify-content: flex-end;
+  }
+  .val-ph-copy {
+    width: 100%;
+    max-width: 620px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .val-ph-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    max-width: 100%;
+    margin: 0;
+    padding: 8px 15px;
+    border-radius: 999px;
+    background: rgba(245, 158, 11, 0.14);
+    border: 1px solid rgba(245, 158, 11, 0.55);
+    color: #F59E0B;
+    font-family: 'Barlow Condensed', 'Archivo Narrow', 'Arial Narrow', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55);
+  }
+  .vd .val-ph-title {
+    font-family: 'Barlow Condensed', 'Archivo Narrow', 'Arial Narrow', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.6rem, 5.4vw, 4.6rem);
+    line-height: 0.98;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    margin: 0;
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.75);
+    text-wrap: balance;
+  }
+  .val-ph-text {
+    margin: 0;
+    max-width: 54ch;
+    color: #F3F4F6;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    font-weight: 500;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
+  }
+  .val-ph-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+    margin-top: 4px;
+  }
+  .val-ph-btn-gold,
+  .val-ph-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 52px;
+    padding: 15px 26px;
+    border-radius: 6px;
+    font-family: 'Barlow Condensed', 'Archivo Narrow', 'Arial Narrow', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform .16s var(--vd-ease), background .2s, border-color .2s, box-shadow .2s;
+  }
+  .val-ph-btn-gold {
+    background: #F59E0B;
+    color: #111827;
+    border: 1.5px solid #F59E0B;
+    box-shadow: 0 10px 26px rgba(245, 158, 11, 0.28);
+  }
+  .val-ph-btn-gold:hover { background: #FBB024; border-color: #FBB024; transform: translateY(-2px); box-shadow: 0 14px 32px rgba(245, 158, 11, 0.38); }
+  .val-ph-btn-gold:active { transform: scale(0.98); }
+  .val-ph-btn-ghost {
+    background: rgba(11, 15, 23, 0.18);
+    border: 1.5px solid rgba(255, 255, 255, 0.85);
+    color: #FFFFFF;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .val-ph-btn-ghost:hover { background: rgba(255, 255, 255, 0.14); border-color: #FFFFFF; transform: translateY(-2px); }
+  .val-ph-btn-ghost:active { transform: scale(0.98); }
+  .val-ph-btn-gold:focus-visible,
+  .val-ph-btn-ghost:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 3px; }
+
+  /* Movil: una columna centrada. El scrim pasa a vertical para que el
+     turbo siga visible arriba y el texto tenga fondo solido abajo. */
+  @media (max-width: 768px) {
+    /* En vertical, 'cover' recorta tanto el ancho que el turbo sale de
+       cuadro. Aqui la foto se muestra completa como banda 16:9 arriba
+       (100% auto) y se funde a navy solido; el texto va sobre ese navy,
+       asi el repuesto SI se ve y el contraste es absoluto. */
+    #val-presentation-hero {
+      min-height: 0;
+      align-items: flex-start;
+      background-color: #0B0F17;
+      background-image:
+        linear-gradient(
+          180deg,
+          rgba(11, 15, 23, 0.05) 0%,
+          rgba(11, 15, 23, 0.22) 46%,
+          rgba(11, 15, 23, 0.82) 82%,
+          #0B0F17 100%
+        ),
+        url('assets/imagen-presentacion.jpg');
+      background-size: 100% 57.14vw, 100% auto;
+      background-position: center top, center top;
+      background-repeat: no-repeat, no-repeat;
+    }
+    #val-presentation-hero::after { background: none; }
+    .val-ph-inner {
+      justify-content: center;
+      padding: calc(57.14vw - 26px) 20px 38px;
+    }
+    .val-ph-copy {
+      max-width: 100%;
+      align-items: center;
+      text-align: center;
+      gap: 14px;
+    }
+    .val-ph-kicker {
+      align-self: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.09em;
+      padding: 7px 12px;
+      text-align: center;
+    }
+    .vd .val-ph-title { font-size: clamp(2rem, 9.6vw, 2.8rem); }
+    .val-ph-text { font-size: 1rem; line-height: 1.5; max-width: 44ch; }
+    .val-ph-actions { flex-direction: column; align-items: stretch; }
+    .val-ph-btn-gold, .val-ph-btn-ghost { width: 100%; }
+  }
+  /* Tablet: los CTAs caben uno al lado del otro. */
+  @media (min-width: 560px) and (max-width: 768px) {
+    .val-ph-actions { flex-direction: row; justify-content: center; align-items: center; }
+    .val-ph-btn-gold, .val-ph-btn-ghost { width: auto; min-width: 220px; }
+  }
+  @media (max-width: 380px) {
+    .val-ph-kicker { font-size: 0.62rem; letter-spacing: 0.06em; padding: 7px 10px; }
+  }
 </style>
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"VALDIESEL SAS","url":"https://valdiesel.com/","contactPoint":{"@type":"ContactPoint","telephone":"+57-315-030-0954","contactType":"customer service","areaServed":"CO","availableLanguage":"es"},"address":{"@type":"PostalAddress","streetAddress":"Cra 55 No. 14-17","addressLocality":"Bogotá","addressCountry":"CO"}}
+{"@context":"https://schema.org","@type":"Organization","name":"VALDIESEL SAS","url":"https://valdiesel.com/","contactPoint":{"@type":"ContactPoint","telephone":"+57-310-808-8686","contactType":"customer service","areaServed":"CO","availableLanguage":"es"},"address":{"@type":"PostalAddress","streetAddress":"Cra 55 No. 14-17","addressLocality":"Bogotá","addressCountry":"CO"}}
 </script>
 </head>
 <body>
@@ -721,6 +917,14 @@ function fitFull(el) {
 }
 window.addEventListener('resize', () => fitFull(document.getElementById('vd-fullbleed')));
 
+function valPhGoCatalogo(e) {
+  if (e) e.preventDefault();
+  if (typeof showView === 'function') { showView('catalogo'); } else { location.hash = 'catalogo'; }
+  const toTop = () => { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (_) { window.scrollTo(0, 0); } };
+  requestAnimationFrame(toTop);
+  return false;
+}
+
 function fitHero() {
   const hero = document.getElementById('vd-hero');
   if (!hero) return;
@@ -738,21 +942,22 @@ function viewHome() {
   <style>#app { padding: 0 !important; max-width: none !important; }</style>
   <div class="vd">
 
-    <div id="vd-hero" style="position:relative;height:440px;overflow:hidden;width:100vw;margin-left:calc(50% - 50vw);">
-      ${VD_SLIDES.map((s, i) => `<img class="vd-slide${i === 0 ? ' on' : ''}" src="${s.src}" alt="${s.alt}" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async" style="object-position:${s.pos};">`).join('')}
-      <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg, rgba(26,24,23,.92) 0%, rgba(26,24,23,.78) 34%, rgba(26,24,23,.15) 62%, rgba(26,24,23,0) 80%);"></div>
-      <div class="vd-hero-grid">
-        <div class="vd-hero-copy">
-          <p class="vd-hero-kicker">Bogotá · desde 2003</p>
-          <h1 class="vd-hero-title">Su aliado en repuestos diesel</h1>
-          <p class="vd-hero-sub">Amplio portafolio para transporte ligero, con asesoría de quien conoce la pieza. Consulte por referencia o cuéntenos qué necesita: confirmamos existencia y precio el mismo día.</p>
-          <div class="vd-hero-ctas">
-            <button class="btn btn-primary" onclick="showView('catalogo')">Ver catálogo</button>
-            <button class="btn btn-secondary" onclick="contactarAsesor()">Hablar con un asesor</button>
+    <section id="val-presentation-hero" aria-labelledby="val-ph-title">
+      <div class="val-ph-inner">
+        <div class="val-ph-copy">
+          <p class="val-ph-kicker">DISTRIBUCIÓN AUTORIZADA BOGOTÁ · DESDE 1983</p>
+          <h1 class="val-ph-title" id="val-ph-title">POTENCIA Y RESPALDO DIÉSEL PESADO</h1>
+          <p class="val-ph-text">Encuentra componentes de alta precisión para las principales marcas (ISUZU, RIKKON, TONYCO), respaldados por décadas de experiencia y servicio técnico especializado en Bogotá para flotas y transporte ligero.</p>
+          <div class="val-ph-actions">
+            <a class="val-ph-btn-gold" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quiero cotizar repuestos diésel de alto rendimiento.')}" target="_blank" rel="noopener noreferrer">
+              <img src="https://unpkg.com/simple-icons@13.21.0/icons/whatsapp.svg" alt="" aria-hidden="true" width="20" height="20" style="filter:brightness(0);opacity:.85;">
+              Cotizar por WhatsApp
+            </a>
+            <a class="val-ph-btn-ghost" href="#catalogo" onclick="return valPhGoCatalogo(event)">Ver catálogo</a>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
     <div class="vd-seals" style="width:100vw;margin-left:calc(50% - 50vw);">
       ${VD_TRUST.map(t => `<div style="display:flex;align-items:center;gap:8px;">
@@ -1181,7 +1386,7 @@ function updateCartSummaryPublic() {
   document.getElementById('pub-cart-total').textContent = session ? fmt(total) : 'Precio para clientes';
 }
 
-const WHATSAPP_NUMBER = '573150300954';
+const WHATSAPP_NUMBER = '573108088686';
 
 function contactarAsesor() {
   const msg = '¡Hola! Quisiera hablar con un asesor sobre repuestos';
