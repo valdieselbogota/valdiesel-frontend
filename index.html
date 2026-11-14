@@ -647,18 +647,56 @@ const PRODUCTS_FALLBACK = [{"id":1,"code":"8-97385988-0","name":"BOMBA ACEITE NH
 let PRODUCTS = [];
 let productsLoaded = false;
 
+const CATALOG_URL = 'https://script.google.com/macros/s/AKfycbwGPPTy1tYwgUa2NYdUUth8S2FLbrXDEYUwdOpavQZR7LtavIrHD1emIMQ1uJhqzHM9/exec';
+
 async function loadProducts() {
+  // Mapeo tolerante: la Web App puede devolver claves en espanol (Hojas de
+  // calculo) o en ingles. Siempre caemos a PRODUCTS_FALLBACK si falla.
+  const pick = (r, ...keys) => {
+    for (const k of keys) {
+      if (r && r[k] !== undefined && r[k] !== null && String(r[k]).trim() !== '') return r[k];
+    }
+    return undefined;
+  };
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4000);
-    const res = await fetch(API_BASE + '/api/products', { signal: controller.signal });
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    const res = await fetch(CATALOG_URL, { signal: controller.signal, mode: 'cors' });
     clearTimeout(timeoutId);
-    if (!res.ok) throw new Error('bad response');
+    if (!res.ok) throw new Error('bad response: ' + res.status);
     const data = await res.json();
-    PRODUCTS = data.length ? data : PRODUCTS_FALLBACK;
+    const rows = Array.isArray(data) ? data
+      : (data && Array.isArray(data.products) ? data.products
+      : (data && Array.isArray(data.data) ? data.data : []));
+    if (!rows.length) throw new Error('empty response');
+
+    const norm = rows.map((r, idx) => {
+      const code = pick(r, 'code', 'Código', 'codigo', 'Code', 'CODIGO');
+      const name = pick(r, 'name', 'Nombre', 'Name', 'NOMBRE');
+      const brand = pick(r, 'brand', 'Categoría', 'categoria', 'Category', 'category', 'CATEGORIA');
+      const priceRaw = pick(r, 'price', 'Precio', 'Precio de venta', 'precio', 'Price', 'PRECIO');
+      const price = Number(priceRaw);
+      const img = pick(r, 'image', 'Imagen_URL', 'imagen_url', 'ImagenUrl', 'imageUrl', 'image_url', 'IMAGEN_URL');
+      return {
+        id: (r && (r.id || r.ID || r.Id)) || (idx + 1),
+        code: String(code === undefined ? '' : code).trim(),
+        name: String(name === undefined ? '' : name).trim(),
+        brand: String(brand === undefined ? '' : brand).trim(),
+        price: isNaN(price) ? 0 : price,
+        image: img ? String(img).trim() : undefined,
+      };
+    }).filter(p => p.code || p.name);
+
+    // Prioridad visual: los que tienen Imagen_URL valida van primero.
+    norm.sort((a, b) => (b.image ? 1 : 0) - (a.image ? 1 : 0));
+
+    if (norm.length) PRODUCTS = norm;
+    else PRODUCTS = PRODUCTS_FALLBACK;
   } catch (e) {
+    console.warn('loadProducts: usando fallback -', (e && e.message) || e);
     PRODUCTS = PRODUCTS_FALLBACK;
   }
+  // Sobrescribir con imagenes base64 embebidas si existen (mejor calidad offline).
   PRODUCTS.forEach(p => { if (PRODUCT_IMAGES[p.code]) p.image = PRODUCT_IMAGES[p.code]; });
   productsLoaded = true;
 }
@@ -941,8 +979,8 @@ function vdProductCard(pr) {
   return `
     <div class="vd-card vd-card-hover">
       ${pr.image
-        ? `<img class="plate" src="${pr.image}" alt="${pr.name}" loading="lazy" decoding="async" style="width:100%;height:92px;object-fit:cover;">`
-        : `<div class="plate" style="width:100%;height:92px;display:flex;align-items:center;justify-content:center;"><img src="${VD_ICON}cog.svg" alt="" style="width:26px;height:26px;opacity:.35;"></div>`}
+        ? `<img class="plate" src="${pr.image}" alt="${pr.name}" loading="lazy" decoding="async" style="width:100%;height:92px;object-fit:contain;background:#F3F4F6;border-radius:6px;" onerror="this.onerror=null;this.src='assets/placeholder-repuesto.jpg';">`
+        : `<div class="plate" style="width:100%;height:92px;display:flex;align-items:center;justify-content:center;background:#F3F4F6;border-radius:6px;"><img src="${VD_ICON}cog.svg" alt="" style="width:26px;height:26px;opacity:.35;"></div>`}
       <span class="card-kicker">${pr.brand}</span>
       <p class="vd-card-name">${pr.name}</p>
       ${logged
@@ -1547,6 +1585,9 @@ function getFiltered(searchId, brandId) {
 function cardWithControls(p, price, cartRef, changeFn, locked) {
   const qty = cartRef[p.id] ? cartRef[p.id].qty : 0;
   return `<div class="card product-card" style="padding:12px;display:flex;flex-direction:column;gap:6px;">
+    ${p.image
+      ? `<img class="plate" src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" style="width:100%;height:92px;object-fit:contain;background:#F3F4F6;border-radius:6px;" onerror="this.onerror=null;this.src='assets/placeholder-repuesto.jpg';">`
+      : `<div class="plate" style="width:100%;height:92px;display:flex;align-items:center;justify-content:center;background:#F3F4F6;border-radius:6px;"><img src="${VD_ICON}cog.svg" alt="" style="width:26px;height:26px;opacity:.35;"></div>`}
     <span style="font-size:10px;color:#E8443C;background:linear-gradient(135deg,#FDECEA 0%,#FBD9D6 100%);border-radius:6px;padding:2px 8px;width:fit-content;">${p.brand}</span>
     <p style="font-size:12px;font-weight:500;color:#4A5560;margin:0;line-height:1.4;min-height:34px;">${p.name}</p>
     <p style="font-size:11px;color:#97A0AA;margin:0;">Ref: ${p.code}</p>
