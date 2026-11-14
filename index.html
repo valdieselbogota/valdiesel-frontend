@@ -674,9 +674,11 @@ async function loadProducts() {
       const code = pick(r, 'code', 'Código', 'codigo', 'Code', 'CODIGO');
       const name = pick(r, 'name', 'Nombre', 'Name', 'NOMBRE');
       const brand = pick(r, 'brand', 'Categoría', 'categoria', 'Category', 'category', 'CATEGORIA');
-      const priceRaw = pick(r, 'price', 'Precio', 'Precio de venta', 'precio', 'Price', 'PRECIO');
+      const priceRaw = pick(r, 'price', 'Precio', 'Precio de venta', 'Precio de venta 1', 'precio', 'Price', 'PRECIO', 'PRECIO DE VENTA', 'PRECIO DE VENTA 1');
       const price = Number(priceRaw);
       const img = pick(r, 'image', 'Imagen_URL', 'imagen_url', 'ImagenUrl', 'imageUrl', 'image_url', 'IMAGEN_URL');
+      const description = pick(r, 'description', 'Descripcion', 'descripción', 'Descripción', 'Description', 'DESCRIPCION');
+      const disponibilidad = pick(r, 'disponibilidad', 'Disponibilidad', 'DISPONIBILIDAD', 'stock', 'Stock');
       return {
         id: (r && (r.id || r.ID || r.Id)) || (idx + 1),
         code: String(code === undefined ? '' : code).trim(),
@@ -684,6 +686,8 @@ async function loadProducts() {
         brand: String(brand === undefined ? '' : brand).trim(),
         price: isNaN(price) ? 0 : price,
         image: img ? String(img).trim() : undefined,
+        description: description ? String(description).trim() : undefined,
+        disponibilidad: disponibilidad ? String(disponibilidad).trim() : undefined,
       };
     }).filter(p => p.code || p.name);
 
@@ -976,6 +980,18 @@ function vdProductCard(pr) {
   const price = isClient ? priceForClient(pr.price) : pr.price;
   const desc = isClient ? (session.discount || 0) : 0;
 
+  // Copy (conversion-copy): usa la descripcion real del Sheets si existe; si no,
+  // una linea funcional verificable (no fluff autogenerado). El cliente es el
+  // heroe: hablamos de disponibilidad y respaldo, no de "componente generico".
+  const descripcionReal = pr.description && String(pr.description).trim();
+  const descripcionCorta = descripcionReal
+    ? String(descripcionReal).trim()
+    : 'Disponible para entrega inmediata. Respaldo tecnico VALDIESEL.';
+
+  // CTA unico por estado de sesion (sin slash que paralice la decision).
+  const ctaTexto = logged ? 'AGREGAR AL PEDIDO' : 'COTIZAR POR WHATSAPP';
+  const ctaClase = logged ? 'vd-card-cta--primary' : 'vd-card-cta--ghost';
+
   return `
     <div class="vd-card vd-card-hover">
       ${pr.image
@@ -983,12 +999,16 @@ function vdProductCard(pr) {
         : `<div class="plate" style="width:100%;height:92px;display:flex;align-items:center;justify-content:center;background:#F3F4F6;border-radius:6px;"><img src="${VD_ICON}cog.svg" alt="" style="width:26px;height:26px;opacity:.35;"></div>`}
       <span class="card-kicker">${pr.brand}</span>
       <p class="vd-card-name">${pr.name}</p>
+      <p style="font-family:'Inter',system-ui,sans-serif;font-size:0.78rem;color:#6B7280;margin:0;line-height:1.4;min-height:2.4em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${descripcionCorta}</p>
+      ${pr.disponibilidad ? `<p style="font-family:'Inter',system-ui,sans-serif;font-size:0.72rem;color:#059669;margin:0;font-weight:600;">Disponibilidad: ${pr.disponibilidad}</p>` : ''}
       ${logged
         ? `<p class="vd-price">${fmt(price)}</p>${desc > 0 ? `<p class="vd-price-old">${fmt(pr.price)}</p>` : ''}`
         : `<div class="text-muted" style="font-size: 12px;">Precio para clientes</div>`}
-      <button class="btn btn-primary btn-block vd-card-cta" style="padding:8px;font-size:13px;" onclick="vdAdd(event, ${pr.id})">Agregar</button>
+      <button class="btn btn-primary btn-block vd-card-cta ${ctaClase}" style="padding:8px;font-size:13px;" onclick="vdAdd(event, ${pr.id})">${ctaTexto}</button>
     </div>`;
 }
+
+
 function fitFull(el) {
   if (!el) return;
   const tb = document.querySelector('.vd-topbar');
@@ -1532,6 +1552,12 @@ function viewCatalog() {
       .vd-cat-card-qtybtn:hover { background: #F3F4F6; }
       .vd-cat-card-qtybtn:active { transform: scale(0.95); }
       .vd-cat-card-qtyval { flex: 1; text-align: center; font-family: 'Inter', system-ui, sans-serif; font-weight: 600; font-size: 1rem; color: #111827; }
+      .vd-cat-card-desc { font-family: 'Inter', system-ui, sans-serif; font-size: 0.78rem; color: #4B5563; margin: 4px 0 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+      .vd-cat-card-stock { font-family: 'Inter', system-ui, sans-serif; font-size: 0.72rem; color: #059669; margin: 2px 0 0; font-weight: 600; }
+      .vd-card-cta--primary { background: #D6392F; }
+      .vd-card-cta--primary:hover { background: #B82E25; }
+      .vd-card-cta--ghost { background: transparent; color: #D6392F; border: 1.5px solid #D6392F; }
+      .vd-card-cta--ghost:hover { background: rgba(214, 57, 47, 0.06); }
       @media (max-width: 768px) {
         .vd-catalog-toolbar { grid-template-columns: 1fr; }
         .vd-catalog-brand { min-width: 0; width: 100%; }
@@ -1637,6 +1663,8 @@ function cardWithControls(p, price, cartRef, changeFn, locked) {
       <span class="vd-cat-card-brand">${p.brand}</span>
       <p class="vd-cat-card-name">${p.name}</p>
       <p class="vd-cat-card-ref">Ref: ${p.code}</p>
+      <p class="vd-cat-card-desc">${p.description ? String(p.description).trim() : 'Disponible para entrega inmediata. Respaldo técnico VALDIESEL.'}</p>
+      ${p.disponibilidad ? `<p class="vd-cat-card-stock">Disponibilidad: ${p.disponibilidad}</p>` : ''}
       ${locked
         ? `<p class="vd-cat-card-price vd-cat-card-price--locked">Precio disponible para clientes</p>
            <button class="vd-cat-card-cta vd-cat-card-cta--ghost" onclick="showView('portal')">
