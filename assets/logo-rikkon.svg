@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 60" width="220" height="60" role="img" aria-label="RIKKON">
+  <title>RIKKON</title>
+  <rect x="0" y="0" width="220" height="60" fill="none"/>
+  <circle cx="14" cy="30" r="6" fill="#F59E0B"/>
+  <text x="30" y="40" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="800" font-size="34" letter-spacing="2" fill="#111827">RIKKON</text>
+  <line x1="30" y1="46" x2="156" y2="46" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+</svg>
