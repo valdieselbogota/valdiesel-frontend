@@ -1051,6 +1051,15 @@ function viewHome() {
         <div class="vd-hero-copy">
           <p class="vd-hero-kicker">Bogotá · desde 1983</p>
           <h1 class="vd-hero-title">Su aliado en repuestos diesel</h1>
+          <p class="vd-hero-sub">Amplio portafolio para transporte ligero, con asesoría de quien conoce la pieza. Consulte por referencia o cuéntenos qué necesita: confirmamos existencia y precio el mismo día.</p>
+          <div class="vd-hero-ctas">
+            <button class="btn btn-primary" onclick="showView('catalogo')">Ver catálogo</button>
+            <button class="btn btn-secondary" onclick="contactarAsesor()">Hablar con un asesor</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
           <style>
             .val-hero-subcta-section { padding: 40px 20px; background: #F9FAFB; text-align: center; }
             .val-hero-subcta-section .val-hero-subcta-title { font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:800; font-size: clamp(1.7rem, 3.6vw, 2.6rem); line-height: 1.05; text-transform: uppercase; color:#111827; margin: 0 0 14px; text-align: center; }
@@ -1067,15 +1076,6 @@ function viewHome() {
               <a class="val-hero-subcta-btn" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quiero cotizar repuestos diésel de alto rendimiento.')}" target="_blank" rel="noopener">COTIZAR REPUESTOS AHORA</a>
             </div>
           </div>
-          <p class="vd-hero-sub">Amplio portafolio para transporte ligero, con asesoría de quien conoce la pieza. Consulte por referencia o cuéntenos qué necesita: confirmamos existencia y precio el mismo día.</p>
-          <div class="vd-hero-ctas">
-            <button class="btn btn-primary" onclick="showView('catalogo')">Ver catálogo</button>
-            <button class="btn btn-secondary" onclick="contactarAsesor()">Hablar con un asesor</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <<div class="vd-seals" style="width:100vw;margin-left:calc(50% - 50vw);">
       ${VD_TRUST.map(t => `<div style="display:flex;align-items:center;gap:8px;">
         <img src="${VD_ICON}${t.icon}" alt="" style="width:17px;height:17px;opacity:.55;">
