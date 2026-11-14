@@ -1746,7 +1746,7 @@ function viewClientPortal() {
     <style>
       .val-client-welcome-banner { position: relative; width: 100vw; margin-left: calc(50% - 50vw); overflow: hidden; isolation: isolate; background-color: #0B0F17; background-image: url('assets/banner-aliado-valdiesel.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 80px 20px; }
       .val-client-welcome-banner::before { content:''; position:absolute; inset:0; z-index:1; pointer-events:none; background: linear-gradient(180deg, rgba(11,15,23,0.88) 0%, rgba(11,15,23,0.72) 45%, rgba(11,15,23,0.25) 100%); }
-      .val-client-welcome-inner { position: relative; z-index: 2; max-width: 1100px; margin: 0 auto; text-align: right; }
+      .val-client-welcome-inner { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; text-align: right; }
       .val-client-welcome-title { font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:800; font-size: clamp(1.9rem, 4.4vw, 3.4rem); line-height: 1.05; text-transform: uppercase; color:#FFFFFF; margin: 0 0 14px; text-shadow: 0 4px 24px rgba(0,0,0,0.75); }
       .val-client-welcome-sub { font-family:'Inter',system-ui,sans-serif; font-size: clamp(0.95rem,1.6vw,1.15rem); line-height: 1.5; color:#E5E7EB; margin: 0 0 28px; }
       .val-client-welcome-actions { display:flex; justify-content:flex-end; }
@@ -1754,6 +1754,17 @@ function viewClientPortal() {
       .val-client-welcome-btn:hover { background:#B82E25; transform:translateY(-2px); box-shadow:0 14px 32px rgba(214,57,47,0.45); }
       .val-client-welcome-btn:active { transform:scale(0.97); }
       @media (max-width:768px){ .val-client-welcome-banner { padding: 56px 20px; } .val-client-welcome-inner { text-align:center; } .val-client-welcome-actions { justify-content:center; } }
+      .val-client-cart-bar { display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; margin-bottom:8px; padding:16px; background:#FFFFFF; border:1px solid rgba(11,15,23,0.06); border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.05); }
+      .val-client-toolbar { display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; background:#FFFFFF; border:1px solid #E5E7EB; border-radius:12px; padding:12px; }
+      @media (min-width:1024px){ #product-grid-cli { grid-template-columns: repeat(3,1fr); } }
+      .val-portal-cta { background:#0B0F17; padding: clamp(40px,6vw,64px) 20px; }
+      .val-portal-cta-card { max-width:1100px; margin:0 auto; background:linear-gradient(135deg,#111827,#0B0F17); border:1px solid rgba(214,57,47,0.4); border-radius:16px; padding: clamp(28px,5vw,48px); text-align:center; position:relative; overflow:hidden; }
+      .val-portal-cta-title { font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:800; font-size:clamp(1.8rem,4vw,2.8rem); text-transform:uppercase; color:#FFFFFF; margin:0 0 14px; text-shadow:0 4px 20px rgba(0,0,0,0.75); }
+      .val-portal-cta-sub { font-family:'Inter',system-ui,sans-serif; font-size:1.05rem; line-height:1.5; color:#D1D5DB; margin:0 auto 28px; max-width:60ch; }
+      .val-portal-cta-actions { display:flex; justify-content:center; }
+      .val-portal-cta-btn { display:inline-flex; align-items:center; justify-content:center; min-height:50px; padding:14px 40px; border-radius:8px; background:#D6392F; color:#FFFFFF; font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:700; font-size:clamp(1rem,2vw,1.15rem); letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; border:1.5px solid #D6392F; box-shadow:0 10px 26px rgba(214,57,47,0.35); transition: transform .16s var(--vd-ease, cubic-bezier(0.23,1,0.32,1)), background .2s, box-shadow .2s; }
+      .val-portal-cta-btn:hover { background:#B82E25; transform:translateY(-2px); box-shadow:0 14px 32px rgba(214,57,47,0.45); }
+      .val-portal-cta-btn:active { transform:scale(0.97); }
     </style>
     <section class="val-client-welcome-banner" aria-labelledby="val-client-welcome-title">
       <div class="val-client-welcome-inner">
@@ -1764,7 +1775,7 @@ function viewClientPortal() {
         </div>
       </div>
     </section>
-    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:8px;padding:12px 14px;background:#FFFFFF;border-radius:8px;">
+    <div class="val-client-cart-bar">
       <div style="font-size:13px;">${session.company} · Carrito: <b id="cli-cart-count">0 items</b></div>
       <div style="display:flex;align-items:center;gap:12px;">
         <span style="font-weight:500;font-size:15px;color:#1A2229;" id="cli-cart-total">$0 COP</span>
@@ -1772,16 +1783,25 @@ function viewClientPortal() {
       </div>
     </div>
     ${session.discount > 0 ? '<p style="font-size:12px;color:#7BC97B;margin-bottom:14px;">Precio con tu descuento de cliente frecuente: ' + session.discount + '%</p>' : '<div style="margin-bottom:14px;"></div>'}
-    <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+    <div class="val-client-toolbar">
       <input id="search-cli" placeholder="Buscar por nombre o referencia" style="flex:2;min-width:180px;" oninput="visibleCount=PAGE_SIZE;renderClientGrid();" />
       <select id="brand-filter-cli" style="flex:1;min-width:140px;" onchange="visibleCount=PAGE_SIZE;renderClientGrid();"></select>
     </div>
     <div id="results-count-cli" style="font-size:12px;color:#8993A0;margin-bottom:10px;"></div>
-    <div id="product-grid-cli" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;"></div>
+    <div id="product-grid-cli" style="display:grid;grid-template-columns:1fr;gap:10px;"></div>
     <div style="display:flex;justify-content:center;margin-top:16px;">
       <button id="load-more-cli" class="btn-ghost hidden" onclick="visibleCount+=PAGE_SIZE;renderClientGrid();">Cargar más productos</button>
     </div>
     <div id="checkout-msg-cli" style="font-size:13px;color:#7BC97B;text-align:center;margin-top:16px;"></div>
+    <section class="val-portal-cta">
+      <div class="val-portal-cta-card">
+        <h2 class="val-portal-cta-title">¿NECESITAS UNA REFERENCIA ESPECIAL O ASESORÍA PARA TU TALLER?</h2>
+        <p class="val-portal-cta-sub">Nuestro equipo técnico en Bogotá está listo para verificar existencias y despachar de inmediato.</p>
+        <div class="val-portal-cta-actions">
+          <button class="val-portal-cta-btn" onclick="enviarListaWhatsApp()">ENVIAR LISTA A WHATSAPP</button>
+        </div>
+      </div>
+    </section>
   `;
 }
 
@@ -1971,6 +1991,15 @@ function updateCartSummaryClient() {
   const total = items.reduce((s,i)=>s+i.qty*priceForClient(i.product.price),0);
   document.getElementById('cli-cart-count').textContent = count + (count===1?' item':' items');
   document.getElementById('cli-cart-total').textContent = fmt(total);
+}
+
+function enviarListaWhatsApp() {
+  const items = Object.values(clientCart);
+  const m = document.getElementById('checkout-msg-cli');
+  if (!items.length) { if (m) { m.style.color='#E8443C'; m.textContent='Tu carrito está vacío.'; } return; }
+  const total = items.reduce((s,i)=>s+i.qty*priceForClient(i.product.price),0);
+  const order = { username:session.username, company:session.company, items: items.map(i=>({name:i.product.name, code:i.product.code, qty:i.qty, price:priceForClient(i.product.price)})), total };
+  redirectToWhatsApp(order);
 }
 
 async function checkoutClientFrom(msgId) {
