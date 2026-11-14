@@ -24,7 +24,7 @@
 <link rel="preload" as="image" href="assets/slide-1.jpg">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.43.0/dist/tabler-icons.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Archivo+Narrow:wght@600;700&family=Cormorant+Garamond:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Archivo+Narrow:wght@600;700&family=Cormorant+Garamond:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -1121,7 +1121,50 @@ function quickBrand(b) {
 
 function viewAbout() {
   return `
-    <style>#app { padding: 0 !important; max-width: none !important; }</style>
+    <style>
+      #app { padding: 0 !important; max-width: none !important; }
+      .vd-nosotros-block { max-width:1200px; margin:0 auto; padding:clamp(40px,6vw,72px) 24px; }
+      .vd-nosotros-kicker { display:inline-flex; align-items:center; gap:8px; margin:0 0 12px; padding:6px 12px; border-radius:999px; background:rgba(214,57,47,0.10); border:1px solid rgba(214,57,47,0.45); color:#D6392F; font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-size:0.78rem; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; }
+      .vd-nosotros-title { font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:800; font-size:clamp(2rem,4.2vw,3.2rem); line-height:1.02; letter-spacing:-0.01em; text-transform:uppercase; color:#111827; margin:0 0 20px; }
+      .vd-nosotros-text { font-family:'Inter',system-ui,sans-serif; font-size:1.05rem; line-height:1.65; color:#374151; margin:0 0 14px; max-width:62ch; }
+      .vd-nosotros-grid { display:grid; grid-template-columns:1.05fr 1fr; gap:clamp(24px,5vw,56px); align-items:center; }
+      .vd-nosotros-photo { position:relative; border-radius:16px; overflow:hidden; box-shadow:0 20px 40px rgba(11,15,23,0.18); border:1px solid rgba(11,15,23,0.08); background:#0B0F17; }
+      .vd-nosotros-photo img { display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; }
+      .vd-nosotros-badge { position:absolute; left:16px; bottom:16px; background:#111827; color:#FFFFFF; border-left:4px solid #D6392F; padding:10px 14px; font-family:'Barlow Condensed',sans-serif; font-size:0.8rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; border-radius:0 6px 6px 0; box-shadow:0 8px 20px rgba(0,0,0,0.35); }
+      .vd-nosotros-stats { background:#111827; border-top:3px solid #F59E0B; padding:clamp(32px,5vw,56px) 24px; }
+      .vd-nosotros-stats-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:24px; }
+      .vd-nosotros-stat { text-align:center; padding:8px; }
+      .vd-nosotros-stat-num { display:block; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:clamp(2.6rem,5vw,4rem); line-height:1; color:#FFFFFF; font-variant-numeric:tabular-nums; }
+      .vd-nosotros-stat-label { display:block; margin-top:8px; font-family:'Inter',system-ui,sans-serif; font-size:0.85rem; font-weight:500; color:rgba(255,255,255,0.72); letter-spacing:0.04em; }
+      .vd-nosotros-mision { display:flex; gap:16px; align-items:flex-start; background:#F9FAFB; border-left:4px solid #D6392F; border-radius:0 12px 12px 0; padding:24px 28px; margin-bottom:28px; box-shadow:0 4px 14px rgba(11,15,23,0.06); }
+      .vd-nosotros-mision-icon { flex:0 0 auto; width:44px; height:44px; border-radius:10px; background:rgba(214,57,47,0.10); color:#D6392F; display:flex; align-items:center; justify-content:center; }
+      .vd-nosotros-mision-label { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; letter-spacing:0.16em; text-transform:uppercase; color:#D6392F; margin:0 0 6px; }
+      .vd-nosotros-mision-text { font-family:'Inter',system-ui,sans-serif; font-size:1.05rem; line-height:1.6; color:#111827; margin:0; font-weight:500; }
+      .vd-nosotros-pillars { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+      .vd-nosotros-pillar { background:#FFFFFF; border:1px solid #E5E7EB; border-radius:12px; padding:24px 20px; box-shadow:0 4px 14px rgba(11,15,23,0.05); transition:transform .2s ease, box-shadow .2s ease; }
+      .vd-nosotros-pillar:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(11,15,23,0.10); }
+      .vd-nosotros-pillar-icon { width:44px; height:44px; border-radius:10px; background:rgba(245,158,11,0.14); color:#F59E0B; display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
+      .vd-nosotros-pillar h3 { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1.15rem; text-transform:uppercase; letter-spacing:0.02em; color:#111827; margin:0 0 8px; }
+      .vd-nosotros-pillar p { font-family:'Inter',system-ui,sans-serif; font-size:0.95rem; line-height:1.6; color:#4B5563; margin:0; }
+      .vd-nosotros-cta { background:linear-gradient(135deg,#0B0F17 0%,#111827 100%); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:clamp(28px,4vw,44px); display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; box-shadow:0 20px 40px rgba(11,15,23,0.18); }
+      .vd-nosotros-cta-copy { flex:1 1 360px; min-width:0; }
+      .vd-nosotros-cta-title { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:clamp(1.6rem,3.4vw,2.4rem); line-height:1.05; text-transform:uppercase; color:#FFFFFF; margin:0 0 8px; }
+      .vd-nosotros-cta-sub { font-family:'Inter',system-ui,sans-serif; font-size:1rem; line-height:1.5; color:#D1D5DB; margin:0; }
+      .vd-nosotros-cta-actions { display:flex; gap:12px; flex-wrap:wrap; }
+      .vd-nosotros-cta-btn-gold { display:inline-flex; align-items:center; justify-content:center; min-height:50px; padding:14px 24px; border-radius:6px; background:#F59E0B; color:#111827; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.95rem; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; border:1.5px solid #F59E0B; box-shadow:0 10px 26px rgba(245,158,11,0.28); transition:transform .16s ease, background .2s; }
+      .vd-nosotros-cta-btn-gold:hover { background:#FBB024; transform:translateY(-2px); }
+      .vd-nosotros-cta-btn-ghost { display:inline-flex; align-items:center; justify-content:center; min-height:50px; padding:14px 24px; border-radius:6px; background:transparent; color:#FFFFFF; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.95rem; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; border:1.5px solid rgba(255,255,255,0.85); backdrop-filter:blur(4px); transition:transform .16s ease, background .2s; }
+      .vd-nosotros-cta-btn-ghost:hover { background:rgba(255,255,255,0.10); transform:translateY(-2px); }
+      @media (max-width: 768px) {
+        .vd-nosotros-grid { grid-template-columns:1fr; }
+        .vd-nosotros-stats-grid { grid-template-columns:repeat(2,1fr); }
+        .vd-nosotros-pillars { grid-template-columns:1fr; }
+        .vd-nosotros-badge { font-size:0.7rem; padding:8px 10px; }
+      }
+      @media (max-width: 480px) {
+        .vd-nosotros-stats-grid { grid-template-columns:1fr; }
+      }
+    </style>
     <div class="vd">
 
       <section id="val-presentation-hero" aria-labelledby="val-ph-title">
@@ -1141,39 +1184,88 @@ function viewAbout() {
         </div>
       </section>
 
-      <div style="max-width:1080px;margin:0 auto;padding:24px 20px 4px;">
-        <div style="max-width:640px;">
-          <p class="brand" style="font-size:22px;color:#1A2229;margin-bottom:16px;">Quiénes somos</p>
-          <p style="font-size:14px;line-height:1.7;color:#4A5560;margin-bottom:16px;">
-            Desde 1983, VALDIESEL SAS acompaña al transporte ligero de Bogotá y del resto del país. Lo que empezó como un mostrador de barrio se convirtió, con el tiempo, en el punto al que los talleres llaman cuando una flota no puede detenerse.
-          </p>
-          <p style="font-size:14px;line-height:1.7;color:#4A5560;margin-bottom:16px;">
-            No vendemos repuestos: le ponemos orden, respaldo y datos a la operación que no puede parar. Hoy nos especializamos en ISUZU, KOREA, RIKKON, TONYCO y SONYCO, entre otras, con un inventario permanente de 663 referencias y el equipo que conoce cada pieza por su nombre.
-          </p>
-          <p style="font-size:14px;line-height:1.7;color:#4A5560;margin-bottom:16px;">
-            Detrás de cada pedido hay más de cuatro décadas entendiendo lo que un taller necesita: rapidez, calidad y alguien que responda.
-          </p>
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;">
-            <div class="card" style="padding:14px;text-align:center;"><p style="font-size:20px;color:#1A2229;font-weight:500;">43</p><p style="font-size:11px;color:#8993A0;">años</p></div>
-            <div class="card" style="padding:14px;text-align:center;"><p style="font-size:20px;color:#1A2229;font-weight:500;">663</p><p style="font-size:11px;color:#8993A0;">referencias</p></div>
-            <div class="card" style="padding:14px;text-align:center;"><p style="font-size:20px;color:#1A2229;font-weight:500;">16</p><p style="font-size:11px;color:#8993A0;">marcas</p></div>
-            <div class="card" style="padding:14px;text-align:center;"><p style="font-size:20px;color:#1A2229;font-weight:500;">500+</p><p style="font-size:11px;color:#8993A0;">clientes</p></div>
+      <section class="vd-nosotros-block">
+        <div class="vd-nosotros-grid">
+          <div class="vd-nosotros-copy">
+            <p class="vd-nosotros-kicker">TRAYECTORIA Y RESPALDO EN BOGOTÁ · DESDE 1983</p>
+            <h2 class="vd-nosotros-title">MÁS DE 43 AÑOS MANTENIENDO EL TRANSPORTE EN MOVIMIENTO</h2>
+            <p class="vd-nosotros-text">Desde 1983, VALDIESEL SAS acompaña al transporte ligero de Bogotá y del resto del país. Lo que empezó como un mostrador de barrio se convirtió, con el tiempo, en el punto al que los talleres llaman cuando una flota no puede detenerse.</p>
+            <p class="vd-nosotros-text">No vendemos repuestos: le ponemos orden, respaldo y datos a la operación que no puede parar. Hoy nos especializamos en ISUZU, KOREA, RIKKON, TONYCO y SONYCO, entre otras, con un inventario permanente de 663 referencias y el equipo que conoce cada pieza por su nombre.</p>
+            <p class="vd-nosotros-text">Detrás de cada pedido hay más de cuatro décadas entendiendo lo que un taller necesita: rapidez, calidad y alguien que responda.</p>
           </div>
-          <p style="font-size:14px;color:#1A2229;margin-bottom:8px;">Misión</p>
-          <p style="font-size:13px;line-height:1.7;color:#5B6672;margin-bottom:16px;">Mantener el transporte ligero en movimiento — con repuestos reales, disponibles y respaldados — para que su camión no se detenga.</p>
-          <p style="font-size:14px;color:#1A2229;margin-bottom:8px;">Ubicación</p>
-          <p style="font-size:13px;line-height:1.7;color:#5B6672;">Cra 55 No. 14-17, Bogotá, Colombia</p>
+          <div class="vd-nosotros-media">
+            <div class="vd-nosotros-photo">
+              <img src="assets/local-valdiesel.jpg" alt="Fachada VALDIESEL SAS, Cra 55 No. 14-17, Bogotá" loading="lazy" decoding="async">
+            </div>
+            <div class="vd-nosotros-badge">SEDE PRINCIPAL · CRA 55 No. 14-17, BOGOTÁ</div>
+          </div>
         </div>
-      </div>
+      </section>
 
+      <section class="vd-nosotros-stats">
+        <div class="vd-nosotros-stats-grid">
+          <div class="vd-nosotros-stat"><span class="vd-nosotros-stat-num">43</span><span class="vd-nosotros-stat-label">Años de experiencia</span></div>
+          <div class="vd-nosotros-stat"><span class="vd-nosotros-stat-num">663</span><span class="vd-nosotros-stat-label">Referencias activas</span></div>
+          <div class="vd-nosotros-stat"><span class="vd-nosotros-stat-num">16</span><span class="vd-nosotros-stat-label">Marcas especializadas</span></div>
+          <div class="vd-nosotros-stat"><span class="vd-nosotros-stat-num">500+</span><span class="vd-nosotros-stat-label">Clientes y talleres</span></div>
+        </div>
+      </section>
 
-    <div class="vd-map-section" style="width:100vw;margin-left:calc(50% - 50vw);margin-top:var(--space-6);">
-      <div style="max-width:1200px;margin:0 auto 12px;padding:0 24px;">
-        <p class="vd-footer-label" style="margin:0 0 6px;">Encuéntranos</p>
-        <p class="vd-footer-text" style="margin:0;font-size:13px;">Cra 55 No. 14-17, Bogotá, Colombia &middot; <a href="https://www.google.com/maps/place/VALDIESEL+S.A.S./@4.6307267,-74.109057,17z" target="_blank" rel="noopener noreferrer" style="color:#F59E0B;text-decoration:none;">Abrir en Google Maps &rarr;</a></p>
+      <section class="vd-nosotros-block">
+        <div class="vd-nosotros-mision">
+          <div class="vd-nosotros-mision-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <p class="vd-nosotros-mision-label">Misión</p>
+            <p class="vd-nosotros-mision-text">Mantener el transporte ligero en movimiento — con repuestos reales, disponibles y respaldados — para que su camión no se detenga.</p>
+          </div>
+        </div>
+        <div class="vd-nosotros-pillars">
+          <div class="vd-nosotros-pillar">
+            <div class="vd-nosotros-pillar-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            </div>
+            <h3>Inventario Real y Verificado</h3>
+            <p>Stock permanente en Bogotá listo para entrega inmediata sin falsas promesas.</p>
+          </div>
+          <div class="vd-nosotros-pillar">
+            <div class="vd-nosotros-pillar-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <h3>Asesoría Técnica por Nombre y Muestra</h3>
+            <p>Identificamos la pieza exacta según el modelo de su vehículo y síntoma de falla.</p>
+          </div>
+          <div class="vd-nosotros-pillar">
+            <div class="vd-nosotros-pillar-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
+            <h3>Respaldo Multimarcas Diésel</h3>
+            <p>Especialistas en líneas ISUZU, KOREA, RIKKON, TONYCO y SONYCO.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="vd-nosotros-block">
+        <div class="vd-nosotros-cta">
+          <div class="vd-nosotros-cta-copy">
+            <h2 class="vd-nosotros-cta-title">¿TU FLOTA O TALLER NECESITA UN REPUESTO HOY MISMO?</h2>
+            <p class="vd-nosotros-cta-sub">Visítanos en la Cra 55 No. 14-17, Bogotá, o cotiza directamente con nuestro equipo técnico.</p>
+          </div>
+          <div class="vd-nosotros-cta-actions">
+            <a class="vd-nosotros-cta-btn-gold" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quiero cotizar repuestos diésel de alto rendimiento.')}" target="_blank" rel="noopener noreferrer">CONTACTAR ASESOR POR WHATSAPP</a>
+            <a class="vd-nosotros-cta-btn-ghost" href="https://www.google.com/maps/place/VALDIESEL+S.A.S./@4.6307267,-74.109057,17z" target="_blank" rel="noopener noreferrer">CÓMO LLEGAR (GOOGLE MAPS)</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="vd-map-section" style="width:100vw;margin-left:calc(50% - 50vw);margin-top:var(--space-6);">
+        <div style="max-width:1200px;margin:0 auto 12px;padding:0 24px;">
+          <p class="vd-footer-label" style="margin:0 0 6px;">Encuéntranos</p>
+          <p class="vd-footer-text" style="margin:0;font-size:13px;">Cra 55 No. 14-17, Bogotá, Colombia &middot; <a href="https://www.google.com/maps/place/VALDIESEL+S.A.S./@4.6307267,-74.109057,17z" target="_blank" rel="noopener noreferrer" style="color:#F59E0B;text-decoration:none;">Abrir en Google Maps &rarr;</a></p>
+        </div>
+        <iframe title="Ubicación VALDIESEL SAS en Bogotá" src="https://www.google.com/maps?q=4.6307267,-74.109057&z=17&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="display:block;width:100%;height:360px;border:0;filter:grayscale(0.15) contrast(1.05);" allowfullscreen></iframe>
       </div>
-      <iframe title="Ubicación VALDIESEL SAS en Bogotá" src="https://www.google.com/maps?q=4.6307267,-74.109057&z=17&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="display:block;width:100%;height:360px;border:0;filter:grayscale(0.15) contrast(1.05);" allowfullscreen></iframe>
-    </div>
 
     </div>
   `;
