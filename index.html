@@ -1384,24 +1384,62 @@ function logout() { session = null; clientCart = {}; showView('home'); }
 
 function viewAdmin() {
   return `
-    <div class="card" style="padding:20px;margin-bottom:20px;">
-      <p style="font-size:14px;color:#1A2229;margin-bottom:14px;">Crear cliente nuevo</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
-        <input id="new-user" placeholder="usuario" />
-        <input id="new-pass" placeholder="contraseña" />
-        <input id="new-company" placeholder="nombre de empresa" />
-        <input id="new-discount" placeholder="descuento % (ej: 10)" type="number" />
+    <style>
+      #app { padding: 0 !important; max-width: none !important; }
+      .vd-admin { background:#F3F4F6; padding: clamp(24px,4vw,48px) 20px 72px; }
+      .vd-admin-card { background:#FFFFFF; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.05); border:1px solid rgba(11,15,23,0.04); padding: clamp(20px,3vw,32px); margin-bottom:24px; }
+      .vd-admin-title { font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:800; font-size:clamp(1.5rem,2.6vw,2rem); text-transform:uppercase; letter-spacing:0.02em; color:#111827; margin:0 0 6px; }
+      .vd-admin-sub { font-family:'Inter',system-ui,sans-serif; font-size:13px; color:#6B7280; margin:0 0 18px; }
+      .vd-admin-grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+      @media (max-width:640px){ .vd-admin-grid2 { grid-template-columns:1fr; } }
+      .vd-admin-input { width:100%; padding:12px 14px; border:1px solid #D1D5DB; border-radius:8px; background:#FFFFFF; color:#111827; font-family:'Inter',system-ui,sans-serif; font-size:14px; min-height:46px; }
+      .vd-admin-input:focus { outline:none; border-color:#D6392F; box-shadow:0 0 0 3px rgba(214,57,47,0.12); }
+      .vd-admin-actions { margin-top:14px; display:flex; justify-content:flex-end; }
+      .vd-admin-btn { display:inline-flex; align-items:center; justify-content:center; min-height:46px; padding:12px 22px; border:none; border-radius:8px; background:#D6392F; color:#FFFFFF; font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:700; font-size:1rem; letter-spacing:0.05em; text-transform:uppercase; cursor:pointer; box-shadow:0 6px 16px rgba(214,57,47,0.28); transition:transform 160ms var(--vd-ease, cubic-bezier(0.23,1,0.32,1)), box-shadow 200ms ease, background 200ms ease; }
+      .vd-admin-btn:hover { background:#B82E25; transform:translateY(-2px); box-shadow:0 10px 22px rgba(214,57,47,0.34); }
+      .vd-admin-btn:active { transform:scale(0.98); }
+      .vd-admin-table-wrap { overflow-x:auto; }
+      .vd-admin-table { width:100%; border-collapse:collapse; min-width:560px; }
+      .vd-admin-table th { background:#0B0F17; color:#FFFFFF; font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:700; text-transform:uppercase; font-size:0.8rem; letter-spacing:0.08em; text-align:left; padding:12px 14px; }
+      .vd-admin-table td { padding:12px 14px; font-family:'Inter',system-ui,sans-serif; font-size:13px; color:#1A2229; border-bottom:1px solid #F3F4F6; vertical-align:middle; }
+      .vd-admin-table tbody tr:nth-child(even) { background:#F9FAFB; }
+      .vd-admin-table tbody tr:hover { background:#F3F4F6; }
+      .vd-admin-num { font-variant-numeric:tabular-nums; }
+      .vd-admin-total { font-weight:700; color:#111827; }
+      .vd-admin-badge { display:inline-block; padding:3px 10px; border-radius:999px; font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; border:1px solid transparent; }
+      .vd-admin-badge--registered { background:rgba(5,150,105,0.10); color:#059669; border-color:rgba(5,150,105,0.35); }
+      .vd-admin-badge--guest { background:rgba(17,24,39,0.06); color:#4B5563; border-color:rgba(17,24,39,0.18); }
+      @media (max-width:640px){ .vd-admin { padding:16px 12px 48px; } }
+    </style>
+    <div class="vd-admin">
+      <div class="vd-admin-card">
+        <h2 class="vd-admin-title">Crear cliente</h2>
+        <p class="vd-admin-sub">Alta de taller o cliente con acceso a precios y descuentos.</p>
+        <div class="vd-admin-grid2">
+          <input class="vd-admin-input" id="new-user" placeholder="usuario" />
+          <input class="vd-admin-input" id="new-pass" placeholder="contraseña" />
+          <input class="vd-admin-input" id="new-company" placeholder="nombre de empresa" />
+          <input class="vd-admin-input" id="new-discount" placeholder="descuento % (ej: 10)" type="number" />
+        </div>
+        <div class="vd-admin-actions">
+          <button class="btn-primary vd-admin-btn" onclick="createClient()">Crear cliente</button>
+        </div>
+        <p id="admin-msg" style="font-size:12px;min-height:16px;"></p>
       </div>
-      <p id="admin-msg" style="font-size:12px;min-height:16px;"></p>
-      <button class="btn-primary" onclick="createClient()">Crear cliente</button>
-    </div>
-    <div class="card" style="padding:20px;margin-bottom:20px;">
-      <p style="font-size:14px;color:#1A2229;margin-bottom:14px;">Clientes registrados</p>
-      <div id="client-list" style="font-size:13px;">Cargando...</div>
-    </div>
-    <div class="card" style="padding:20px;">
-      <p style="font-size:14px;color:#1A2229;margin-bottom:14px;">Pedidos recibidos</p>
-      <div id="order-list" style="font-size:13px;">Cargando...</div>
+
+      <div class="vd-admin-card">
+        <h2 class="vd-admin-title">Clientes registrados</h2>
+        <div class="vd-admin-table-wrap">
+          <div id="client-list" style="font-size:13px;">Cargando...</div>
+        </div>
+      </div>
+
+      <div class="vd-admin-card">
+        <h2 class="vd-admin-title">Pedidos recibidos</h2>
+        <div class="vd-admin-table-wrap">
+          <div id="order-list" style="font-size:13px;">Cargando...</div>
+        </div>
+      </div>
     </div>
   `;
 }
@@ -1440,10 +1478,14 @@ async function loadClientList() {
     const res = await fetch(API_BASE + '/api/admin/clients?' + params);
     const clients = await res.json();
     const rows = clients.map(u =>
-      '<tr><td style="padding:6px 0;">' + u.username + '</td><td>' + u.company + '</td><td>' + u.discount + '%</td></tr>'
+      '<tr>' +
+        '<td style="padding:6px 0;">' + u.username + '</td>' +
+        '<td style="padding:6px 0;">' + u.company + '</td>' +
+        '<td class="vd-admin-num" style="padding:6px 0;text-align:right;">' + u.discount + '%</td>' +
+      '</tr>'
     );
-    document.getElementById('client-list').innerHTML = rows.length
-      ? '<table style="width:100%;border-collapse:collapse;"><tr style="color:#8993A0;font-size:11px;text-align:left;"><td>Usuario</td><td>Empresa</td><td>Descuento</td></tr>' + rows.join('') + '</table>'
+    document.getElementById('client-list').innerHTML = clients.length
+      ? '<table class="vd-admin-table"><thead><tr><th>Usuario</th><th>Empresa</th><th>Descuento</th></tr></thead><tbody>' + rows.join('') + '</tbody></table>'
       : 'Aún no hay clientes registrados.';
   } catch(e) { document.getElementById('client-list').innerHTML = 'No se pudo conectar al servidor.'; }
   loadOrderList();
@@ -1456,10 +1498,19 @@ async function loadOrderList() {
     const orders = await res.json();
     const rows = orders.map(o => {
       const date = new Date(o.created_at).toLocaleString('es-CO');
-      return '<tr><td style="padding:6px 0;">' + date + '</td><td>' + (o.company||o.username) + '</td><td>' + o.items.length + ' items</td><td>' + fmt(o.total) + '</td></tr>';
+      const registrado = !!(o.userId || o.account || o.registered);
+      const badge = registrado
+        ? '<span class="vd-admin-badge vd-admin-badge--registered">Taller registrado</span>'
+        : '<span class="vd-admin-badge vd-admin-badge--guest">Sin cuenta</span>';
+      return '<tr>' +
+        '<td style="padding:6px 0;">' + date + '</td>' +
+        '<td style="padding:6px 0;">' + (o.company || o.username) + ' ' + badge + '</td>' +
+        '<td style="padding:6px 0;" class="vd-admin-num">' + o.items.length + ' items</td>' +
+        '<td style="padding:6px 0;" class="vd-admin-total"><strong>' + fmt(o.total) + '</strong></td>' +
+      '</tr>';
     });
-    document.getElementById('order-list').innerHTML = rows.length
-      ? '<table style="width:100%;border-collapse:collapse;"><tr style="color:#8993A0;font-size:11px;text-align:left;"><td>Fecha</td><td>Cliente</td><td>Items</td><td>Total</td></tr>' + rows.join('') + '</table>'
+    document.getElementById('order-list').innerHTML = orders.length
+      ? '<table class="vd-admin-table"><thead><tr><th>Fecha</th><th>Cliente</th><th>Items</th><th>Total</th></tr></thead><tbody>' + rows.join('') + '</tbody></table>'
       : 'Aún no hay pedidos.';
   } catch(e) { document.getElementById('order-list').innerHTML = 'No se pudo conectar al servidor.'; }
 }
