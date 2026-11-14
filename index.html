@@ -1041,44 +1041,7 @@ window.addEventListener('load', fitHero);
 function viewHome() {
   return `
   <style>#app { padding: 0 !important; max-width: none !important; }</style>
-  <style>
-    .vd-marquee { background:#F9FAFB; padding:clamp(28px,4vw,44px) 0; border-top:1px solid #E5E7EB; border-bottom:1px solid #E5E7EB; }
-    .vd-marquee-head { max-width:1200px; margin:0 auto clamp(16px,3vw,24px); padding:0 24px; text-align:center; }
-    .vd-marquee-title { font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:800; font-size:clamp(1.5rem,3vw,2.1rem); text-transform:uppercase; color:#111827; margin:0 0 6px; letter-spacing:0.02em; }
-    .vd-marquee-sub { font-family:'Inter',system-ui,sans-serif; font-size:1rem; color:#6B7280; margin:0; }
-    .vd-marquee-viewport { overflow:hidden; position:relative; }
-    .vd-marquee-viewport::before, .vd-marquee-viewport::after { content:''; position:absolute; top:0; bottom:0; width:clamp(40px,8vw,120px); z-index:2; pointer-events:none; }
-    .vd-marquee-viewport::before { left:0; background:linear-gradient(to right, #F9FAFB, rgba(249,250,251,0)); }
-    .vd-marquee-viewport::after { right:0; background:linear-gradient(to left, #F9FAFB, rgba(249,250,251,0)); }
-    .vd-marquee-track { display:flex; gap:20px; width:max-content; animation: vdMarquee 32s linear infinite; will-change:transform; }
-    .vd-marquee-track:hover { animation-play-state: paused; }
-    @keyframes vdMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    .vd-marquee-card { background:#FFFFFF; border:1px solid #E5E7EB; border-radius:12px; padding:14px 28px; box-shadow:0 2px 8px rgba(11,15,23,0.04); display:flex; align-items:center; justify-content:center; flex:0 0 auto; min-width:150px; height:76px; transition: box-shadow .2s ease, transform .2s ease; }
-    .vd-marquee-card:hover { box-shadow:0 8px 20px rgba(11,15,23,0.08); transform:translateY(-2px); }
-    .vd-marquee-card img { max-height:40px; width:auto; object-fit:contain; filter:grayscale(1) opacity(0.65); transition: filter .3s ease, transform .3s ease; }
-    .vd-marquee-card:hover img { filter:grayscale(0) opacity(1); transform:scale(1.06); }
-    @media (prefers-reduced-motion: reduce) { .vd-marquee-track { animation: none; } }
-    @media (max-width: 768px) { .vd-marquee-card { min-width:120px; height:64px; padding:10px 20px; } .vd-marquee-card img { max-height:32px; } }
-
-    /* ---- Banner de conversion (registro / precios) ---- */
-    .vd-registro-banner { position: relative; width: 100vw; margin-left: calc(50% - 50vw); overflow: hidden; isolation: isolate; background-color: #0B0F17; background-image: url('assets/banner-registro-precios.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 80px 20px; }
-    .vd-registro-banner::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(11, 15, 23, 0.9) 0%, rgba(11, 15, 23, 0.8) 100%); }
-    .vd-registro-inner { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; text-align: center; }
-    .vd-registro-title { font-family: 'Barlow Condensed', 'Archivo Narrow', sans-serif; font-weight: 800; font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.05; text-transform: uppercase; color: #FFFFFF; margin: 0 0 12px; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6); }
-    .vd-registro-sub { font-family: 'Inter', system-ui, sans-serif; font-size: 1.05rem; line-height: 1.5; color: #E5E7EB; margin: 0 auto 28px; max-width: 60ch; text-shadow: 0 2px 14px rgba(0, 0, 0, 0.5); }
-    .vd-registro-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .vd-registro-btn-gold { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 14px 28px; border-radius: 8px; background: #F59E0B; color: #111827; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; border: 1.5px solid #F59E0B; box-shadow: 0 10px 26px rgba(245, 158, 11, 0.28); transition: transform .16s var(--vd-ease, cubic-bezier(0.23, 1, 0.32, 1)), background .2s, box-shadow .2s; cursor: pointer; }
-    .vd-registro-btn-gold:hover { background: #FBB024; border-color: #FBB024; transform: translateY(-2px); box-shadow: 0 14px 32px rgba(245, 158, 11, 0.38); }
-    .vd-registro-btn-gold:active { transform: scale(0.97); }
-    .vd-registro-btn-ghost { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 14px 28px; border-radius: 8px; background: transparent; color: #FFFFFF; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; border: 1.5px solid rgba(255, 255, 255, 0.85); backdrop-filter: blur(4px); transition: transform .16s var(--vd-ease, cubic-bezier(0.23, 1, 0.32, 1)), background .2s; cursor: pointer; }
-    .vd-registro-btn-ghost:hover { background: rgba(255, 255, 255, 0.10); transform: translateY(-2px); }
-    .vd-registro-btn-ghost:active { transform: scale(0.97); }
-    @media (max-width: 768px) {
-      .vd-registro-banner { padding: 56px 20px; }
-      .vd-registro-actions { flex-direction: column; align-items: stretch; }
-      .vd-registro-btn-gold, .vd-registro-btn-ghost { width: 100%; }
-    }
-  </style>
+  
   <div class="vd">
 
     <div id="vd-hero"  style="position:relative;height:440px;overflow:hidden;width:100vw;margin-left:calc(50% - 50vw);">
@@ -1097,33 +1060,7 @@ function viewHome() {
       </div>
     </div>
 
-    <section class="vd-marquee" aria-label="Marcas y vehiculos que atendemos">
-      <div class="vd-marquee-head">
-        <h2 class="vd-marquee-title">Repuestos según la marca de tu vehículo</h2>
-        <p class="vd-marquee-sub">Inventario permanente especializado para flotas ligeras y camiones en Bogotá.</p>
-      </div>
-      <div class="vd-marquee-viewport">
-        <div class="vd-marquee-track">
-          ${['isuzu','hino','rikkon','tonyco','korea','sonyco','isuzu','hino','rikkon','tonyco','korea','sonyco'].map(b => `
-            <div class="vd-marquee-card">
-              <img src="assets/logo-${b}.svg" alt="${b.toUpperCase()}" loading="lazy" decoding="async">
-            </div>`).join('')}
-        </div>
-      </div>
-    </section>
-
-    <section class="vd-registro-banner" aria-labelledby="vd-registro-title">
-      <div class="vd-registro-inner">
-        <h2 class="vd-registro-title" id="vd-registro-title">ACCEDE AL CATÁLOGO COMPLETO Y PRECIOS NETOS PARA TALLERES</h2>
-        <p class="vd-registro-sub">Regístrate en menos de 1 minuto para desbloquear el inventario en tiempo real, referencias de alta rotación y descuentos exclusivos para flotas en Bogotá.</p>
-        <div class="vd-registro-actions">
-          <button class="vd-registro-btn-gold" onclick="goPortal()">CREAR CUENTA GRATIS</button>
-          <button class="vd-registro-btn-ghost" onclick="goPortal()">INICIAR SESIÓN</button>
-        </div>
-      </div>
-    </section>
-
-    <div class="vd-seals" style="width:100vw;margin-left:calc(50% - 50vw);">
+    <<div class="vd-seals" style="width:100vw;margin-left:calc(50% - 50vw);">
       ${VD_TRUST.map(t => `<div style="display:flex;align-items:center;gap:8px;">
         <img src="${VD_ICON}${t.icon}" alt="" style="width:17px;height:17px;opacity:.55;">
         <span>${t.label}</span>
@@ -1155,7 +1092,6 @@ function viewHome() {
         <p class="vd-cat-count">${vdCategoryCounts()[c.name]} refs</p>
       </div>`).join('')}
     </section>
-
 
 
     <section id="vd-destacados" style="max-width:1200px;margin:0 auto;padding:44px 24px 56px;">
@@ -1199,8 +1135,6 @@ function viewHome() {
         ${[0,1,2,3].map(i => `<button class="val-banner-dot${i===0?' on':''}" onclick="valBannerGo(${i})" aria-label="Slide ${i+1}"></button>`).join('')}
       </div>
     </section>
-
-
 
 
     <div class="vd-map-section" style="width:100vw;margin-left:calc(50% - 50vw);margin-top:var(--space-6);">
@@ -1630,6 +1564,44 @@ function viewCatalog() {
       @media (max-width: 480px) {
         #product-grid-pub { grid-template-columns: 1fr !important; }
       }
+    
+    .vd-marquee { background:#F9FAFB; padding:clamp(28px,4vw,44px) 0; border-top:1px solid #E5E7EB; border-bottom:1px solid #E5E7EB; }
+    .vd-marquee-head { max-width:1200px; margin:0 auto clamp(16px,3vw,24px); padding:0 24px; text-align:center; }
+    .vd-marquee-title { font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:800; font-size:clamp(1.5rem,3vw,2.1rem); text-transform:uppercase; color:#111827; margin:0 0 6px; letter-spacing:0.02em; }
+    .vd-marquee-sub { font-family:'Inter',system-ui,sans-serif; font-size:1rem; color:#6B7280; margin:0; }
+    .vd-marquee-viewport { overflow:hidden; position:relative; }
+    .vd-marquee-viewport::before, .vd-marquee-viewport::after { content:''; position:absolute; top:0; bottom:0; width:clamp(40px,8vw,120px); z-index:2; pointer-events:none; }
+    .vd-marquee-viewport::before { left:0; background:linear-gradient(to right, #F9FAFB, rgba(249,250,251,0)); }
+    .vd-marquee-viewport::after { right:0; background:linear-gradient(to left, #F9FAFB, rgba(249,250,251,0)); }
+    .vd-marquee-track { display:flex; gap:20px; width:max-content; animation: vdMarquee 32s linear infinite; will-change:transform; }
+    .vd-marquee-track:hover { animation-play-state: paused; }
+    @keyframes vdMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .vd-marquee-card { background:#FFFFFF; border:1px solid #E5E7EB; border-radius:12px; padding:14px 28px; box-shadow:0 2px 8px rgba(11,15,23,0.04); display:flex; align-items:center; justify-content:center; flex:0 0 auto; min-width:150px; height:76px; transition: box-shadow .2s ease, transform .2s ease; }
+    .vd-marquee-card:hover { box-shadow:0 8px 20px rgba(11,15,23,0.08); transform:translateY(-2px); }
+    .vd-marquee-card img { max-height:40px; width:auto; object-fit:contain; filter:grayscale(1) opacity(0.65); transition: filter .3s ease, transform .3s ease; }
+    .vd-marquee-card:hover img { filter:grayscale(0) opacity(1); transform:scale(1.06); }
+    @media (prefers-reduced-motion: reduce) { .vd-marquee-track { animation: none; } }
+    @media (max-width: 768px) { .vd-marquee-card { min-width:120px; height:64px; padding:10px 20px; } .vd-marquee-card img { max-height:32px; } }
+
+    /* ---- Banner de conversion (registro / precios) ---- */
+    .vd-registro-banner { position: relative; width: 100vw; margin-left: calc(50% - 50vw); overflow: hidden; isolation: isolate; background-color: #0B0F17; background-image: url('assets/banner-registro-precios.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 80px 20px; }
+    .vd-registro-banner::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, rgba(11, 15, 23, 0.9) 0%, rgba(11, 15, 23, 0.8) 100%); }
+    .vd-registro-inner { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; text-align: center; }
+    .vd-registro-title { font-family: 'Barlow Condensed', 'Archivo Narrow', sans-serif; font-weight: 800; font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.05; text-transform: uppercase; color: #FFFFFF; margin: 0 0 12px; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6); }
+    .vd-registro-sub { font-family: 'Inter', system-ui, sans-serif; font-size: 1.05rem; line-height: 1.5; color: #E5E7EB; margin: 0 auto 28px; max-width: 60ch; text-shadow: 0 2px 14px rgba(0, 0, 0, 0.5); }
+    .vd-registro-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .vd-registro-btn-gold { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 14px 28px; border-radius: 8px; background: #F59E0B; color: #111827; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; border: 1.5px solid #F59E0B; box-shadow: 0 10px 26px rgba(245, 158, 11, 0.28); transition: transform .16s var(--vd-ease, cubic-bezier(0.23, 1, 0.32, 1)), background .2s, box-shadow .2s; cursor: pointer; }
+    .vd-registro-btn-gold:hover { background: #FBB024; border-color: #FBB024; transform: translateY(-2px); box-shadow: 0 14px 32px rgba(245, 158, 11, 0.38); }
+    .vd-registro-btn-gold:active { transform: scale(0.97); }
+    .vd-registro-btn-ghost { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 14px 28px; border-radius: 8px; background: transparent; color: #FFFFFF; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; border: 1.5px solid rgba(255, 255, 255, 0.85); backdrop-filter: blur(4px); transition: transform .16s var(--vd-ease, cubic-bezier(0.23, 1, 0.32, 1)), background .2s; cursor: pointer; }
+    .vd-registro-btn-ghost:hover { background: rgba(255, 255, 255, 0.10); transform: translateY(-2px); }
+    .vd-registro-btn-ghost:active { transform: scale(0.97); }
+    @media (max-width: 768px) {
+      .vd-registro-banner { padding: 56px 20px; }
+      .vd-registro-actions { flex-direction: column; align-items: stretch; }
+      .vd-registro-btn-gold, .vd-registro-btn-ghost { width: 100%; }
+    }
+  
     </style>
     <div class="vd">
 
@@ -1667,6 +1639,32 @@ function viewCatalog() {
         <div style="display:flex;justify-content:center;margin-top:16px;">
           <button id="load-more-pub" class="btn-ghost hidden" onclick="visibleCount+=PAGE_SIZE;renderPublicGrid();">Cargar más productos</button>
         </div>
+
+    <section class="vd-marquee" aria-label="Marcas y vehiculos que atendemos">
+      <div class="vd-marquee-head">
+        <h2 class="vd-marquee-title">Repuestos según la marca de tu vehículo</h2>
+        <p class="vd-marquee-sub">Inventario permanente especializado para flotas ligeras y camiones en Bogotá.</p>
+      </div>
+      <div class="vd-marquee-viewport">
+        <div class="vd-marquee-track">
+          ${['isuzu','hino','rikkon','tonyco','korea','sonyco','isuzu','hino','rikkon','tonyco','korea','sonyco'].map(b => `
+            <div class="vd-marquee-card">
+              <img src="assets/logo-${b}.svg" alt="${b.toUpperCase()}" loading="lazy" decoding="async">
+            </div>`).join('')}
+        </div>
+      </div>
+    </section>
+
+    <section class="vd-registro-banner" aria-labelledby="vd-registro-title">
+      <div class="vd-registro-inner">
+        <h2 class="vd-registro-title" id="vd-registro-title">ACCEDE AL CATÁLOGO COMPLETO Y PRECIOS NETOS PARA TALLERES</h2>
+        <p class="vd-registro-sub">Regístrate en menos de 1 minuto para desbloquear el inventario en tiempo real, referencias de alta rotación y descuentos exclusivos para flotas en Bogotá.</p>
+        <div class="vd-registro-actions">
+          <button class="vd-registro-btn-gold" onclick="goPortal()">CREAR CUENTA GRATIS</button>
+          <button class="vd-registro-btn-ghost" onclick="goPortal()">INICIAR SESIÓN</button>
+        </div>
+      </div>
+    </section>
 
         <div id="checkout-msg-pub" style="font-size:13px;color:#7BC97B;text-align:center;margin-top:16px;"></div>
 
