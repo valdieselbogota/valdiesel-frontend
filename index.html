@@ -358,8 +358,8 @@ html { overflow-x: clip; }
   #val-welcome-popup { position:fixed; inset:0; z-index:10000; display:none; align-items:center; justify-content:center; background:rgba(11,15,23,0.8); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); padding:16px; overscroll-behavior:contain; }
   #val-welcome-popup.open { display:flex; }
   .val-popup-card { position:relative; background:#111827; color:#FFFFFF; border-radius:16px; width:100%; max-width:540px; max-height:calc(100vh - 28px); max-height:calc(100dvh - 28px); overflow-y:auto; -webkit-overflow-scrolling:touch; box-shadow:0 25px 50px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.1); display:flex; flex-direction:column; }
-  .val-popup-img-wrap { position:relative; background:linear-gradient(135deg,#1f2937 0%,#0f172a 100%); flex:0 0 auto; }
-  .val-popup-img { width:100%; height:auto; display:block; }
+  .val-popup-img-wrap { position:relative; background:linear-gradient(135deg,#1f2937 0%,#0f172a 100%); flex:0 0 auto; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .val-popup-img { width:100%; height:auto; max-height:min(54vh, 420px); object-fit:contain; object-position:center; display:block; }
   .val-popup-img-wrap.img-failed .val-popup-img { display:none; }
   .val-popup-img-wrap.img-failed { min-height:120px; display:flex; align-items:center; justify-content:center; }
   .val-popup-img-wrap.img-failed::after { content:'10% DE DESCUENTO ESPECIAL - cliente nuevo'; color:#F59E0B; font-weight:700; text-align:center; padding:16px; font-size:13px; }
@@ -380,6 +380,7 @@ html { overflow-x: clip; }
     .val-popup-content { padding:18px; gap:10px; }
     .val-popup-title { font-size:clamp(1.35rem,5vw,1.9rem); }
     .val-popup-text { font-size:13px; }
+    .val-popup-img { max-height:min(46vh, 360px); }
   }
   @media (max-width:420px) {
     .val-popup-text { display:none; }
@@ -2263,11 +2264,14 @@ loadProducts().then(() => {
     p.classList.remove('open');
     p.style.display='none';
     document.body.style.overflow='';
-    localStorage.setItem('val_popup_closed','true');
   };
   document.addEventListener("DOMContentLoaded", function(){
     setWaLink();
-    if(!localStorage.getItem('val_popup_closed')) setTimeout(window.openValPopup, 2000);
+    /* El popup de bienvenida debe mostrarse en CADA ingreso a la pagina,
+       tanto en PC como en movil. Se limpia la marca antigua que lo
+       bloqueaba en visitas recurrentes. */
+    try { localStorage.removeItem('val_popup_closed'); } catch(e) {}
+    setTimeout(window.openValPopup, 1200);
   });
   document.addEventListener('click', function(e){
     var p=document.getElementById('val-welcome-popup');
