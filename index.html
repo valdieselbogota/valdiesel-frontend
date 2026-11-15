@@ -359,23 +359,16 @@ html { overflow-x: clip; }
   #val-welcome-popup.open { display:flex; }
   .val-popup-card { position:relative; background:#111827; color:#FFFFFF; border-radius:16px; width:100%; max-width:540px; max-height:calc(100vh - 28px); max-height:calc(100dvh - 28px); overflow-y:auto; -webkit-overflow-scrolling:touch; box-shadow:0 25px 50px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.1); display:flex; flex-direction:column; }
   .val-popup-img-wrap { position:relative; background:linear-gradient(135deg,#1f2937 0%,#0f172a 100%); flex:0 0 auto; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-  .val-popup-img { width:100%; height:auto; max-height:min(54vh, 420px); object-fit:contain; object-position:center; display:block; }
+  .val-popup-img { width:100%; height:auto; max-height:min(86vh, 560px); object-fit:contain; object-position:center; display:block; }
   .val-popup-img-wrap.img-failed .val-popup-img { display:none; }
   .val-popup-img-wrap.img-failed { min-height:120px; display:flex; align-items:center; justify-content:center; }
   .val-popup-img-wrap.img-failed::after { content:'10% DE DESCUENTO ESPECIAL - cliente nuevo'; color:#F59E0B; font-weight:700; text-align:center; padding:16px; font-size:13px; }
-  .val-popup-content { padding:16px 20px 20px; display:flex; flex-direction:column; justify-content:center; gap:8px; }
   .val-popup-close { position:absolute; top:10px; right:10px; width:30px; height:30px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1.1rem; color:#fff; background:rgba(11,15,23,0.55); border:1px solid rgba(255,255,255,0.35); border-radius:50%; line-height:1; z-index:3; backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); }
   .val-popup-close:hover { color:#fff; background:rgba(11,15,23,0.8); }
-  .val-popup-btn-primary { background:#F59E0B; color:#111827; font-weight:700; border:none; border-radius:6px; padding:12px 18px; font-size:14px; text-transform:uppercase; cursor:pointer; text-decoration:none; display:inline-block; text-align:center; box-shadow:0 8px 20px rgba(245,158,11,0.35); transition:background .15s,transform .15s; }
-  .val-popup-btn-primary:hover { background:#D97706; transform:translateY(-1px); }
-  .val-popup-btn-secondary { background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,0.6); border-radius:6px; padding:10px 18px; font-size:13px; font-weight:600; cursor:pointer; text-decoration:none; display:inline-block; text-align:center; transition:background .15s; }
-  .val-popup-btn-secondary:hover { background:rgba(255,255,255,0.1); }
-  .val-popup-actions { display:flex; flex-direction:column; gap:8px; margin-top:4px; }
   @media (max-width:768px) {
     #val-welcome-popup { padding:12px; align-items:center; }
     .val-popup-card { max-width:100%; border-radius:12px; }
-    .val-popup-content { padding:18px; gap:10px; }
-    .val-popup-img { max-height:min(46vh, 360px); }
+    .val-popup-img { max-height:min(76vh, 480px); }
   }
   .vd-footer { background:#1A1817; color:rgba(255,255,255,.72); padding:var(--space-8) 24px var(--space-4); }
   .vd-footer-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:var(--space-6); }
@@ -2220,26 +2213,13 @@ loadProducts().then(() => {
     <div class="val-popup-img-wrap">
       <img class="val-popup-img" src="assets/popup-bienvenida.jpg" srcset="assets/popup-bienvenida-640.jpg 640w, assets/popup-bienvenida.jpg 1024w" sizes="(max-width:768px) 92vw, 540px" alt="Bienvenida VALDIESEL - 10% de descuento para cliente nuevo" width="1024" height="1024" loading="eager" decoding="async" onerror="this.closest('.val-popup-img-wrap').classList.add('img-failed');">
     </div>
-    <div class="val-popup-content">
-      <div class="val-popup-actions">
-        <a class="val-popup-btn-primary" id="val-popup-wa" href="#" target="_blank" rel="noopener">Reclamar por WhatsApp</a>
-        <button class="val-popup-btn-secondary" id="val-popup-catalog">Ver catálogo completo</button>
-      </div>
-    </div>
   </div>
 </div>
 <script>
 (function(){
-  function setWaLink(){
-    var wa=document.getElementById('val-popup-wa');
-    if(wa && typeof WHATSAPP_NUMBER!=='undefined'){
-      wa.href='https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent('Hola, soy cliente nuevo y quiero reclamar mi descuento especial de bienvenida.');
-    }
-  }
   window.openValPopup = function(){
     var p=document.getElementById('val-welcome-popup');
     if(!p) return;
-    setWaLink();
     p.classList.add('open');
     p.style.display='flex';
     document.body.style.overflow='hidden';
@@ -2252,7 +2232,6 @@ loadProducts().then(() => {
     document.body.style.overflow='';
   };
   document.addEventListener("DOMContentLoaded", function(){
-    setWaLink();
     /* El popup de bienvenida debe mostrarse en CADA ingreso a la pagina,
        tanto en PC como en movil. Se limpia la marca antigua que lo
        bloqueaba en visitas recurrentes. */
@@ -2263,11 +2242,6 @@ loadProducts().then(() => {
     var p=document.getElementById('val-welcome-popup');
     if(!p) return;
     if(e.target===p || (e.target && e.target.id==='val-popup-close')) closeValPopup();
-    if(e.target && e.target.id==='val-popup-catalog'){
-      closeValPopup();
-      if(typeof showView==='function') showView('catalogo');
-      setTimeout(function(){ var el=document.getElementById('vd-destacados'); if(el) el.scrollIntoView({behavior:'smooth'}); },100);
-    }
   });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeValPopup(); });
 })();
