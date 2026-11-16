@@ -1085,22 +1085,55 @@ function viewHome() {
     </section>
 
           <style>
-            .val-hero-subcta-section { padding: 40px 20px; background: #F9FAFB; text-align: center; }
-            .val-hero-subcta-section .val-hero-subcta-title { font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:800; font-size: clamp(1.7rem, 3.6vw, 2.6rem); line-height: 1.05; text-transform: uppercase; color:#111827; margin: 0 0 14px; text-align: center; }
-            .val-hero-subcta-sub { font-family:'Inter',system-ui,sans-serif; font-size: 1.1rem; line-height: 1.5; color:#4B5563; max-width: 60ch; margin: 0 auto 26px; text-align: center; }
-            .val-hero-subcta-actions { display:flex; justify-content:center; }
-            .val-hero-subcta-btn { display:inline-flex; align-items:center; justify-content:center; min-height:50px; padding:14px 40px; border-radius:8px; background:#D6392F; color:#FFFFFF; font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:700; font-size: clamp(1rem, 2vw, 1.15rem); letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; border:1.5px solid #D6392F; box-shadow:0 10px 26px rgba(214,57,47,0.35); transition: transform .16s var(--vd-ease, cubic-bezier(0.23,1,0.32,1)), background .2s, box-shadow .2s; }
-            .val-hero-subcta-btn:hover { background:#B82E25; transform:translateY(-2px); box-shadow:0 14px 32px rgba(214,57,47,0.45); }
-            .val-hero-subcta-btn:active { transform:scale(0.97); }
+            .val-benefits { background:#F9FAFB; border-bottom:1px solid #E5E7EB; }
+            .val-benefits-list { width:100%; max-width:1180px; margin:0 auto; padding:clamp(20px,2.8vw,32px) clamp(20px,4vw,48px); list-style:none; display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(14px,2.2vw,28px); }
+            .val-benefit { display:flex; align-items:flex-start; gap:11px; position:relative; }
+            .val-benefit + .val-benefit::before { content:''; position:absolute; left:calc(-1 * clamp(7px,1.1vw,14px)); top:5px; bottom:5px; width:1px; background:#E1E3E7; }
+            .val-benefit-icon { flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:9px; background:rgba(214,57,47,0.10); color:var(--brand-red-700); font-size:19px; line-height:1; }
+            .val-benefits .val-benefit-title { font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:700; font-size:clamp(.98rem,1.3vw,1.06rem); letter-spacing:.03em; text-transform:uppercase; color:#111827; margin:0 0 3px; line-height:1.15; }
+            .val-benefit-desc { font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:13.5px; line-height:1.45; color:#4B5563; margin:0; }
+            @media (max-width:900px) {
+              .val-benefits-list { grid-template-columns:repeat(2,1fr); gap:18px 24px; }
+              .val-benefit:nth-child(odd)::before { content:none; }
+            }
+            @media (max-width:520px) {
+              .val-benefits-list { grid-template-columns:1fr; gap:15px; padding:20px 20px 22px; }
+              .val-benefit + .val-benefit::before { content:none; }
+            }
           </style>
-          <div class="val-hero-subcta-section">
-            <h2 class="val-hero-subcta-title">REPUESTOS Y AUTOPARTES DIÉSEL QUE NO DETIENEN TU FLOTA</h2>
-            <p class="val-hero-subcta-sub">Inventario permanente, despacho inmediato en Bogotá y el respaldo de más de cuatro décadas junto a los talleres.</p>
-            <div class="val-hero-subcta-actions">
-              <a class="val-hero-subcta-btn" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quiero cotizar repuestos diésel de alto rendimiento.')}" target="_blank" rel="noopener">COTIZAR REPUESTOS AHORA</a>
-            </div>
-          </div>
-    <div class="vd-seals" style="width:100vw;margin-left:calc(50% - 50vw);">
+          <section class="val-benefits" aria-label="Por qué comprar en VALDIESEL">
+            <ul class="val-benefits-list">
+              <li class="val-benefit">
+                <span class="val-benefit-icon" aria-hidden="true"><i class="ti ti-package"></i></span>
+                <div>
+                  <h2 class="val-benefit-title">Inventario permanente</h2>
+                  <p class="val-benefit-desc">Referencias de las series que trabajamos, disponibles en bodega Bogotá.</p>
+                </div>
+              </li>
+              <li class="val-benefit">
+                <span class="val-benefit-icon" aria-hidden="true"><i class="ti ti-truck"></i></span>
+                <div>
+                  <h2 class="val-benefit-title">Despacho el mismo día</h2>
+                  <p class="val-benefit-desc">Entrega en Bogotá y sabana para talleres y flotas que no pueden parar.</p>
+                </div>
+              </li>
+              <li class="val-benefit">
+                <span class="val-benefit-icon" aria-hidden="true"><i class="ti ti-shield-check"></i></span>
+                <div>
+                  <h2 class="val-benefit-title">Originales y garantizados</h2>
+                  <p class="val-benefit-desc">Piezas con garantía respaldada, sin adaptaciones ni reemplazos genéricos.</p>
+                </div>
+              </li>
+              <li class="val-benefit">
+                <span class="val-benefit-icon" aria-hidden="true"><i class="ti ti-settings"></i></span>
+                <div>
+                  <h2 class="val-benefit-title">Asesoría de técnico a técnico</h2>
+                  <p class="val-benefit-desc">Más de 40 años identificando la referencia exacta que necesita su motor.</p>
+                </div>
+              </li>
+            </ul>
+          </section>
+    <div class="vd-seals" style="width:100%;">
       ${VD_TRUST.map(t => `<div style="display:flex;align-items:center;gap:8px;">
         <img src="${VD_ICON}${t.icon}" alt="" style="width:17px;height:17px;opacity:.55;">
         <span>${t.label}</span>
