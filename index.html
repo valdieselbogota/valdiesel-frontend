@@ -96,16 +96,33 @@
   .vd .vd-price-old { color:var(--vd-muted); font-size:12px; margin:0; text-decoration:line-through;
     font-variant-numeric:tabular-nums; font-feature-settings:"tnum"; }
   /* ===== Hero pantalla 3a ===== */
-  .vd-hero { position:relative; background:#1A1817; overflow:hidden; }
-  .vd-slide { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; will-change:opacity; transition:opacity .7s var(--vd-ease-in-out); }
+    .vd-slide { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; will-change:opacity; transition:opacity .7s var(--vd-ease-in-out); }
   .vd-slide.on { opacity:1; }
-  .vd-hero-grid { display:grid; grid-template-columns:1.05fr 1fr; gap:var(--space-8); align-items:center; padding:var(--space-8); position:relative; }
-  .vd-hero::before { content:''; position:absolute; top:0; left:0; width:100%; height:3px; background:var(--brand-red); transform:scaleX(0); transform-origin:left; will-change:transform; animation:vdRule 0.5s var(--vd-ease) 0.2s forwards; }
-  .vd-hero-copy { display:flex; flex-direction:column; justify-content:center; gap:18px; position:relative; z-index:2; }
-  .vd-hero-kicker { font-family:'Playfair Display',Georgia,serif; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--brand-red-700); font-variant-numeric:tabular-nums; margin:0; }
-  .vd .vd-hero-title { font-family:'Cormorant Garamond',Georgia,serif; font-weight:400; font-size:50px; line-height:1.05; color:#fff; margin:0; letter-spacing:-.01em; }
-  .vd-hero-sub { font-family:'Lora',Georgia,serif; font-size:16px; line-height:1.55; color:rgba(255,255,255,.86); text-align:justify; max-width:44ch; margin:0; }
-  .vd-hero-ctas { display:flex; gap:12px; flex-wrap:wrap; margin-top:4px; }
+  .val-hero { position:relative; isolation:isolate; width:100%; display:flex; align-items:center; overflow:hidden; background:#0B0F17; min-height:clamp(500px,60vh,640px); }
+  .val-hero-media { position:absolute; inset:0; z-index:-2; overflow:hidden; }
+  .val-hero-overlay { position:absolute; inset:0; z-index:-1; pointer-events:none; background:linear-gradient(90deg, rgba(11,15,23,0.92) 0%, rgba(11,15,23,0.75) 100%); }
+  .val-hero::after { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--brand-red-700); z-index:3; }
+  .val-hero-inner { width:100%; max-width:1180px; margin:0 auto; padding:clamp(30px,5vw,66px) clamp(20px,4vw,48px); }
+  .val-hero-copy { display:flex; flex-direction:column; align-items:flex-start; gap:clamp(13px,1.5vw,19px); max-width:780px; position:relative; z-index:2; }
+  .val-hero-kicker { display:inline-flex; align-items:center; gap:10px; margin:0; font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:12px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.80); }
+  .val-hero-kicker::before { content:''; width:34px; height:3px; border-radius:2px; background:var(--brand-red-700); }
+  .val-hero .val-hero-title { font-family:'Barlow Condensed','Archivo Narrow','Arial Narrow',sans-serif; font-weight:800; font-size:clamp(2.35rem,4.9vw,4.05rem); line-height:.95; letter-spacing:.005em; text-transform:uppercase; color:#FFFFFF; margin:0; max-width:22ch; text-shadow:0 2px 4px rgba(0,0,0,0.5); text-wrap:balance; }
+  .val-hero-tags { display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin:2px 0 0; padding:10px 15px; max-width:100%; border-radius:10px; background:rgba(214,57,47,0.14); border:1px solid rgba(214,57,47,0.42); }
+  .val-hero-tags-label { font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:11px; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:#FFB4AE; white-space:nowrap; }
+  .val-hero-tags-list { display:flex; flex-wrap:wrap; align-items:center; gap:6px 14px; margin:0; padding:0; list-style:none; }
+  .val-hero-tags-list li { position:relative; font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:12.5px; font-weight:600; letter-spacing:.02em; color:#FFFFFF; white-space:nowrap; }
+  .val-hero-tags-list li + li::before { content:'\2022'; position:absolute; left:-10px; color:rgba(255,255,255,.40); }
+  .val-hero-sub { font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:clamp(14.5px,1.15vw,16.5px); line-height:1.6; color:rgba(255,255,255,.88); margin:0; max-width:58ch; }
+  .val-hero-ctas { display:flex; flex-wrap:wrap; gap:12px; margin-top:8px; }
+  .val-hero-btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:52px; padding:14px 26px; border-radius:8px; border:1.5px solid transparent; font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:700; font-size:1.06rem; letter-spacing:.05em; text-transform:uppercase; text-decoration:none; cursor:pointer; transition:transform .18s var(--vd-ease,cubic-bezier(.23,1,.32,1)), box-shadow .18s ease, background .18s ease, border-color .18s ease; }
+  .val-hero-btn .ti { font-size:1.2em; line-height:1; }
+  .val-hero-btn--primary { background:var(--brand-red-700); border-color:var(--brand-red-700); color:#FFFFFF; box-shadow:0 10px 26px rgba(214,57,47,0.34); }
+  .val-hero-btn--primary:hover { background:#B82E25; border-color:#B82E25; transform:translateY(-3px); box-shadow:0 16px 34px rgba(214,57,47,0.46); }
+  .val-hero-btn--primary:active { transform:translateY(-1px) scale(.995); }
+  .val-hero-btn--ghost { background:rgba(255,255,255,0.06); border-color:rgba(182,130,53,0.62); color:#FFFFFF; box-shadow:0 6px 20px rgba(0,0,0,0.25); }
+  .val-hero-btn--ghost:hover { background:rgba(182,130,53,0.18); border-color:rgba(214,181,120,0.90); transform:translateY(-3px); color:#FFFFFF; }
+  .val-hero-btn--ghost:active { transform:translateY(-1px) scale(.995); }
+  .val-hero-btn:focus-visible { outline:2px solid #FFFFFF; outline-offset:3px; }
   .val-banner-carousel { position:relative; max-width:960px; margin:var(--space-6) auto; border-radius:var(--radius-md); overflow:hidden; background:#1A1817; aspect-ratio:16/9; }
   .val-banner-track { position:absolute; inset:0; }
   .val-banner-slide { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .7s ease-in-out; }
@@ -118,13 +135,12 @@
   .val-banner-dot { width:8px; height:8px; border-radius:999px; background:rgba(255,255,255,0.4); border:none; cursor:pointer; padding:0; transition:background .2s, transform .2s; }
   .val-banner-dot.on { background:#F59E0B; transform:scale(1.3); }
   @media (max-width:768px) { .val-banner-carousel { aspect-ratio:4/3; } }
-  .vd-hero-copy > * { animation: vdUp .6s var(--vd-ease) both; }
-  .vd-hero-copy > *:nth-child(1) { animation-delay: .15s; }
-  .vd-hero-copy > *:nth-child(2) { animation-delay: .25s; }
-  .vd-hero-copy > *:nth-child(3) { animation-delay: .35s; }
-  .vd-hero-copy > *:nth-child(4) { animation-delay: .45s; }
-  .vd .vd-hero .btn-primary { background:transparent; color:var(--brand-red-700); border:1px solid var(--brand-red); padding:11px 20px; }
-  .vd .vd-hero-ctas .btn-primary { background:transparent; color:var(--brand-red-700); border:1px solid var(--brand-red); padding:11px 20px; }
+  .val-hero-copy > * { animation: vdUp .6s var(--vd-ease) both; }
+  .val-hero-copy > *:nth-child(1) { animation-delay: .10s; }
+  .val-hero-copy > *:nth-child(2) { animation-delay: .20s; }
+  .val-hero-copy > *:nth-child(3) { animation-delay: .30s; }
+  .val-hero-copy > *:nth-child(4) { animation-delay: .40s; }
+  .val-hero-copy > *:nth-child(5) { animation-delay: .50s; }
   .btn-secondary { background:transparent; border:1px solid var(--brand-red); color:var(--brand-red); border-radius:6px; padding:11px 20px; font-size:14px; transition:filter .15s, transform .16s var(--vd-ease); }
   .btn-secondary:hover { transform: translateY(-1px); }
   .btn-secondary:active { transform: scale(0.97); }
@@ -287,18 +303,32 @@
     .vd-order { min-height:48px; }
     .vd-seals { display:grid; grid-template-columns:1fr 1fr; justify-items:start; }
   }
+  @media (max-width:1024px) {
+    .val-hero { min-height:clamp(480px,64vh,600px); }
+    .val-hero .val-hero-title { font-size:clamp(2.2rem,5.6vw,3.2rem); max-width:100%; }
+  }
   @media (max-width:768px) {
-    #vd-hero .vd-hero-copy { padding:0 22px !important; gap:12px !important; }
-    #vd-hero .vd-hero-copy > div { width:100% !important; }
-    #vd-hero .vd-brands { margin-top:30px !important; gap:12px !important; }
-    #vd-hero .vd-brands img { height:38px !important; }
-    #vd-hero .vd-btn { flex:1 1 auto; justify-content:center; }
-    .vd-hero-grid { grid-template-columns:1fr; gap:var(--space-4); padding:var(--space-4); }
-    .vd-hero-copy { gap:14px !important; padding:0 !important; }
-    .vd .vd-hero-title { font-size:32px !important; }
-    .vd-hero-sub { font-size:14px !important; max-width:100%; }
-    .vd-hero-ctas { flex-direction:column; align-items:stretch; }
-    .vd-hero-ctas .btn { width:100%; min-height:48px; }
+    .val-hero { align-items:center; }
+    .val-hero-inner { padding:34px 20px 38px; }
+    .val-hero-copy { gap:14px; }
+    .val-hero .val-hero-title { font-size:clamp(2rem,8.4vw,2.85rem); line-height:.97; }
+    .val-hero-tags { padding:9px 12px; gap:6px 10px; border-radius:9px; }
+    .val-hero-tags-list { gap:5px 12px; }
+    .val-hero-tags-list li + li::before { left:-9px; }
+    .val-hero-sub { font-size:15px; }
+    .val-hero-ctas { flex-direction:column; align-items:stretch; gap:10px; width:100%; }
+    .val-hero-btn { width:100%; min-height:50px; }
+  }
+  @media (max-width:620px) {
+    .val-hero-tags { gap:6px 10px; }
+    .val-hero-tags-list { gap:5px 11px; }
+    .val-hero-tags-list li + li::before { content:none; }
+  }
+  @media (max-width:400px) {
+    .val-hero-kicker { font-size:11px; letter-spacing:.11em; gap:8px; }
+    .val-hero-kicker::before { width:22px; }
+    .val-hero-tags-label { font-size:10.5px; }
+    .val-hero-tags-list li { font-size:12px; }
   }
   @media (prefers-reduced-motion: reduce) { .vd *, .vd *::before, .vd *::after {
     animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
@@ -307,8 +337,6 @@
     .marquee-track, .brands-carousel { animation: none !important; transform: none !important; overflow-x: auto; }
   }
   @media (max-width: 720px) {
-    .vd .vd-hero { grid-template-columns: 1fr !important; }
-    .vd .vd-hero h1 { font-size: 28px !important; }
     .vd .vd-trust { grid-template-columns: 1fr !important; }
     .vd .vd-trust > div { border-right: 0 !important; }
     .vd .vd-cats, .vd .vd-grid { grid-template-columns: 1fr 1fr !important; }
@@ -1017,7 +1045,11 @@ function fitHero() {
   const hd = document.querySelector('.vd-hdr');
   const sl = document.querySelector('.vd-seals');
   const chrome = (tb ? tb.offsetHeight : 0) + (hd ? hd.offsetHeight : 0) + (sl ? sl.offsetHeight : 0);
-  hero.style.height = Math.max(420, window.innerHeight - chrome) + 'px';
+  /* min-height en vez de height: el hero ocupa la primera pantalla, pero si el
+     contenido crece (pantallas estrechas, texto ampliado) crece con el en lugar
+     de recortar los botones. */
+  hero.style.height = '';
+  hero.style.minHeight = Math.max(420, window.innerHeight - chrome) + 'px';
 }
 window.addEventListener('resize', fitHero);
 window.addEventListener('load', fitHero);
@@ -1028,39 +1060,80 @@ function viewHome() {
   
   <div class="vd">
 
-    <div id="vd-hero"  style="position:relative;height:440px;overflow:hidden;width:100vw;margin-left:calc(50% - 50vw);">
-      ${VD_SLIDES.map((s, i) => `<img class="vd-slide${i === 0 ? ' on' : ''}" src="${s.src}" alt="${s.alt}" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async" style="object-position:${s.pos};">`).join('')}
-      <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg, rgba(26,24,23,.92) 0%, rgba(26,24,23,.78) 34%, rgba(26,24,23,.15) 62%, rgba(26,24,23,0) 80%);"></div>
-      <div class="vd-hero-grid">
-        <div class="vd-hero-copy">
-          <p class="vd-hero-kicker">Bogotá · desde 1983</p>
-          <h1 class="vd-hero-title">Su aliado en repuestos diesel</h1>
-          <p class="vd-hero-sub">Amplio portafolio para transporte ligero, con asesoría de quien conoce la pieza. Consulte por referencia o cuéntenos qué necesita: confirmamos existencia y precio el mismo día.</p>
-          <div class="vd-hero-ctas">
-            <button class="btn btn-primary" onclick="showView('catalogo')">Ver catálogo</button>
-            <button class="btn btn-secondary" onclick="contactarAsesor()">Hablar con un asesor</button>
+    <section id="vd-hero" class="val-hero" aria-labelledby="val-hero-title">
+      <div class="val-hero-media" aria-hidden="true">
+        ${VD_SLIDES.map((s, i) => `<img class="vd-slide${i === 0 ? ' on' : ''}" src="${s.src}" alt="${s.alt}" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async" style="object-position:${s.pos};">`).join('')}
+      </div>
+      <div class="val-hero-overlay" aria-hidden="true"></div>
+      <div class="val-hero-inner">
+        <div class="val-hero-copy">
+          <p class="val-hero-kicker">Bogotá · desde 1983</p>
+          <h1 class="val-hero-title" id="val-hero-title">Su aliado en repuestos y autopartes diésel</h1>
+          <div class="val-hero-tags">
+            <span class="val-hero-tags-label">Especialistas en</span>
+            <ul class="val-hero-tags-list">
+              <li>LV-452-150</li><li>FVR</li><li>FTR</li><li>FSR</li><li>FRR</li><li>NPR</li><li>NKR</li><li>DIMAX 3.0-2.5</li>
+            </ul>
+          </div>
+          <p class="val-hero-sub">Más de 40 años de experiencia en Bogotá surtiendo a talleres y flotas con repuestos originales y garantizados.</p>
+          <div class="val-hero-ctas">
+            <a class="val-hero-btn val-hero-btn--primary" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quiero cotizar repuestos y autopartes diésel para mi taller o flota.')}" target="_blank" rel="noopener">Cotizar ahora</a>
+            <a class="val-hero-btn val-hero-btn--ghost" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quiero hablar con un asesor técnico sobre repuestos diésel.')}" target="_blank" rel="noopener"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i>Hablar con un asesor técnico</a>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
           <style>
-            .val-hero-subcta-section { padding: 40px 20px; background: #F9FAFB; text-align: center; }
-            .val-hero-subcta-section .val-hero-subcta-title { font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:800; font-size: clamp(1.7rem, 3.6vw, 2.6rem); line-height: 1.05; text-transform: uppercase; color:#111827; margin: 0 0 14px; text-align: center; }
-            .val-hero-subcta-sub { font-family:'Inter',system-ui,sans-serif; font-size: 1.1rem; line-height: 1.5; color:#4B5563; max-width: 60ch; margin: 0 auto 26px; text-align: center; }
-            .val-hero-subcta-actions { display:flex; justify-content:center; }
-            .val-hero-subcta-btn { display:inline-flex; align-items:center; justify-content:center; min-height:50px; padding:14px 40px; border-radius:8px; background:#D6392F; color:#FFFFFF; font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:700; font-size: clamp(1rem, 2vw, 1.15rem); letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; border:1.5px solid #D6392F; box-shadow:0 10px 26px rgba(214,57,47,0.35); transition: transform .16s var(--vd-ease, cubic-bezier(0.23,1,0.32,1)), background .2s, box-shadow .2s; }
-            .val-hero-subcta-btn:hover { background:#B82E25; transform:translateY(-2px); box-shadow:0 14px 32px rgba(214,57,47,0.45); }
-            .val-hero-subcta-btn:active { transform:scale(0.97); }
+            .val-benefits { background:#F9FAFB; border-bottom:1px solid #E5E7EB; }
+            .val-benefits-list { width:100%; max-width:1180px; margin:0 auto; padding:clamp(20px,2.8vw,32px) clamp(20px,4vw,48px); list-style:none; display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(14px,2.2vw,28px); }
+            .val-benefit { display:flex; align-items:flex-start; gap:11px; position:relative; }
+            .val-benefit + .val-benefit::before { content:''; position:absolute; left:calc(-1 * clamp(7px,1.1vw,14px)); top:5px; bottom:5px; width:1px; background:#E1E3E7; }
+            .val-benefit-icon { flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:9px; background:rgba(214,57,47,0.10); color:var(--brand-red-700); font-size:19px; line-height:1; }
+            .val-benefits .val-benefit-title { font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:700; font-size:clamp(.98rem,1.3vw,1.06rem); letter-spacing:.03em; text-transform:uppercase; color:#111827; margin:0 0 3px; line-height:1.15; }
+            .val-benefit-desc { font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:13.5px; line-height:1.45; color:#4B5563; margin:0; }
+            @media (max-width:900px) {
+              .val-benefits-list { grid-template-columns:repeat(2,1fr); gap:18px 24px; }
+              .val-benefit:nth-child(odd)::before { content:none; }
+            }
+            @media (max-width:520px) {
+              .val-benefits-list { grid-template-columns:1fr; gap:15px; padding:20px 20px 22px; }
+              .val-benefit + .val-benefit::before { content:none; }
+            }
           </style>
-          <div class="val-hero-subcta-section">
-            <h2 class="val-hero-subcta-title">REPUESTOS Y AUTOPARTES DIÉSEL QUE NO DETIENEN TU FLOTA</h2>
-            <p class="val-hero-subcta-sub">Inventario permanente, despacho inmediato en Bogotá y el respaldo de más de cuatro décadas junto a los talleres.</p>
-            <div class="val-hero-subcta-actions">
-              <a class="val-hero-subcta-btn" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quiero cotizar repuestos diésel de alto rendimiento.')}" target="_blank" rel="noopener">COTIZAR REPUESTOS AHORA</a>
-            </div>
-          </div>
-    <<div class="vd-seals" style="width:100vw;margin-left:calc(50% - 50vw);">
+          <section class="val-benefits" aria-label="Por qué comprar en VALDIESEL">
+            <ul class="val-benefits-list">
+              <li class="val-benefit">
+                <span class="val-benefit-icon" aria-hidden="true"><i class="ti ti-package"></i></span>
+                <div>
+                  <h2 class="val-benefit-title">Inventario permanente</h2>
+                  <p class="val-benefit-desc">Referencias de las series que trabajamos, disponibles en bodega Bogotá.</p>
+                </div>
+              </li>
+              <li class="val-benefit">
+                <span class="val-benefit-icon" aria-hidden="true"><i class="ti ti-truck"></i></span>
+                <div>
+                  <h2 class="val-benefit-title">Despacho el mismo día</h2>
+                  <p class="val-benefit-desc">Entrega en Bogotá y sabana para talleres y flotas que no pueden parar.</p>
+                </div>
+              </li>
+              <li class="val-benefit">
+                <span class="val-benefit-icon" aria-hidden="true"><i class="ti ti-shield-check"></i></span>
+                <div>
+                  <h2 class="val-benefit-title">Originales y garantizados</h2>
+                  <p class="val-benefit-desc">Piezas con garantía respaldada, sin adaptaciones ni reemplazos genéricos.</p>
+                </div>
+              </li>
+              <li class="val-benefit">
+                <span class="val-benefit-icon" aria-hidden="true"><i class="ti ti-settings"></i></span>
+                <div>
+                  <h2 class="val-benefit-title">Asesoría de técnico a técnico</h2>
+                  <p class="val-benefit-desc">Más de 40 años identificando la referencia exacta que necesita su motor.</p>
+                </div>
+              </li>
+            </ul>
+          </section>
+    <div class="vd-seals" style="width:100%;">
       ${VD_TRUST.map(t => `<div style="display:flex;align-items:center;gap:8px;">
         <img src="${VD_ICON}${t.icon}" alt="" style="width:17px;height:17px;opacity:.55;">
         <span>${t.label}</span>
