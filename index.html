@@ -1121,22 +1121,26 @@ function viewHome() {
             .val-client-media::after { content:''; position:absolute; inset:0; z-index:2; pointer-events:none; border-radius:inherit; border:1px solid rgba(11,15,23,0.08); }
             .val-client-media img { display:block; width:100%; height:100%; aspect-ratio:4/3; object-fit:cover; }
 
-            .val-client-pillars { list-style:none; margin:clamp(28px,3.8vw,46px) 0 0; padding:clamp(22px,2.8vw,32px) 0 0; border-top:1px solid #E5E7EB; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(18px,2.4vw,32px); }
-            .val-client-pillar { position:relative; padding-top:14px; min-width:0; }
-            .val-client-pillar::before { content:''; position:absolute; top:0; left:0; width:26px; height:3px; border-radius:2px; background:var(--brand-red-700); }
-            .val-client .val-client-pillar-num { display:block; font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:800; font-size:1.5rem; line-height:1; letter-spacing:.02em; color:rgba(214,57,47,.34); }
-            .val-client .val-client-pillar-title { font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:700; font-size:clamp(.96rem,1.15vw,1.04rem); line-height:1.2; letter-spacing:.02em; text-transform:uppercase; color:#111827; margin:5px 0 4px; }
-            .val-client .val-client-pillar-desc { font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:12.8px; line-height:1.5; color:#4B5563; margin:0; }
-            /* Reserva 2 lineas de titulo para que las descripciones de los 4 pilares alineen */
-            @media (min-width:381px) {
-              .val-client .val-client-pillar-title { min-height:2.4em; }
-            }
+            /* ---- Pasos para ser cliente registrado ---- */
+            .val-client-steps { margin-top:clamp(28px,3.8vw,46px); padding-top:clamp(22px,2.8vw,32px); border-top:1px solid #E5E7EB; }
+            .val-client-steps .val-steps-heading { font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:700; font-size:clamp(1.05rem,1.5vw,1.22rem); line-height:1.2; letter-spacing:.04em; text-transform:uppercase; color:#111827; margin:0 0 clamp(18px,2.2vw,24px); }
+            .val-steps { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(18px,2.4vw,32px); position:relative; }
+            .val-steps::before { content:''; position:absolute; top:19px; left:0; right:0; height:2px; background:#E5E7EB; z-index:0; }
+            .val-step { position:relative; z-index:1; display:flex; flex-direction:column; align-items:flex-start; min-width:0; }
+            .val-step-num { flex:0 0 auto; width:40px; height:40px; border-radius:50%; display:grid; place-items:center; background:#FFFFFF; border:2px solid var(--brand-red-700); color:var(--brand-red-700); font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:800; font-size:1.02rem; letter-spacing:.02em; }
+            .val-steps .val-step-title { font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:700; font-size:clamp(.96rem,1.15vw,1.04rem); line-height:1.2; letter-spacing:.02em; text-transform:uppercase; color:#111827; margin:13px 0 4px; }
+            .val-steps .val-step-desc { font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:12.9px; line-height:1.5; color:#4B5563; margin:0; }
+            .val-client-steps .val-steps-note { margin:clamp(18px,2.2vw,26px) 0 0; padding:12px 16px; border-left:3px solid var(--brand-red-700); background:#F9FAFB; border-radius:0 8px 8px 0; font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:13.5px; line-height:1.5; color:#4B5563; }
 
             @media (max-width:900px) {
               .val-client { padding:36px 22px 40px; }
               .val-client-grid { grid-template-columns:1fr; gap:26px; }
               .val-client-media img { aspect-ratio:16/10; }
-              .val-client-pillars { grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px 24px; }
+              .val-steps { grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px 24px; }
+              .val-steps::before { display:none; }
+              .val-step { display:grid; grid-template-columns:40px minmax(0,1fr); column-gap:14px; align-items:start; }
+              .val-steps .val-step-num { grid-row:span 2; margin-top:2px; }
+              .val-steps .val-step-title { margin:6px 0 3px; }
             }
             @media (max-width:520px) {
               .val-client { padding:30px 20px 34px; }
@@ -1145,13 +1149,9 @@ function viewHome() {
               .val-client .val-client-sub { font-size:15px; margin-bottom:18px; }
               .val-client-btn { width:100%; min-height:52px; }
               .val-client-media img { aspect-ratio:16/9; }
-              .val-client-pillars { grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px 18px; padding-top:20px; margin-top:26px; }
-              .val-client .val-client-pillar-num { font-size:1.3rem; }
-              .val-client .val-client-pillar-title { font-size:.92rem; }
-              .val-client .val-client-pillar-desc { font-size:12.5px; }
-            }
-            @media (max-width:380px) {
-              .val-client-pillars { grid-template-columns:1fr; gap:15px; }
+              .val-client-steps { margin-top:26px; padding-top:20px; }
+              .val-steps { grid-template-columns:1fr; gap:14px; }
+              .val-steps .val-step-desc { font-size:12.5px; }
             }
           </style>
           <section class="val-benefits" aria-label="Por qué comprar en VALDIESEL">
@@ -1201,28 +1201,32 @@ function viewHome() {
         </div>
       </div>
 
-      <ol class="val-client-pillars">
-        <li class="val-client-pillar">
-          <span class="val-client-pillar-num" aria-hidden="true">01</span>
-          <h3 class="val-client-pillar-title">Repuestos de alta calidad y garantizados</h3>
-          <p class="val-client-pillar-desc">Piezas confiables y originales.</p>
-        </li>
-        <li class="val-client-pillar">
-          <span class="val-client-pillar-num" aria-hidden="true">02</span>
-          <h3 class="val-client-pillar-title">Inventario siempre disponible</h3>
-          <p class="val-client-pillar-desc">Referencias listas en bodega Bogotá.</p>
-        </li>
-        <li class="val-client-pillar">
-          <span class="val-client-pillar-num" aria-hidden="true">03</span>
-          <h3 class="val-client-pillar-title">Soporte técnico experto</h3>
-          <p class="val-client-pillar-desc">Asesoría para identificar la pieza exacta.</p>
-        </li>
-        <li class="val-client-pillar">
-          <span class="val-client-pillar-num" aria-hidden="true">04</span>
-          <h3 class="val-client-pillar-title">Entregas rápidas en Colombia</h3>
-          <p class="val-client-pillar-desc">Disponibilidad inmediata para flotas.</p>
-        </li>
-      </ol>
+      <div class="val-client-steps">
+        <h3 class="val-steps-heading">Así se registra en 4 pasos</h3>
+        <ol class="val-steps">
+          <li class="val-step">
+            <span class="val-step-num" aria-hidden="true">01</span>
+            <h4 class="val-step-title">Escriba a WhatsApp</h4>
+            <p class="val-step-desc">Cuéntenos qué taller o flota tiene y qué referencias necesita.</p>
+          </li>
+          <li class="val-step">
+            <span class="val-step-num" aria-hidden="true">02</span>
+            <h4 class="val-step-title">Solicite sus credenciales</h4>
+            <p class="val-step-desc">Le enviamos usuario y contraseña del portal de clientes.</p>
+          </li>
+          <li class="val-step">
+            <span class="val-step-num" aria-hidden="true">03</span>
+            <h4 class="val-step-title">Ingrese al portal</h4>
+            <p class="val-step-desc">Consulte inventario, precios y disponibilidad en línea.</p>
+          </li>
+          <li class="val-step">
+            <span class="val-step-num" aria-hidden="true">04</span>
+            <h4 class="val-step-title">Haga su primer pedido</h4>
+            <p class="val-step-desc">Confirme la pieza y reciba su despacho como cliente VALDIESEL.</p>
+          </li>
+        </ol>
+        <p class="val-steps-note">Al completar el registro accede a los descuentos exclusivos para clientes que VALDIESEL publicará en la tienda online.</p>
+      </div>
     </section>
 
     <div class="vd-seals" style="width:100%;">
