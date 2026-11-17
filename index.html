@@ -1186,6 +1186,45 @@ function viewHome() {
               </li>
             </ul>
           </section>
+    <!-- ADQUISICION DE CLIENTES -->
+    <section id="vd-hazte-cliente" class="val-client" aria-labelledby="val-client-title">
+      <div class="val-client-grid">
+        <div class="val-client-copy">
+          <p class="val-client-kicker">Nuevos clientes</p>
+          <h2 class="val-client-title" id="val-client-title">¿Quiere ser <span class="val-client-title-accent">cliente?</span></h2>
+          <p class="val-client-sub">Hágase cliente de VALDIESEL SAS y acceda a inventario amplio, precios competitivos para talleres, entregas seguras y asesoría experta en Bogotá.</p>
+          <a class="val-client-btn" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quiero ser cliente de VALDIESEL SAS. Tengo taller o flota y quisiera conocer los precios para talleres y los requisitos de alta.')}" target="_blank" rel="noopener">Quiero ser cliente</a>
+          <p class="val-client-alt">¿Ya tiene cuenta? <a onclick="goPortal()">Ingrese al portal de clientes</a></p>
+        </div>
+        <div class="val-client-media">
+          <img src="assets/repuesto-b2b-limpio.jpg" alt="Conjunto de transmisión diésel listo para entrega en bodega VALDIESEL" width="1200" height="686" loading="lazy" decoding="async">
+        </div>
+      </div>
+
+      <ol class="val-client-pillars">
+        <li class="val-client-pillar">
+          <span class="val-client-pillar-num" aria-hidden="true">01</span>
+          <h3 class="val-client-pillar-title">Repuestos de alta calidad y garantizados</h3>
+          <p class="val-client-pillar-desc">Piezas confiables y originales.</p>
+        </li>
+        <li class="val-client-pillar">
+          <span class="val-client-pillar-num" aria-hidden="true">02</span>
+          <h3 class="val-client-pillar-title">Inventario siempre disponible</h3>
+          <p class="val-client-pillar-desc">Referencias listas en bodega Bogotá.</p>
+        </li>
+        <li class="val-client-pillar">
+          <span class="val-client-pillar-num" aria-hidden="true">03</span>
+          <h3 class="val-client-pillar-title">Soporte técnico experto</h3>
+          <p class="val-client-pillar-desc">Asesoría para identificar la pieza exacta.</p>
+        </li>
+        <li class="val-client-pillar">
+          <span class="val-client-pillar-num" aria-hidden="true">04</span>
+          <h3 class="val-client-pillar-title">Entregas rápidas en Colombia</h3>
+          <p class="val-client-pillar-desc">Disponibilidad inmediata para flotas.</p>
+        </li>
+      </ol>
+    </section>
+
     <div class="vd-seals" style="width:100%;">
       ${VD_TRUST.map(t => `<div style="display:flex;align-items:center;gap:8px;">
         <img src="${VD_ICON}${t.icon}" alt="" style="width:17px;height:17px;opacity:.55;">
@@ -1228,45 +1267,6 @@ function viewHome() {
       <div class="vd-grid-4">
         ${vdFeatured().map(pr => vdProductCard(pr)).join('')}
       </div>
-    </section>
-
-    <!-- ADQUISICION DE CLIENTES -->
-    <section id="vd-hazte-cliente" class="val-client" aria-labelledby="val-client-title">
-      <div class="val-client-grid">
-        <div class="val-client-copy">
-          <p class="val-client-kicker">Nuevos clientes</p>
-          <h2 class="val-client-title" id="val-client-title">¿Quiere ser <span class="val-client-title-accent">cliente?</span></h2>
-          <p class="val-client-sub">Hágase cliente de VALDIESEL SAS y acceda a inventario amplio, precios competitivos para talleres, entregas seguras y asesoría experta en Bogotá.</p>
-          <a class="val-client-btn" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quiero ser cliente de VALDIESEL SAS. Tengo taller o flota y quisiera conocer los precios para talleres y los requisitos de alta.')}" target="_blank" rel="noopener">Quiero ser cliente</a>
-          <p class="val-client-alt">¿Ya tiene cuenta? <a onclick="goPortal()">Ingrese al portal de clientes</a></p>
-        </div>
-        <div class="val-client-media">
-          <img src="assets/repuesto-b2b-limpio.jpg" alt="Conjunto de transmisión diésel listo para entrega en bodega VALDIESEL" width="1200" height="686" loading="lazy" decoding="async">
-        </div>
-      </div>
-
-      <ol class="val-client-pillars">
-        <li class="val-client-pillar">
-          <span class="val-client-pillar-num" aria-hidden="true">01</span>
-          <h3 class="val-client-pillar-title">Repuestos de alta calidad y garantizados</h3>
-          <p class="val-client-pillar-desc">Piezas confiables y originales.</p>
-        </li>
-        <li class="val-client-pillar">
-          <span class="val-client-pillar-num" aria-hidden="true">02</span>
-          <h3 class="val-client-pillar-title">Inventario siempre disponible</h3>
-          <p class="val-client-pillar-desc">Referencias listas en bodega Bogotá.</p>
-        </li>
-        <li class="val-client-pillar">
-          <span class="val-client-pillar-num" aria-hidden="true">03</span>
-          <h3 class="val-client-pillar-title">Soporte técnico experto</h3>
-          <p class="val-client-pillar-desc">Asesoría para identificar la pieza exacta.</p>
-        </li>
-        <li class="val-client-pillar">
-          <span class="val-client-pillar-num" aria-hidden="true">04</span>
-          <h3 class="val-client-pillar-title">Entregas rápidas en Colombia</h3>
-          <p class="val-client-pillar-desc">Disponibilidad inmediata para flotas.</p>
-        </li>
-      </ol>
     </section>
 
     <section id="vd-asesoria" style="max-width:1200px;margin:0 auto;padding:var(--space-6) 24px;">
