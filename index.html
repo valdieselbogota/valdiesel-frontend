@@ -641,8 +641,8 @@ html { overflow-x: clip; }
   </div>
 </div>
 
-<div class="wrap" id="app" style="padding:24px 20px 4px;">
-  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:80px 20px;color:#97A0AA;font-size:13px;">
+<div class="wrap" id="app" style="padding:0;max-width:none;">
+  <div style="min-height:100vh;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:80px 20px;color:#97A0AA;font-size:13px;">
     <i class="ti ti-loader-2" style="font-size:28px;color:#E8443C;animation:spin 1s linear infinite;"></i>
     Cargando...
   </div>
@@ -664,7 +664,7 @@ let productsLoaded = false;
 
 const CATALOG_URL = 'https://script.google.com/macros/s/AKfycbwGPPTy1tYwgUa2NYdUUth8S2FLbrXDEYUwdOpavQZR7LtavIrHD1emIMQ1uJhqzHM9/exec';
 
-async function loadProducts() {
+async function fetchProducts() {
   // Mapeo tolerante: la Web App puede devolver claves en espanol (Hojas de
   // calculo) o en ingles. Siempre caemos a PRODUCTS_FALLBACK si falla.
   const pick = (r, ...keys) => {
@@ -709,15 +709,38 @@ async function loadProducts() {
     // Prioridad visual: los que tienen Imagen_URL valida van primero.
     norm.sort((a, b) => (b.image ? 1 : 0) - (a.image ? 1 : 0));
 
-    if (norm.length) PRODUCTS = norm;
-    else PRODUCTS = PRODUCTS_FALLBACK;
+    return norm.length ? norm : null;
   } catch (e) {
-    console.warn('loadProducts: usando fallback -', (e && e.message) || e);
-    PRODUCTS = PRODUCTS_FALLBACK;
+    console.warn('fetchProducts: se usa el catalogo embebido -', (e && e.message) || e);
+    return null;
   }
-  // Sobrescribir con imagenes base64 embebidas si existen (mejor calidad offline).
+}
+
+/* Aplica un catalogo a lo que se va a pintar. Sin lista valida se usa la copia
+   embebida, que ya trae codigo, nombre, marca y precio. Las fotos base64
+   mandan sobre cualquier imagen remota (mejor calidad y cero red). */
+function setProducts(list) {
+  PRODUCTS = list && list.length ? list : PRODUCTS_FALLBACK;
   PRODUCTS.forEach(p => { if (PRODUCT_IMAGES[p.code]) p.image = PRODUCT_IMAGES[p.code]; });
   productsLoaded = true;
+}
+
+/* Version de siempre: descarga y aplica de una sola vez. */
+async function loadProducts() {
+  setProducts(await fetchProducts());
+}
+
+/* El catalogo descargado no se aplica en caliente: se guarda y se aplica en el
+   siguiente repintado. Si se cambiara ahora, las tarjetas que ya estan en
+   pantalla quedarian con los ids del catalogo embebido y el buscador/carrito
+   apuntarian a otro producto. */
+let pendingProducts;
+
+function applyPendingProducts() {
+  if (pendingProducts === undefined) return;
+  const list = pendingProducts;
+  pendingProducts = undefined;
+  setProducts(list);
 }
 const fmt = (n) => new Intl.NumberFormat('es-CO', {style:'currency', currency:'COP', maximumFractionDigits:0}).format(n);
 
@@ -807,6 +830,7 @@ function startClientReveal() {
 }
 
 function renderView(view) {
+  applyPendingProducts();
   currentView = view;
   renderNav();
   const app = document.getElementById('app');
@@ -2249,14 +2273,31 @@ function startValBanner() {
   if (slides.length < 2) return;
   valBannerTimer = setInterval(() => { valBannerShow(valBannerIdx + 1); }, 4000);
 }
-loadProducts().then(() => {
-  /* Respetar el deep link (#nosotros, #catalogo, ...) en vez de forzar home. */
-  const routable = ['home', 'catalogo', 'nosotros', 'carrito', 'portal'];
-  const asked = (location.hash || '').replace('#', '');
-  const start = routable.indexOf(asked) >= 0 ? asked : 'home';
-  history.replaceState({ view: start }, '', '#' + start);
-  renderView(start);
-});
+/* ARRANQUE
+   Antes, TODA la pagina esperaba a loadProducts() -un fetch a la Web App de
+   Apps Script, con 8 s de espera- antes de pintar nada. El usuario veia un
+   "Cargando..." de 243 px y el pie de pagina asomando a media pantalla; cuando
+   llegaba el catalogo, el pie saltaba 3.900 px hacia abajo (CLS 0,96, Google
+   considera pobre todo lo que pase de 0,25).
+   Ahora la home se pinta de inmediato con el catalogo que ya viaja dentro del
+   archivo: mismas 663 filas, mismas fotos en base64. La red pasa a segundo
+   plano y solo refresca el catalogo para la proxima vista.
+   Un deep link a #catalogo si necesita el catalogo entero, asi que sigue
+   esperando, pero el aviso de carga ya ocupa la pantalla completa. */
+const ROUTABLE = ['home', 'catalogo', 'nosotros', 'carrito', 'portal'];
+const askedView = (location.hash || '').replace('#', '');
+const startView = ROUTABLE.indexOf(askedView) >= 0 ? askedView : 'home';
+history.replaceState({ view: startView }, '', '#' + startView);
+
+if (startView === 'home') {
+  setProducts(PRODUCTS_FALLBACK);
+  renderView('home');
+  /* Descarga en segundo plano: se aplica en el siguiente repintado, nunca
+     debajo de las tarjetas que ya se estan viendo. */
+  fetchProducts().then((list) => { if (list) pendingProducts = list; });
+} else {
+  loadProducts().then(() => renderView(startView));
+}
 </script>
 <!-- ==========================================
    PIE DE PAGINA (FOOTER) - VALDIESEL SAS
