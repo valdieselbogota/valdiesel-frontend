@@ -1100,6 +1100,59 @@ function viewHome() {
               .val-benefits-list { grid-template-columns:1fr; gap:15px; padding:20px 20px 22px; }
               .val-benefit + .val-benefit::before { content:none; }
             }
+
+            /* ---- Adquisicion de clientes: ?Quiere ser cliente? ---- */
+            .val-client { max-width:1200px; margin:0 auto; padding:clamp(38px,5vw,66px) 24px clamp(34px,4.2vw,54px); }
+            .val-client-grid { display:grid; grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr); gap:clamp(26px,3.6vw,52px); align-items:center; }
+            .val-client-copy { display:flex; flex-direction:column; align-items:flex-start; min-width:0; }
+            .val-client .val-client-kicker { display:inline-flex; align-items:center; gap:9px; margin:0 0 12px; font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:11.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:#6B7280; }
+            .val-client .val-client-kicker::before { content:''; width:26px; height:2px; border-radius:2px; background:var(--brand-red-700); }
+            .val-client .val-client-title { font-family:'Barlow Condensed','Archivo Narrow','Arial Narrow',sans-serif; font-weight:800; font-size:clamp(2.1rem,3.9vw,3.15rem); line-height:1.02; letter-spacing:-.004em; color:#111827; margin:0 0 14px; text-transform:none; }
+            .val-client .val-client-title-accent { color:var(--brand-red-700); }
+            .val-client .val-client-sub { font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:clamp(15px,1.15vw,16.5px); line-height:1.62; color:#4B5563; margin:0 0 24px; max-width:52ch; }
+            .val-client-btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:54px; padding:15px 30px; border-radius:8px; border:1.5px solid #0B0F17; background:#0B0F17; color:#FFFFFF; font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:700; font-size:1.08rem; letter-spacing:.06em; text-transform:uppercase; text-decoration:none; cursor:pointer; box-shadow:0 10px 26px rgba(11,15,23,0.22); transition:background .2s ease, border-color .2s ease, transform .18s var(--vd-ease,cubic-bezier(.23,1,.32,1)), box-shadow .2s ease; }
+            .val-client-btn:hover { background:var(--brand-red-700); border-color:var(--brand-red-700); color:#FFFFFF; transform:translateY(-2px); box-shadow:0 16px 34px rgba(214,57,47,0.38); }
+            .val-client-btn:active { transform:translateY(0) scale(.995); }
+            .val-client-btn:focus-visible { outline:2px solid #0B0F17; outline-offset:3px; }
+            .val-client .val-client-alt { font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:13px; color:#6B7280; margin:14px 0 0; }
+            .val-client .val-client-alt a { color:#111827; font-weight:600; text-decoration:underline; text-underline-offset:2px; cursor:pointer; }
+            .val-client .val-client-alt a:hover { color:var(--brand-red-700); }
+            .val-client-media { position:relative; border-radius:16px; overflow:hidden; background:#F3F4F6; box-shadow:0 24px 54px rgba(11,15,23,0.17), 0 2px 6px rgba(11,15,23,0.06); }
+            .val-client-media::after { content:''; position:absolute; inset:0; z-index:2; pointer-events:none; border-radius:inherit; border:1px solid rgba(11,15,23,0.08); }
+            .val-client-media img { display:block; width:100%; height:100%; aspect-ratio:4/3; object-fit:cover; }
+
+            .val-client-pillars { list-style:none; margin:clamp(28px,3.8vw,46px) 0 0; padding:clamp(22px,2.8vw,32px) 0 0; border-top:1px solid #E5E7EB; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(18px,2.4vw,32px); }
+            .val-client-pillar { position:relative; padding-top:14px; min-width:0; }
+            .val-client-pillar::before { content:''; position:absolute; top:0; left:0; width:26px; height:3px; border-radius:2px; background:var(--brand-red-700); }
+            .val-client .val-client-pillar-num { display:block; font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:800; font-size:1.5rem; line-height:1; letter-spacing:.02em; color:rgba(214,57,47,.34); }
+            .val-client .val-client-pillar-title { font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:700; font-size:clamp(.96rem,1.15vw,1.04rem); line-height:1.2; letter-spacing:.02em; text-transform:uppercase; color:#111827; margin:5px 0 4px; }
+            .val-client .val-client-pillar-desc { font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:12.8px; line-height:1.5; color:#4B5563; margin:0; }
+            /* Reserva 2 lineas de titulo para que las descripciones de los 4 pilares alineen */
+            @media (min-width:381px) {
+              .val-client .val-client-pillar-title { min-height:2.4em; }
+            }
+
+            @media (max-width:900px) {
+              .val-client { padding:36px 22px 40px; }
+              .val-client-grid { grid-template-columns:1fr; gap:26px; }
+              .val-client-media img { aspect-ratio:16/10; }
+              .val-client-pillars { grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px 24px; }
+            }
+            @media (max-width:520px) {
+              .val-client { padding:30px 20px 34px; }
+              .val-client .val-client-kicker { margin-bottom:9px; }
+              .val-client .val-client-title { font-size:clamp(1.95rem,9vw,2.5rem); margin-bottom:11px; }
+              .val-client .val-client-sub { font-size:15px; margin-bottom:18px; }
+              .val-client-btn { width:100%; min-height:52px; }
+              .val-client-media img { aspect-ratio:16/9; }
+              .val-client-pillars { grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px 18px; padding-top:20px; margin-top:26px; }
+              .val-client .val-client-pillar-num { font-size:1.3rem; }
+              .val-client .val-client-pillar-title { font-size:.92rem; }
+              .val-client .val-client-pillar-desc { font-size:12.5px; }
+            }
+            @media (max-width:380px) {
+              .val-client-pillars { grid-template-columns:1fr; gap:15px; }
+            }
           </style>
           <section class="val-benefits" aria-label="Por qué comprar en VALDIESEL">
             <ul class="val-benefits-list">
@@ -1175,6 +1228,45 @@ function viewHome() {
       <div class="vd-grid-4">
         ${vdFeatured().map(pr => vdProductCard(pr)).join('')}
       </div>
+    </section>
+
+    <!-- ADQUISICION DE CLIENTES -->
+    <section id="vd-hazte-cliente" class="val-client" aria-labelledby="val-client-title">
+      <div class="val-client-grid">
+        <div class="val-client-copy">
+          <p class="val-client-kicker">Nuevos clientes</p>
+          <h2 class="val-client-title" id="val-client-title">¿Quiere ser <span class="val-client-title-accent">cliente?</span></h2>
+          <p class="val-client-sub">Hágase cliente de VALDIESEL SAS y acceda a inventario amplio, precios competitivos para talleres, entregas seguras y asesoría experta en Bogotá.</p>
+          <a class="val-client-btn" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, quiero ser cliente de VALDIESEL SAS. Tengo taller o flota y quisiera conocer los precios para talleres y los requisitos de alta.')}" target="_blank" rel="noopener">Quiero ser cliente</a>
+          <p class="val-client-alt">¿Ya tiene cuenta? <a onclick="goPortal()">Ingrese al portal de clientes</a></p>
+        </div>
+        <div class="val-client-media">
+          <img src="assets/repuesto-b2b-limpio.jpg" alt="Conjunto de transmisión diésel listo para entrega en bodega VALDIESEL" width="1200" height="686" loading="lazy" decoding="async">
+        </div>
+      </div>
+
+      <ol class="val-client-pillars">
+        <li class="val-client-pillar">
+          <span class="val-client-pillar-num" aria-hidden="true">01</span>
+          <h3 class="val-client-pillar-title">Repuestos de alta calidad y garantizados</h3>
+          <p class="val-client-pillar-desc">Piezas confiables y originales.</p>
+        </li>
+        <li class="val-client-pillar">
+          <span class="val-client-pillar-num" aria-hidden="true">02</span>
+          <h3 class="val-client-pillar-title">Inventario siempre disponible</h3>
+          <p class="val-client-pillar-desc">Referencias listas en bodega Bogotá.</p>
+        </li>
+        <li class="val-client-pillar">
+          <span class="val-client-pillar-num" aria-hidden="true">03</span>
+          <h3 class="val-client-pillar-title">Soporte técnico experto</h3>
+          <p class="val-client-pillar-desc">Asesoría para identificar la pieza exacta.</p>
+        </li>
+        <li class="val-client-pillar">
+          <span class="val-client-pillar-num" aria-hidden="true">04</span>
+          <h3 class="val-client-pillar-title">Entregas rápidas en Colombia</h3>
+          <p class="val-client-pillar-desc">Disponibilidad inmediata para flotas.</p>
+        </li>
+      </ol>
     </section>
 
     <section id="vd-asesoria" style="max-width:1200px;margin:0 auto;padding:var(--space-6) 24px;">
