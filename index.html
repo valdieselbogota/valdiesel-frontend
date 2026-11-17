@@ -95,6 +95,15 @@
     letter-spacing:-.02em; margin:0; font-variant-numeric:tabular-nums; font-feature-settings:"tnum"; }
   .vd .vd-price-old { color:var(--vd-muted); font-size:12px; margin:0; text-decoration:line-through;
     font-variant-numeric:tabular-nums; font-feature-settings:"tnum"; }
+  /* ===== Foco =====
+     Todo lo que se puede operar tiene que mostrar donde esta el foco. Se usa
+     currentColor en vez de un color fijo porque el texto ya contrasta con su
+     fondo: el anillo sirve igual sobre el hero oscuro que sobre el catalogo.
+     Los botones que necesitan otro color lo sobrescriben con su propia regla
+     :focus-visible (mayor especificidad). */
+  a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
+    outline:2px solid currentColor; outline-offset:3px; border-radius:inherit; }
+
   /* ===== Hero pantalla 3a ===== */
     .vd-slide { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; will-change:opacity; transition:opacity .7s var(--vd-ease-in-out); }
   .vd-slide.on { opacity:1; }
@@ -114,6 +123,17 @@
   .val-hero-tags-list li + li::before { content:'\2022'; position:absolute; left:-10px; color:rgba(255,255,255,.40); }
   .val-hero-sub { font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:clamp(14.5px,1.15vw,16.5px); line-height:1.6; color:rgba(255,255,255,.88); margin:0; max-width:58ch; }
   .val-hero-ctas { display:flex; flex-wrap:wrap; gap:12px; margin-top:8px; }
+  /* Controles del hero. El punto visible mide 7px (mismo lenguaje que los del
+     banner) pero el boton mide 26px: un objetivo de 7px no se acierta con el
+     dedo. Anillo de foco hacia adentro porque el hero recorta (overflow:hidden). */
+  .val-hero-dots { position:absolute; left:50%; transform:translateX(-50%); bottom:clamp(6px,1.2vw,14px); z-index:3; display:flex; }
+  .val-hero-dot { width:26px; height:26px; padding:0; border:0; background:transparent; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; -webkit-tap-highlight-color:transparent; }
+  .val-hero-dot::before { content:''; width:7px; height:7px; border-radius:999px; background:rgba(255,255,255,.45);
+    transition:background .2s ease, transform .2s var(--vd-ease); }
+  .val-hero-dot.on::before { background:#F59E0B; transform:scale(1.35); }
+  .val-hero-dot:focus-visible { outline:2px solid #FFFFFF; outline-offset:-3px; border-radius:999px; }
+  @media (hover:hover) and (pointer:fine) { .val-hero-dot:hover::before { background:rgba(255,255,255,.85); } }
   .val-hero-btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:52px; padding:14px 26px; border-radius:8px; border:1.5px solid transparent; font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:700; font-size:1.06rem; letter-spacing:.05em; text-transform:uppercase; text-decoration:none; cursor:pointer; transition:transform .18s var(--vd-ease,cubic-bezier(.23,1,.32,1)), box-shadow .18s ease, background .18s ease, border-color .18s ease; }
   .val-hero-btn .ti { font-size:1.2em; line-height:1; }
   .val-hero-btn--primary { background:var(--brand-red-700); border-color:var(--brand-red-700); color:#FFFFFF; box-shadow:0 10px 26px rgba(214,57,47,0.34); }
@@ -135,12 +155,16 @@
   .val-banner-dot { width:8px; height:8px; border-radius:999px; background:rgba(255,255,255,0.4); border:none; cursor:pointer; padding:0; transition:background .2s, transform .2s; }
   .val-banner-dot.on { background:#F59E0B; transform:scale(1.3); }
   @media (max-width:768px) { .val-banner-carousel { aspect-ratio:4/3; } }
-  .val-hero-copy > * { animation: vdUp .6s var(--vd-ease) both; }
-  .val-hero-copy > *:nth-child(1) { animation-delay: .10s; }
-  .val-hero-copy > *:nth-child(2) { animation-delay: .20s; }
-  .val-hero-copy > *:nth-child(3) { animation-delay: .30s; }
-  .val-hero-copy > *:nth-child(4) { animation-delay: .40s; }
-  .val-hero-copy > *:nth-child(5) { animation-delay: .50s; }
+  /* Entrada del hero. Antes eran .6s con delays de .10 a .50s: el CTA
+     "Cotizar ahora" es el quinto hijo y no quedaba completo hasta 1,1 s.
+     Se comprime el escalonado a 60 ms (sigue leyendose de arriba abajo) y la
+     duracion a .45s: ahora el CTA esta entero a los 690 ms. */
+  .val-hero-copy > * { animation: vdUp .45s var(--vd-ease) both; }
+  .val-hero-copy > *:nth-child(1) { animation-delay: 0s; }
+  .val-hero-copy > *:nth-child(2) { animation-delay: .06s; }
+  .val-hero-copy > *:nth-child(3) { animation-delay: .12s; }
+  .val-hero-copy > *:nth-child(4) { animation-delay: .18s; }
+  .val-hero-copy > *:nth-child(5) { animation-delay: .24s; }
   .btn-secondary { background:transparent; border:1px solid var(--brand-red); color:var(--brand-red); border-radius:6px; padding:11px 20px; font-size:14px; transition:filter .15s, transform .16s var(--vd-ease); }
   .btn-secondary:hover { transform: translateY(-1px); }
   .btn-secondary:active { transform: scale(0.97); }
@@ -331,7 +355,8 @@
     .val-hero-tags-list li { font-size:12px; }
   }
   @media (prefers-reduced-motion: reduce) { .vd *, .vd *::before, .vd *::after {
-    animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+    animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important; transition-duration: .01ms !important; } }
   @media (prefers-reduced-motion: reduce) {
     .vd-wa { animation: none !important; }
     .marquee-track, .brands-carousel { animation: none !important; transform: none !important; overflow-x: auto; }
@@ -954,16 +979,63 @@ const VD_SLIDES = [
   { src: 'assets/slide-3.jpg', pos: '50% 50%', alt: 'Culata de motor diesel en reparación' }
 ];
 let vdSlideTimer = null;
+/* Ritmo de la casa. Con controles y pausa ya es opcional: si se quiere mas
+   calma para leer el titular, este es el unico numero que hay que tocar. */
+const VD_SLIDE_MS = 3000;
+
 function startHeroSlides() {
   clearInterval(vdSlideTimer);
-  const slides = document.querySelectorAll('#vd-hero .vd-slide');
+  const hero = document.getElementById('vd-hero');
+  if (!hero) return;
+  const slides = [...hero.querySelectorAll('.vd-slide')];
   if (slides.length < 2) return;
-  let i = 0;
-  vdSlideTimer = setInterval(() => {
-    slides[i].classList.remove('on');
-    i = (i + 1) % slides.length;
-    slides[i].classList.add('on');
-  }, 3000);
+  const dots = [...hero.querySelectorAll('.val-hero-dot')];
+  const total = slides.length;
+  let idx = 0;
+
+  function show(n) {
+    idx = (n % total + total) % total;
+    slides.forEach((s, k) => s.classList.toggle('on', k === idx));
+    dots.forEach((d, k) => {
+      d.classList.toggle('on', k === idx);
+      if (k === idx) d.setAttribute('aria-current', 'true');
+      else d.removeAttribute('aria-current');
+    });
+  }
+
+  function stop() { clearInterval(vdSlideTimer); vdSlideTimer = null; }
+
+  const canHover = !!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches);
+
+  /* Un clic con el mouse tambien enfoca el boton, pero ahi el usuario esta
+     apuntando, no leyendo: solo el foco de teclado aplaza la rotacion. */
+  function keyboardFocusInside() {
+    const a = document.activeElement;
+    return !!(a && a !== document.body && hero.contains(a) && a.matches && a.matches(':focus-visible'));
+  }
+
+  /* Un solo lugar decide si la imagen puede cambiar sola: no se mueve si el
+     usuario pidio menos movimiento, si esta leyendo con el teclado o si tiene
+     el puntero encima. Los puntos siguen cambiando la imagen a mano. */
+  function play() {
+    stop();
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (keyboardFocusInside()) return;
+    if (canHover && hero.matches(':hover')) return;
+    vdSlideTimer = setInterval(() => show(idx + 1), VD_SLIDE_MS);
+  }
+
+  /* En un telefono no existe el hover: si se escuchara, un toque cualquiera
+     dejaria el carrusel quieto para siempre. */
+  if (canHover) {
+    hero.addEventListener('mouseenter', stop);
+    hero.addEventListener('mouseleave', play);
+  }
+  hero.addEventListener('focusin', stop);
+  hero.addEventListener('focusout', (e) => { if (!hero.contains(e.relatedTarget)) play(); });
+
+  dots.forEach((d, k) => d.addEventListener('click', () => { show(k); play(); }));
+  play();
 }
 
 
@@ -1125,6 +1197,7 @@ function viewHome() {
           </div>
         </div>
       </div>
+      <div class="val-hero-dots" role="group" aria-label="Imagen de portada">${VD_SLIDES.map((s, i) => `<button type="button" class="val-hero-dot${i === 0 ? ' on' : ''}" aria-label="Ver imagen ${i + 1} de ${VD_SLIDES.length}: ${s.alt}"${i === 0 ? ' aria-current="true"' : ''}></button>`).join('')}</div>
     </section>
 
           <style>
