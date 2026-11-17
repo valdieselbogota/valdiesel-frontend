@@ -616,6 +616,9 @@ html { overflow-x: clip; }
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"VALDIESEL SAS","url":"https://valdiesel.com/","contactPoint":{"@type":"ContactPoint","telephone":"+57-310-808-8686","contactType":"customer service","areaServed":"CO","availableLanguage":"es"},"address":{"@type":"PostalAddress","streetAddress":"Cra 55 No. 14-17","addressLocality":"Bogotá","addressCountry":"CO"}}
 </script>
+<!-- Armado de animaciones: solo si hay motion normal y soporte de observers.
+     Se ejecuta antes de pintar el body, asi que no hay parpadeo de contenido. -->
+<script>(function(){try{if(!window.matchMedia||!window.matchMedia('(prefers-reduced-motion: reduce)').matches){if('IntersectionObserver' in window){document.documentElement.className+=' vd-anim';}}}catch(e){}})();</script>
 </head>
 <body>
 
@@ -787,11 +790,27 @@ function syncWaFab() {
   waFabObserver.observe(hero);
 }
 
+/* Revela la secuencia de pasos una sola vez, cuando el bloque ya se ve.
+   No hay temporizador a proposito: un timer revelaria la animacion mientras
+   la seccion sigue fuera de pantalla y el usuario no veria nada al llegar.
+   Armar el estado inicial ya exige soporte de IntersectionObserver (ver el
+   script del head), asi que el observer siempre existe cuando llega aqui. */
+function startClientReveal() {
+  const box = document.getElementById('vd-hazte-cliente');
+  const steps = box && box.querySelector('.val-client-steps');
+  if (!steps) return;
+  if (!document.documentElement.classList.contains('vd-anim')) { steps.classList.add('is-in'); return; }
+  const io = new IntersectionObserver((entries, obs) => {
+    entries.forEach((en) => { if (en.isIntersecting) { steps.classList.add('is-in'); obs.disconnect(); } });
+  }, { threshold: 0.35 });
+  io.observe(steps);
+}
+
 function renderView(view) {
   currentView = view;
   renderNav();
   const app = document.getElementById('app');
-  if (view === 'home') { app.innerHTML = viewHome(); fitHero(); startHeroSlides(); startValBanner(); } else { clearInterval(vdSlideTimer); clearInterval(valBannerTimer); }
+  if (view === 'home') { app.innerHTML = viewHome(); fitHero(); startHeroSlides(); startValBanner(); startClientReveal(); } else { clearInterval(vdSlideTimer); clearInterval(valBannerTimer); }
   if (view === 'catalogo') { app.innerHTML = viewCatalog(); populateBrandFilter('brand-filter-pub'); renderPublicGrid(); }
   if (view === 'nosotros') app.innerHTML = viewAbout();
   if (view === 'carrito') app.innerHTML = viewCart();
@@ -1131,6 +1150,17 @@ function viewHome() {
             .val-steps .val-step-title { font-family:'Barlow Condensed','Archivo Narrow',sans-serif; font-weight:700; font-size:clamp(.96rem,1.15vw,1.04rem); line-height:1.2; letter-spacing:.02em; text-transform:uppercase; color:#111827; margin:13px 0 4px; }
             .val-steps .val-step-desc { font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:12.9px; line-height:1.5; color:#4B5563; margin:0; }
             .val-client-steps .val-steps-note { margin:clamp(18px,2.2vw,26px) 0 0; padding:12px 16px; border-left:3px solid var(--brand-red-700); background:#F9FAFB; border-radius:0 8px 8px 0; font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:13.5px; line-height:1.5; color:#4B5563; }
+
+            /* ---- Entrada de la secuencia: el conector se dibuja y los pasos
+                    caen en orden 01->04, para que se lea como un proceso ---- */
+            .vd-anim .val-client-steps .val-step { opacity:0; }
+            .vd-anim .val-client-steps .val-steps::before { transform:scaleX(0); transform-origin:left center; }
+            .vd-anim .val-client-steps.is-in .val-steps::before { animation:vdRule .5s var(--vd-ease) forwards; }
+            .vd-anim .val-client-steps.is-in .val-step { animation:vdUp .4s var(--vd-ease) both; }
+            .vd-anim .val-client-steps.is-in .val-step:nth-child(1) { animation-delay:0ms; }
+            .vd-anim .val-client-steps.is-in .val-step:nth-child(2) { animation-delay:90ms; }
+            .vd-anim .val-client-steps.is-in .val-step:nth-child(3) { animation-delay:180ms; }
+            .vd-anim .val-client-steps.is-in .val-step:nth-child(4) { animation-delay:270ms; }
 
             @media (max-width:900px) {
               .val-client { padding:36px 22px 40px; }
