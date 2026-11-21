@@ -436,6 +436,11 @@ html { overflow-x: clip; }
   #val-welcome-popup .val-popup-card { animation: valPopupIn 340ms var(--vd-ease) both; }
   @keyframes valPopupIn { from { opacity:0; transform: translateY(16px) scale(0.97); } to { opacity:1; transform:none; } }
   @media (prefers-reduced-motion: reduce) { #val-welcome-popup .val-popup-card { animation:none; opacity:1; transform:none; } }
+  .wa-modal-overlay { position:fixed; inset:0; background:rgba(15,20,26,0.75); display:flex; align-items:center; justify-content:center; z-index:9999; animation: waFadeIn 260ms ease both; }
+  .wa-modal-card { max-width:320px; padding:28px 24px; text-align:center; animation: waScaleIn 340ms var(--vd-ease) both; }
+  @keyframes waFadeIn { from { opacity:0; } to { opacity:1; } }
+  @keyframes waScaleIn { from { opacity:0; transform: scale(0.96); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) { .wa-modal-overlay, .wa-modal-card { animation:none; opacity:1; transform:none; } }
   .val-popup-card { position:relative; background:#111827; color:#FFFFFF; border-radius:16px; width:100%; max-width:540px; max-height:calc(100vh - 28px); max-height:calc(100dvh - 28px); overflow-y:auto; -webkit-overflow-scrolling:touch; box-shadow:0 25px 50px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.1); display:flex; flex-direction:column; }
   .val-popup-img-wrap { position:relative; background:linear-gradient(135deg,#1f2937 0%,#0f172a 100%); flex:0 0 auto; display:flex; align-items:center; justify-content:center; overflow:hidden; }
   .val-popup-img { width:100%; height:auto; max-height:min(86vh, 560px); object-fit:contain; object-position:center; display:block; }
@@ -2467,20 +2472,30 @@ function redirectToWhatsApp(order) {
 
 function showWhatsAppModal(order) {
   const overlay = document.createElement('div');
-  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(15,20,26,0.75);display:flex;align-items:center;justify-content:center;z-index:9999;';
+  overlay.className = 'wa-modal-overlay';
   overlay.innerHTML = `
-    <div class="card" style="max-width:320px;padding:28px 24px;text-align:center;">
+    <div class="wa-modal-card">
       <i class="ti ti-brand-whatsapp" style="font-size:32px;color:#7BC97B;display:block;margin-bottom:12px;" aria-hidden="true"></i>
       <p style="font-size:15px;color:#1A2229;margin:0 0 8px;">${order.username === 'invitado'
         ? 'Pedido registrado'
         : 'Pedido registrado por ' + fmt(order.total)}</p>
       <p style="font-size:13px;color:#8993A0;margin:0;">Te vamos a llevar a WhatsApp para coordinar el pago y el despacho...</p>
+      <div style="height:4px;background:#E5E7EB;border-radius:2px;margin-top:18px;overflow:hidden;">
+        <div id="wa-modal-bar" style="height:4px;background:#7BC97B;width:0;border-radius:2px;"></div>
+      </div>
     </div>
   `;
   document.body.appendChild(overlay);
-  setTimeout(() => {
-    redirectToWhatsApp(order);
-  }, 1800);
+  const bar = overlay.querySelector('#wa-modal-bar');
+  const DUR = 1800;
+  let start = null;
+  const tick = (t) => {
+    if (!start) start = t;
+    const p = Math.min(1, (t - start) / DUR);
+    if (bar) bar.style.transform = 'scaleX(' + p + ')';
+    if (p < 1) requestAnimationFrame(tick); else redirectToWhatsApp(order);
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => { start = null; requestAnimationFrame(tick); }));
 }
 
 async function checkoutPublicFrom(msgId) {
