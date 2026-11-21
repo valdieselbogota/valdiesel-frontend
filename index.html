@@ -1390,7 +1390,7 @@ window.addEventListener('resize', () => fitFull(document.getElementById('vd-full
 function valPhGoCatalogo(e) {
   if (e) e.preventDefault();
   if (typeof showView === 'function') { showView('catalogo'); } else { location.hash = 'catalogo'; }
-  const toTop = () => { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (_) { window.scrollTo(0, 0); } };
+  const toTop = () => { const pr = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false; if (pr) { window.scrollTo(0, 0); return; } try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (_) { window.scrollTo(0, 0); } };
   requestAnimationFrame(toTop);
   return false;
 }
