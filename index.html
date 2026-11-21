@@ -433,6 +433,9 @@ html { overflow-x: clip; }
   .hidden { display: none !important; }
   #val-welcome-popup { position:fixed; inset:0; z-index:10000; display:none; align-items:center; justify-content:center; background:rgba(11,15,23,0.8); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); padding:16px; overscroll-behavior:contain; }
   #val-welcome-popup.open { display:flex; }
+  #val-welcome-popup .val-popup-card { animation: valPopupIn 340ms var(--vd-ease) both; }
+  @keyframes valPopupIn { from { opacity:0; transform: translateY(16px) scale(0.97); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) { #val-welcome-popup .val-popup-card { animation:none; opacity:1; transform:none; } }
   .val-popup-card { position:relative; background:#111827; color:#FFFFFF; border-radius:16px; width:100%; max-width:540px; max-height:calc(100vh - 28px); max-height:calc(100dvh - 28px); overflow-y:auto; -webkit-overflow-scrolling:touch; box-shadow:0 25px 50px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.1); display:flex; flex-direction:column; }
   .val-popup-img-wrap { position:relative; background:linear-gradient(135deg,#1f2937 0%,#0f172a 100%); flex:0 0 auto; display:flex; align-items:center; justify-content:center; overflow:hidden; }
   .val-popup-img { width:100%; height:auto; max-height:min(86vh, 560px); object-fit:contain; object-position:center; display:block; }
@@ -2773,19 +2776,34 @@ if (startView === 'home') {
 </div>
 <script>
 (function(){
+  var valPopupLastFocus = null;
   window.openValPopup = function(){
     var p=document.getElementById('val-welcome-popup');
     if(!p) return;
+    valPopupLastFocus = document.activeElement;
+    var card = p.querySelector('.val-popup-card');
+    if (card) { card.classList.remove('val-popup-in'); void card.offsetWidth; card.classList.add('val-popup-in'); }
     p.classList.add('open');
     p.style.display='flex';
+    var closeBtn = p.querySelector('.val-popup-close');
+    if (closeBtn) { try { closeBtn.focus(); } catch(e) {} }
+    var sy = window.scrollY || window.pageYOffset || 0;
     document.body.style.overflow='hidden';
+    document.body.style.position='fixed';
+    document.body.style.top='-'+sy+'px';
   };
   window.closeValPopup = function(){
     var p=document.getElementById('val-welcome-popup');
     if(!p) return;
     p.classList.remove('open');
     p.style.display='none';
+    var card = p.querySelector('.val-popup-card');
+    if (card) card.classList.remove('val-popup-in');
     document.body.style.overflow='';
+    document.body.style.position='';
+    document.body.style.top='';
+    if (valPopupLastFocus && typeof valPopupLastFocus.focus === 'function') { try { valPopupLastFocus.focus(); } catch(e) {} }
+    valPopupLastFocus = null;
   };
   document.addEventListener("DOMContentLoaded", function(){
     /* El popup de bienvenida debe mostrarse en CADA ingreso a la pagina,
